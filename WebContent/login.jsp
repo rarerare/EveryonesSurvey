@@ -15,7 +15,7 @@
 <h1 class="loginh1">EveryoneQ</h1>
 <div class="loginformdiv">
 
-<form method="post" action="mainservlet" id="loginform">
+<form method="post"  id="loginform">
 <input type="hidden" name="mact" value="login">
 Username: <span id="usernamewrong" class="wrong"></span>
 </span> <br><input type="text" class="logininput" name="username" id="username"><br>

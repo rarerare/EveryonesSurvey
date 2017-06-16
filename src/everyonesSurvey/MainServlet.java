@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.sql.*;
+import java.util.Enumeration;
+
 import com.mysql.*;
 import com.mysql.jdbc.Driver;
 /**
@@ -79,6 +81,8 @@ public class MainServlet extends HttpServlet {
 			case "getfirstname":
 				getFirstName(request, response);
 				break;
+			case "question":
+				makeQuestion(request, response);
 			default:
 				;
 			}
@@ -90,7 +94,6 @@ public class MainServlet extends HttpServlet {
 		Statement stmt=conn.createStatement();
 		
 		String userName=request.getParameter("username");
-		System.out.println(userName);
 		String password=request.getParameter("password");
 		ResultSet rs=stmt.executeQuery("select password, firstname, lastname from user WHERE username='"+userName+"'");
 		if(rs.next()){
@@ -100,6 +103,7 @@ public class MainServlet extends HttpServlet {
 				session.setAttribute("loggedin", true);
 				session.setAttribute("username", userName);
 				String firstname=rs.getString(2);
+				System.out.println("firstname:"+firstname);
 				session.setAttribute("firstname", firstname);
 				String lastname=rs.getString(3);
 				session.setAttribute("lastname", lastname);
@@ -118,14 +122,23 @@ public class MainServlet extends HttpServlet {
 		}
 		conn.close();
 	}
-	private void signup(HttpServletRequest request, HttpServletResponse response) throws SQLException{
+	private void signup(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException{
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		String email=request.getParameter("email");
+		String firstname=request.getParameter("firstname");
+		String lastname=request.getParameter("lastname");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
+		Statement lookup=conn.createStatement();
+		ResultSet rs= lookup.executeQuery("select * from user where username='"+username+"'");
+		if(rs.next()){
+			response.getWriter().println("username already exists");
+			return;
+		}
 		Statement stmt=conn.createStatement();
-		stmt.executeUpdate("insert into user(username, password, email) value('"
-		+username+"','"+password+"','"+email+"')");
+		stmt.executeUpdate("insert into user(username, password, email, firstname, lastname) value('"
+		+username+"','"+password+"','"+email+"','"+firstname+"','"+lastname+"')");
+		response.sendRedirect("login.jsp");
 	}
 	
 	private void getFirstName(HttpServletRequest request, HttpServletResponse response) throws IOException{
@@ -133,6 +146,21 @@ public class MainServlet extends HttpServlet {
 		String firstname=(String) request.getSession().getAttribute("firstname");
 		System.out.println(pw==null);
 		System.out.println(firstname);
+		Enumeration attrNames=request.getSession().getAttributeNames();
+		while(attrNames.hasMoreElements()){
+			System.out.println(attrNames.nextElement());
+		}
 		pw.println(firstname);
+	}
+	private void makeQuestion(HttpServletRequest request, HttpServletResponse response){
+		String category=request.getParameter("category");
+		switch(category){
+		case "samc":
+			break;
+		case "mamc":
+			break;
+		case "fr"
+			break;
+		}
 	}
 }

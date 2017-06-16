@@ -7,6 +7,9 @@ function passMatch(){
 		return false;
 	}
 }
+function requiredFields(){
+	
+}
 window.onload=function(){
 document.getElementById("submitButt").addEventListener("click",
 		function(event){
@@ -16,5 +19,5 @@ document.getElementById("submitButt").addEventListener("click",
 	}else{
 		alert("password doesn't match");
 	}
-})
+});
 }

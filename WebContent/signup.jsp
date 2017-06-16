@@ -17,9 +17,12 @@
 <div class="signupformdiv">
 <form action="mainservlet" method="post" id="mainform">
 <input type="hidden" value="signup" name="mact">
+First Name:<input type="text" name="firstname"><br>
+Last Name:<input type="text" name="lastname"><br><br>
 Username: <input type="text" name="username"><br><br>
 Password: <input type="password" name="password" id="password"><br><br>
 Confirm Password: <input type="password" id="confirmpassword"><br><br>
+
 Email (optional): <input type="text" name="email"><br><br>
 <button type="submit" id="submitButt">Sign up</button>
 </form>

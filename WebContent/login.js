@@ -24,7 +24,7 @@ function login(){
 		}else if(responseText=="Incorrect Username"){
 			document.getElementById("usernamewrong").innerHTML=this.responseText;
 			document.getElementById("passwordwrong").innerHTML="";
-		}else if(responseText="main"){
+		}else if(responseText=="main"){
 			window.location="main.jsp";
 		}
 		

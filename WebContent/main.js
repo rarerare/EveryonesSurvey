@@ -23,7 +23,6 @@ function loadData(){
 	xhttpname.onreadystatechange=function(){
 		if(xhttpname.readyState==4){
 			var firstname=this.responseText;
-			alert(firstname);
 			document.getElementById("me").innerHTML=this.responseText;
 		}
 	}
