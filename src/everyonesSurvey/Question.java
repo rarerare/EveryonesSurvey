@@ -5,11 +5,13 @@ public class Question {
 	private String title;
 	private String description;
 	private int popularity;
-	public Question(String user, String title, String description, int popularity){
+	private QCategory category;
+	public Question(String user, String title, String description, int popularity, QCategory category){
 		this.user=user;
 		this.title=title;
 		this.description=description;
 		this.popularity=popularity;
+		this.category=category;
 	}
 	public String getTitle(){
 		return title;
@@ -20,5 +22,7 @@ public class Question {
 	public String getUser(){
 		return user;
 	}
-	
+	public QCategory getCategory(){
+		return this.category;
+	}
 }

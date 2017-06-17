@@ -13,10 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.sql.*;
-import java.util.Enumeration;
 
 import com.mysql.*;
 import com.mysql.jdbc.Driver;
+import java.util.*;
+import java.util.Date;
 /**
  * Servlet implementation class Main
  */
@@ -47,9 +48,10 @@ public class MainServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		String mAct=request.getParameter("mact");
+		System.out.println(mAct);
 		response.setCharacterEncoding("utf-8");
 		if(mAct==null){
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("main.jsp");
 	
 		}else{
 			switch(mAct){
@@ -82,7 +84,15 @@ public class MainServlet extends HttpServlet {
 				getFirstName(request, response);
 				break;
 			case "question":
-				makeQuestion(request, response);
+				try {
+					makeQuestion(request, response);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			case "checklogin":
+				checkLogin(request,response);
 			default:
 				;
 			}
@@ -90,12 +100,14 @@ public class MainServlet extends HttpServlet {
 		
 	}
 	private void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException{
+		
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
 		Statement stmt=conn.createStatement();
 		
 		String userName=request.getParameter("username");
 		String password=request.getParameter("password");
-		ResultSet rs=stmt.executeQuery("select password, firstname, lastname from user WHERE username='"+userName+"'");
+		
+		ResultSet rs=stmt.executeQuery("select password, firstname, lastname, userid from user WHERE username='"+userName+"'");
 		if(rs.next()){
 			String realPass=rs.getString(1);
 			if(password.equals(realPass)){
@@ -107,6 +119,8 @@ public class MainServlet extends HttpServlet {
 				session.setAttribute("firstname", firstname);
 				String lastname=rs.getString(3);
 				session.setAttribute("lastname", lastname);
+				long userid=rs.getLong(4);
+				session.setAttribute("userid", userid);
 				
 				PrintWriter pw= response.getWriter();
 				
@@ -144,23 +158,61 @@ public class MainServlet extends HttpServlet {
 	private void getFirstName(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		PrintWriter pw=response.getWriter();
 		String firstname=(String) request.getSession().getAttribute("firstname");
-		System.out.println(pw==null);
-		System.out.println(firstname);
-		Enumeration attrNames=request.getSession().getAttributeNames();
-		while(attrNames.hasMoreElements()){
-			System.out.println(attrNames.nextElement());
-		}
-		pw.println(firstname);
+		pw.print(firstname);
 	}
-	private void makeQuestion(HttpServletRequest request, HttpServletResponse response){
+	private void makeQuestion(HttpServletRequest request, HttpServletResponse response) throws SQLException{
+		String title=request.getParameter("title");
+		String description=request.getParameter("description");
+		
 		String category=request.getParameter("category");
+		
+		
+		long time =(new Date()).getTime();
+		long userid=(long) request.getSession().getAttribute("userid");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
+		Statement insertQ=conn.createStatement();
+		insertQ.executeUpdate("insert into question (title, userid, timeint,"
+				+ "description, category) value('"+title+"',"+userid+","+time+",'"+description
+				+"','"+category+"')");
+		ResultSet qidrs=insertQ.executeQuery("select last_insert_id()");
+		qidrs.next();
+		long qid=qidrs.getLong(1);
+		
+		
 		switch(category){
 		case "samc":
+			int opNums=Integer.valueOf(request.getParameter("opnum"));
+			Statement opss=conn.createStatement();
+			for(int i=1;i<=opNums;i++){
+				opss.executeUpdate("insert into sachoices(description,qid, num) value('"
+						+request.getParameter("choice"+i)+"',"+qid+","+i+")");
+			}
+			
 			break;
 		case "mamc":
+			int opNumm=Integer.valueOf(request.getParameter("opnum"));
+			Statement opsm=conn.createStatement();
+			for(int i=1;i<=opNumm;i++){
+				opsm.executeUpdate("insert into machoices(description,qid, num) value('"
+						+request.getParameter("choice"+i)+"',"+qid+","+i);
+				
+			}
 			break;
-		case "fr"
+		case "fr":
 			break;
 		}
 	}
+	private void checkLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		boolean loggedin;
+		if(request.getSession().getAttribute("loggedin")==null){
+			response.getWriter().print("no");
+			return;
+		}else if((boolean)request.getSession().getAttribute("loggedin")==false){
+			response.getWriter().print("no");
+			return;
+		}
+		response.getWriter().print("yes");
+		
+	}
+	
 }

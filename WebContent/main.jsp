@@ -4,13 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="main.css">
 <script src="main.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>EveryoneQ</title>
 </head>
-<body>
+<body id="mainbody">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -29,14 +30,14 @@
     </form>
     <ul class="nav navbar-nav">
       
-      <li class="active"><a href="#">Ask a Question</a></li>
+      <li><a href="question.jsp">Ask a Question</a></li>
       <li><a href="#">Make a Questionaire</a></li>
-      <li><a href='' id="me"></a></li>
+      <li id="me"></li>
       
     </ul>
   </div>
 </nav>
-  Top questions
+  <h2>Top questions</h2>
 <div id="popqdiv"></div>
 </body>
 </html>

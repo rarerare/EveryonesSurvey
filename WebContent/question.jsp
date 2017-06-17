@@ -8,8 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form id="qform" action="mainservlet?mact=question">
-
+<form id="qform" action="mainservlet">
+<input type="hidden" name="mact" value="question">
+<input type="hidden" name="opnum" id="opnum">
 Title:<input type="text" name="title"><br>
 <br>
 Description:<input type="text" name="description"><br>
