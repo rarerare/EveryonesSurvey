@@ -4,4 +4,17 @@
 .mainq{
 	background-color:#ffffff;
 	color:#000000;
+	margin-left:3%;
+	margin-right:3%;
+	padding-left:3%;
+	padding-right:3%;
+}
+.wrong{
+	color: red;
+}
+#popqh2{
+	text-align: center;
+}
+.navbartext{
+	color:#ffffff;
 }

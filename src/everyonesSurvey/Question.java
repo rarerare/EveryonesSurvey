@@ -6,12 +6,14 @@ public class Question {
 	private String description;
 	private int popularity;
 	private QCategory category;
-	public Question(String user, String title, String description, int popularity, QCategory category){
+	private long qid;
+	public Question(String user, String title, String description, int popularity, QCategory category, long qid){
 		this.user=user;
 		this.title=title;
 		this.description=description;
 		this.popularity=popularity;
 		this.category=category;
+		this.qid=qid;
 	}
 	public String getTitle(){
 		return title;
@@ -24,5 +26,8 @@ public class Question {
 	}
 	public QCategory getCategory(){
 		return this.category;
+	}
+	public long getId(){
+		return qid;
 	}
 }

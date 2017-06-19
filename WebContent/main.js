@@ -29,13 +29,13 @@ function checkLogin(){
 		if(xhttpchecklogin.readyState==4){
 			if(this.responseText=="no"){
 				document.getElementById("me").innerHTML=
-					"<form method='post'  id='loginform'>"+
-"<input type='hidden' name='mact' value='login'>Username: <span id='usernamewrong' class='wrong'></span>"+
-"</span> <br><input type='text' class='logininput' name='username' id='username'><br>"+
-"Password: <span id='passwordwrong' class='wrong'></span>"+
-"</span> <br><input type='password' class='logininput' name='password' id='password'><br>"+
-"<button type='submit' id='loginsubmit'>submit</button>"+
-"</form>";
+					"<form method='post'  id='loginform' class='navbar-form navbar-right'>"+
+"<input type='hidden' name='mact' value='login'> <span id='usernamewrong' class='wrong'></span>"+
+"</span> <input type='text' class='form-control' placeholder='username' name='username' id='username'><br>"+
+" <span id='passwordwrong' class='wrong'></span>"+
+"</span> <input type='password' class='form-control' placeholder='password' class='logininput' name='password' id='password'>"+
+"<button type='submit' id='loginsubmit'>Sign in</button>"+
+"<span class='navbartext'>or</span> <a href='signup.jsp'>Sign up</a></form>";
 				var loginSubmitButt=document.getElementById("loginsubmit");
 				loginSubmitButt.onclick=function(e){
 					e.preventDefault();
@@ -88,7 +88,6 @@ function login(){
 	
 	xhttp.onreadystatechange=function(){
 		responseText=this.responseText
-		alert(responseText);
 		if(responseText=="Incorrect password"){
 			document.getElementById("passwordwrong").innerHTML=this.responseText;
 			document.getElementById("usernamewrong").innerHTML="";

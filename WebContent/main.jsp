@@ -15,7 +15,7 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">EveryoneQ</a>
+      <a class="navbar-brand" href="main.jsp">EveryoneQ</a>
     </div>
     
     <form class="navbar-form navbar-left">
@@ -37,7 +37,7 @@
     </ul>
   </div>
 </nav>
-  <h2>Top questions</h2>
+  <h2 id="popqh2">Top questions</h2>
 <div id="popqdiv"></div>
 </body>
 </html>
