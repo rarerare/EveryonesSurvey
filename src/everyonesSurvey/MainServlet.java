@@ -250,5 +250,51 @@ public class MainServlet extends HttpServlet {
 		PrintWriter pw=response.getWriter();
 		pw.print(responseStr);
 	}
+	private void makeQnaire(HttpServletRequest request, HttpServletResponse response){
+		
+	}
+	private void makeQuestionIn(HttpServletRequest request, HttpServletResponse response,int qnum) throws SQLException{
+		
+		String title=request.getParameter("title"+qnum);
+		String description=request.getParameter("description"+qnum);
+		
+		String category=request.getParameter("category");
+		
+		
+		long time =(new Date()).getTime();
+		long userid=(long) request.getSession().getAttribute("userid");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
+		Statement insertQ=conn.createStatement();
+		insertQ.executeUpdate("insert into question (title, userid, timeint,"
+				+ "description, category) value('"+title+"',"+userid+","+time+",'"+description
+				+"','"+category+"')");
+		ResultSet qidrs=insertQ.executeQuery("select last_insert_id()");
+		qidrs.next();
+		long qid=qidrs.getLong(1);
+		
+		
+		switch(category){
+		case "samc":
+			int opNums=Integer.valueOf(request.getParameter("opnum"));
+			Statement opss=conn.createStatement();
+			for(int i=1;i<=opNums;i++){
+				opss.executeUpdate("insert into sachoices(description,qid, num) value('"
+						+request.getParameter("choice"+i)+"',"+qid+","+i+")");
+			}
+			
+			break;
+		case "mamc":
+			int opNumm=Integer.valueOf(request.getParameter("opnum"));
+			Statement opsm=conn.createStatement();
+			for(int i=1;i<=opNumm;i++){
+				opsm.executeUpdate("insert into machoices(description,qid, num) value('"
+						+request.getParameter("choice"+i)+"',"+qid+","+i);
+				
+			}
+			break;
+		case "fr":
+			break;
+		}
+	}
 	
 }

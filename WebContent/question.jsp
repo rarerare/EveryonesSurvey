@@ -17,20 +17,11 @@
       <a class="navbar-brand" href="main.jsp">EveryoneQ</a>
     </div>
     
-    <form class="navbar-form navbar-left">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
-            <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+    
     <ul class="nav navbar-nav">
       
-      <li><a href="question.jsp">Ask a Question</a></li>
-      <li><a href="#">Make a Questionaire</a></li>
+      <li><a href="#">Ask a Question</a></li>
+      <li><a href="questionaire.jsp">Make a Questionnaire</a></li>
       <li id="me"></li>
       
     </ul>
@@ -41,7 +32,7 @@
 <input type="hidden" name="opnum" id="opnum">
 Title:<input type="text" name="title" required><br>
 <br>
-Description:<input type="text" name="description" required><br>
+Description:<textarea name="description" required></textarea><br>
 <br>
 Category: <br> Single-Answer Multiple choice<input type="radio" name="category" value="samc" required><br>
 Multiple-Answer Multiple choice<input type="radio" name="category" value="mamc" required><br>

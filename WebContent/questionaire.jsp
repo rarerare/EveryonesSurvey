@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="questionaire.js"></script>
 <title>EveryoneQ</title>
 </head>
 <body>
@@ -16,28 +17,27 @@
       <a class="navbar-brand" href="main.jsp">EveryoneQ</a>
     </div>
     
-    <form class="navbar-form navbar-left">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
-            <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+    
     <ul class="nav navbar-nav">
       
       <li><a href="question.jsp">Ask a Question</a></li>
-      <li><a href="#">Make a Questionaire</a></li>
+      <li><a href="#">Make a Questionnaire</a></li>
       <li id="me"></li>
       
     </ul>
   </div>
 </nav>
 <div id="maindiv">
-<form>
+<form action="mainservlet" method="post" id="qform">
+<input type="hidden" name="mact" value="sbmtQuestionaire">
+<input name="qnum" id="qnumInput" type="hidden" value="0"/>
+Title of questionnaire:<input type="text" name="qntitle" required><br>
+<div id="qListDiv">
+</div>
+<button type="button" onclick="updateQList()">Add question</button>
+<input type="submit" value="Submit questionaire"/>
 </form>
+
 </div>
 
 </body>

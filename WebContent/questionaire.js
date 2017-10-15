@@ -4,8 +4,8 @@ window.onload=function(){
 	for(var i=0;i<cate.length;i++){
 		cate[i].addEventListener("change",updateAnswerDetail);
 	}
-	document.getElementById("submit").addEventListener("click", function(e){
-		e.preventDefault();
+	document.getElementById("submitButt").addEventListener("click", function(){
+		
 		var categoryRs=document.getElementsByName("category");
 		var cateSelected=false;
 		for(var i=0;i<categoryRs.length;i++){
@@ -14,43 +14,48 @@ window.onload=function(){
 			}
 		}
 		
-		if(cateSelected==false){
-			
-		}else{
+		
 			document.getElementById("qform").submit();
-		}
+		
 		
 	})
 }
-function updateAnswerDetail(e){
-	var cateRadios=document.getElementsByName("category");
+function updateAnswerDetail(qnum){
+	
+	var cateRadios=document.getElementsByName("category"+qnum);
 	var category;
+	
 	for(var i=0;i<cateRadios.length;i++){
+		
 		if(cateRadios[i].checked){
 			category=cateRadios[i].value;
-			if(updateAnswerDetail.category==category){
-				return;
-			}else{
-				updateAnswerDetail.category=category;
-			}
+			
 		}
 	}
-	var detail=document.getElementById("detail_answer");
+	
+	var detail=document.getElementById("detail_answer"+qnum);
+	
 	switch(category){
 	case "samc":
-		detail.innerHTML="<span id='choices'><span>Choice1: <input type='text' name='choice1' required><br></span></span>" +
-				"<br><button id='addchoicebutt'>Add choice</button>";
+		detail.innerHTML="<span id='choices"+qnum+"'><span>Choice1: " +
+				"<input type='text' name='choice1' required><br></span></span>" +
+				"<br><button id='addchoicebutt"+qnum+"' type='button'" 
+				+"onclick='addChoice("+qnum+")'>Add choice</button>";
 		
-		document.getElementById("opnum").value=1;
+		
 		addChoice.num=1;
-		document.getElementById("addchoicebutt").addEventListener("click", addChoice);
+		
 		break;
 		
 	case "mamc":
-		detail.innerHTML="<span id='choices'><span>Choice1: <input type='text' name='choice1' required><br></span></span>" +
-				"<br><button id='addchoicebutt'>Add choice</button>";
+		
+		detail.innerHTML="<span id='choices"+qnum+"'><span>Choice1:" +
+				" <input type='text' name='choice1' required><br></span></span>" +
+				"<br><button id='addchoicebutt"+qnum+"' type='button'" +
+				" onclick='addChoice("+qnum+")'>Add choice</button>";
         addChoice.num=1;
-        document.getElementById("addchoicebutt").addEventListener("click", addChoice);
+        
+        
         break;
         
 	case "fr":
@@ -60,14 +65,15 @@ function updateAnswerDetail(e){
 	}
 	
 }
-function addChoice(e){
-	e.preventDefault();
+function addChoice(qnum){
+	
 	addChoice.num++;
-	document.getElementById("opnum").value=addChoice.num;
+	
+	document.getElementById("opnum"+qnum).value=addChoice.num;
 	var newChoice=document.createElement("span");
 	newChoice.innerHTML="Choice"
-		+addChoice.num+": <input type='text' name='choice"+addChoice.num+"' required><br>";
-	document.getElementById("choices").appendChild(newChoice);
+		+addChoice.num+": <input type='text' name='q"+qnum+"choice"+addChoice.num+"' required><br>";
+	document.getElementById("choices"+qnum).appendChild(newChoice);
 	
 	
 }
@@ -116,4 +122,25 @@ function setupUser(){
 	}
 	xhttpname.open("POST", "mainservlet?mact=getfirstname", true);
 	xhttpname.send();
+}
+function updateQList(e){
+	
+	var qnum=parseInt($('#qnumInput').val());
+	qnum++;
+	$("#qListDiv").append("<hr><br><h3>Question "+qnum+"</h3><br><b>Title:</b><br> " 
+			+"<input type='hidden' name='opnum' id='opnum"+qnum+"'>"
+			+"<input type='text' name='title"+qnum+"' required><br><br>"
+			+"<b>Description:</b><br> <textarea name='description"+qnum+"' required></textarea><br><br>"
+			+"<b>Category:</b> <br> Single-Answer Multiple choice" 
+			+"<input type='radio' name='category"+qnum+"' value='samc' " 
+			+"onchange='updateAnswerDetail("+qnum+")' required><br>"
+			+"Multiple-Answer Multiple choice" 
+			+"<input type='radio' name='category"+qnum+"' value='mamc' "
+			+"onchange='updateAnswerDetail("+qnum+")' required><br>"
+			+"Free Response:" 
+			+"<input type='radio' name='category"+qnum+"' value='fr'" 
+			+" onchange='updateAnswerDetail("+qnum+")' required><br>"
+			+"<div id='detail_answer"+qnum+"'></div><br><br>");
+	$('#qnumInput').val(qnum);
+	
 }

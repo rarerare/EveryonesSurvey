@@ -31,7 +31,7 @@
     <ul class="nav navbar-nav">
       
       <li><a href="question.jsp">Ask a Question</a></li>
-      <li><a href="#">Make a Questionaire</a></li>
+      <li><a href="questionaire.jsp">Make a Questionnaire</a></li>
       <li id="me"></li>
       
     </ul>
