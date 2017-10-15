@@ -48,12 +48,14 @@ public class MainServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		String mAct=request.getParameter("mact");
-		System.out.println(mAct);
+		
+		System.out.println("mact:"+mAct);
 		response.setCharacterEncoding("utf-8");
 		if(mAct==null){
 			response.sendRedirect("main.jsp");
 	
 		}else{
+			
 			switch(mAct){
 			case "login":
 				try {
@@ -93,6 +95,7 @@ public class MainServlet extends HttpServlet {
 				break;
 			case "checklogin":
 				checkLogin(request,response);
+				break;
 			case "searchQ":
 				try {
 					searchQ(request,response);
@@ -103,6 +106,7 @@ public class MainServlet extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				break;
 			default:
 				;
 			}
@@ -171,6 +175,7 @@ public class MainServlet extends HttpServlet {
 		pw.print(firstname);
 	}
 	private void makeQuestion(HttpServletRequest request, HttpServletResponse response) throws SQLException{
+		
 		String title=request.getParameter("title");
 		String description=request.getParameter("description");
 		
