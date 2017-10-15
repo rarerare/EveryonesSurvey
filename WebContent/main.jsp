@@ -20,9 +20,9 @@
     
     <form class="navbar-form navbar-left">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search">
+        <input type="text" class="form-control" placeholder="Search" id="searchKeyText">
         <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
+          <button class="btn btn-default" type="button" onclick="searchQ()">
             <i class="glyphicon glyphicon-search"></i>
           </button>
         </div>
@@ -37,7 +37,7 @@
     </ul>
   </div>
 </nav>
-  <h2 id="popqh2">Top questions</h2>
+  
 <div id="popqdiv"></div>
 </body>
 </html>

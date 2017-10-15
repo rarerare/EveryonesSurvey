@@ -16,6 +16,22 @@ function loadData(){
 	xhttpq.open("POST", "mainservlet?mact=getsvypops",true);
 	xhttpq.send();	
 }
+function searchQ(){
+	
+	if(window.XMLHttpRequest){
+		var xhttpq=new XMLHttpRequest();
+	}else{
+		var xhttpq = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xhttpq.onreadystatechange=function(){
+		document.getElementById("popqdiv").innerHTML=this.responseText;
+	}
+	
+	xhttpq.open("POST", "mainservlet?mact=searchQ&searchkey="+$("#searchKeyText").val(),true);
+	xhttpq.send();	
+}
+
 function checkLogin(){
 	
 	if(window.XMLHttpRequest){
@@ -31,7 +47,7 @@ function checkLogin(){
 				document.getElementById("me").innerHTML=
 					"<form method='post'  id='loginform' class='navbar-form navbar-right'>"+
 "<input type='hidden' name='mact' value='login'> <span id='usernamewrong' class='wrong'></span>"+
-"</span> <input type='text' class='form-control' placeholder='username' name='username' id='username'><br>"+
+"</span> <input type='text' class='form-control' placeholder='username' name='username' id='username'>"+
 " <span id='passwordwrong' class='wrong'></span>"+
 "</span> <input type='password' class='form-control' placeholder='password' class='logininput' name='password' id='password'>"+
 "<button type='submit' id='loginsubmit'>Sign in</button>"+

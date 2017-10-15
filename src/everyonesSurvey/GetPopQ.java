@@ -12,9 +12,10 @@ import java.io.PrintWriter;
 import java.sql.*;
 
 public class GetPopQ {
-	private static final int POPQNUM=3;
+	private static final int POPQNUM=255;
 	private static Question[] popqs=new Question[POPQNUM] ;
-	private static void initQs() throws SQLException{
+	private static void initQs() throws SQLException, ClassNotFoundException{
+		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
 		Statement stmt=conn.createStatement();
 		ResultSet rs= stmt.executeQuery("select user.username, question.title, question.description"
@@ -29,34 +30,16 @@ public class GetPopQ {
 		
 	}
 	
-	public static void getSurveysPop(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException{
+	public static void getSurveysPop(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ClassNotFoundException{
 		initQs();
 		PrintWriter pw=response.getWriter();
-		String responseStr="";
+		String responseStr="<h2 id=\"popqh2\">Top questions</h2>";
 		for(int i =0; i< POPQNUM&&popqs[i]!=null;i++){
-			responseStr=addQ(responseStr,popqs[i]);
+			responseStr=popqs[i].addQ(responseStr);
 					
 		}
 		pw.print(responseStr);
 		
 	}
-	private static String addQ(String responseStr,Question q) throws SQLException{
-		System.out.println("entered addQ");
-		responseStr+="<div class=\"mainq\"><h4>"+q.getTitle()+"</h4><hr>"
-				+q.getDescription()+"<br><form action='mainservlet?mact=answerq'>";
-		
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
-		Statement stmt=conn.createStatement();
-		long qid=q.getId();
-		String inputname=q.getCategory()+"_"+qid;
-		ResultSet rs= stmt.executeQuery("select num, description from sachoices where qid="+qid  );
-		while(rs.next()){
-			String description=rs.getString(2);
-			
-			responseStr+="<input type='radio' name='"+inputname+"'>"+description+"<br>";
-		}
-		responseStr+="<button type='submit' id='loginsubmit'>submit</button><form></div>";
-		return responseStr;
-		
-	}
+	
 }
