@@ -18,11 +18,11 @@
       <a class="navbar-brand" href="main.jsp">EveryoneQ</a>
     </div>
     
-    <form class="navbar-form navbar-left">
+    <form class="navbar-form navbar-left" id="searchForm">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search" id="searchKeyText">
         <div class="input-group-btn">
-          <button class="btn btn-default" type="button" onclick="searchQ()">
+          <button class="btn btn-default" type="submit" >
             <i class="glyphicon glyphicon-search"></i>
           </button>
         </div>

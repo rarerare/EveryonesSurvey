@@ -1,6 +1,7 @@
 window.onload=function(){
 	loadData();
 	checkLogin();
+	$('#searchForm').submit(searchQ);
 }
 function loadData(){
 	if(window.XMLHttpRequest){
@@ -13,10 +14,10 @@ function loadData(){
 		document.getElementById("popqdiv").innerHTML=this.responseText;
 	}
 	
-	xhttpq.open("POST", "mainservlet?mact=getsvypops",true);
+	xhttpq.open("POST", "displayquestion?mact=getsvypops",true);
 	xhttpq.send();	
 }
-function searchQ(){
+function searchQ(event){
 	
 	if(window.XMLHttpRequest){
 		var xhttpq=new XMLHttpRequest();
@@ -28,8 +29,9 @@ function searchQ(){
 		document.getElementById("popqdiv").innerHTML=this.responseText;
 	}
 	
-	xhttpq.open("POST", "mainservlet?mact=searchQ&searchkey="+$("#searchKeyText").val(),true);
+	xhttpq.open("POST", "displayquestion?mact=searchQ&searchkey="+$("#searchKeyText").val(),true);
 	xhttpq.send();	
+	event.preventDefault();
 }
 
 function checkLogin(){

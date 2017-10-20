@@ -49,7 +49,6 @@ public class MainServlet extends HttpServlet {
 		
 		String mAct=request.getParameter("mact");
 		
-		System.out.println("mact:"+mAct);
 		response.setCharacterEncoding("utf-8");
 		if(mAct==null){
 			response.sendRedirect("main.jsp");
@@ -74,40 +73,17 @@ public class MainServlet extends HttpServlet {
 				}
 				break;
 				
-			case "getsvypops":
-				try {
-					GetPopQ.getSurveysPop(request,response);
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-				break;
 			
 			case "getfirstname":
 				getFirstName(request, response);
 				break;
-			case "question":
-				try {
-					makeQuestion(request, response);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
+			
 			case "checklogin":
 				checkLogin(request,response);
 				break;
-			case "searchQ":
-				try {
-					searchQ(request,response);
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
+			
 			default:
+				response.sendRedirect("main.jsp");
 				;
 			}
 		}
@@ -174,49 +150,7 @@ public class MainServlet extends HttpServlet {
 		String firstname=(String) request.getSession().getAttribute("firstname");
 		pw.print(firstname);
 	}
-	private void makeQuestion(HttpServletRequest request, HttpServletResponse response) throws SQLException{
-		
-		String title=request.getParameter("title");
-		String description=request.getParameter("description");
-		
-		String category=request.getParameter("category");
-		
-		
-		long time =(new Date()).getTime();
-		long userid=(long) request.getSession().getAttribute("userid");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
-		Statement insertQ=conn.createStatement();
-		insertQ.executeUpdate("insert into question (title, userid, timeint,"
-				+ "description, category) value('"+title+"',"+userid+","+time+",'"+description
-				+"','"+category+"')");
-		ResultSet qidrs=insertQ.executeQuery("select last_insert_id()");
-		qidrs.next();
-		long qid=qidrs.getLong(1);
-		
-		
-		switch(category){
-		case "samc":
-			int opNums=Integer.valueOf(request.getParameter("opnum"));
-			Statement opss=conn.createStatement();
-			for(int i=1;i<=opNums;i++){
-				opss.executeUpdate("insert into sachoices(description,qid, num) value('"
-						+request.getParameter("choice"+i)+"',"+qid+","+i+")");
-			}
-			
-			break;
-		case "mamc":
-			int opNumm=Integer.valueOf(request.getParameter("opnum"));
-			Statement opsm=conn.createStatement();
-			for(int i=1;i<=opNumm;i++){
-				opsm.executeUpdate("insert into machoices(description,qid, num) value('"
-						+request.getParameter("choice"+i)+"',"+qid+","+i);
-				
-			}
-			break;
-		case "fr":
-			break;
-		}
-	}
+	
 	private void checkLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		boolean loggedin;
 		if(request.getSession().getAttribute("loggedin")==null){
@@ -229,28 +163,10 @@ public class MainServlet extends HttpServlet {
 		response.getWriter().print("yes");
 		
 	}
-	private void searchQ(HttpServletRequest request, HttpServletResponse response)
-			throws ClassNotFoundException, SQLException, IOException{
-		String searchKey=request.getParameter("searchkey");
-		System.out.println(searchKey);
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
-		Statement stmt=conn.createStatement();
-		ResultSet rs= stmt.executeQuery("select user.username, question.title, question.description"
-		+",question.popularity,question.category, question.qid"
-				+ "  from question, user where (question.userid=user.userid) and (title like '%"
-		+searchKey+"%' or description like '%"+searchKey+"%')");
-		
-		String responseStr="<h2 id=\"popqh2\">Search Results</h2>";
-		while(rs.next()){
-			responseStr=(new Question(rs.getString(1), rs.getString(2), rs.getString(3)
-					, rs.getInt(4),QCategory.valueOf(rs.getString(5)), rs.getLong(6))).addQ(responseStr);
-			System.out.println("responseStr"+responseStr);
-		}
-		PrintWriter pw=response.getWriter();
-		pw.print(responseStr);
-	}
+	
 	private void makeQnaire(HttpServletRequest request, HttpServletResponse response){
+		String title=request.getParameter("qntitle");
+		int qNum=Integer.parseInt(request.getParameter("qnum"));
 		
 	}
 	private void makeQuestionIn(HttpServletRequest request, HttpServletResponse response,int qnum) throws SQLException{

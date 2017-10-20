@@ -27,7 +27,7 @@
     </ul>
   </div>
 </nav>
-<form id="qform" action="mainservlet">
+<form id="qform" action="recordquestion">
 <input type="hidden" name="mact" value="question">
 <input type="hidden" name="opnum" id="opnum">
 Title:<input type="text" name="title" required><br>

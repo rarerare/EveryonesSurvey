@@ -10,13 +10,29 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-  <servlet-name>mainServlet</servlet-name>
-  <servlet-class>everyonesSurvey.MainServlet</servlet-class>
-  <load-on-startup>1</load-on-startup>
+    <servlet-name>mainServlet</servlet-name>
+    <servlet-class>everyonesSurvey.MainServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-  <servlet-name>mainServlet</servlet-name>
-  <url-pattern></url-pattern>
-  <url-pattern>/mainservlet</url-pattern>
+    <servlet-name>mainServlet</servlet-name>
+    <url-pattern></url-pattern>
+    <url-pattern>/mainservlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>recordQuestion</servlet-name>
+    <servlet-class>everyonesSurvey.RecordQuestion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>recordQuestion</servlet-name>
+    <url-pattern>/recordquestion</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>displayQuestion</servlet-name>
+    <servlet-class>everyonesSurvey.DisplayQuestion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>displayQuestion</servlet-name>
+    <url-pattern>/displayquestion</url-pattern>
   </servlet-mapping>
 </web-app>
