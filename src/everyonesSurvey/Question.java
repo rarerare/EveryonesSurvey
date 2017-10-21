@@ -45,11 +45,20 @@ public class Question {
 		Statement stmt=conn.createStatement();
 		long qid=getId();
 		String inputname=getCategory()+"_"+qid;
-		ResultSet rs= stmt.executeQuery("select num, description from sachoices where qid="+qid  );
+		String optionTableName="";
+		String inputType="";
+		if(getCategory()==QCategory.samc){
+			optionTableName="sachoices";
+			inputType="radio";
+		}else if(getCategory()==QCategory.mamc){
+			optionTableName="machoices";
+			inputType="checkbox";
+		}
+		ResultSet rs= stmt.executeQuery("select num, description from "+optionTableName+" where qid="+qid  );
 		while(rs.next()){
 			String description=rs.getString(2);
 			
-			responseStr+="<input type='radio' name='"+inputname+"'>"+description+"<br>";
+			responseStr+="<input type='"+inputType+"' name='"+inputname+"'>"+description+"<br>";
 		}
 		responseStr+="<button type='submit' id='loginsubmit'>submit</button><form></div>";
 		return responseStr;

@@ -54,14 +54,6 @@ String mAct=request.getParameter("mact");
 			switch(mAct){
 			
 			
-			case "getsvypops":
-				try {
-					GetPopQ.getSurveysPop(request,response);
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-				break;
-			
 			
 			case "question":
 				try {
@@ -80,6 +72,8 @@ String mAct=request.getParameter("mact");
 			}
 		}
 	}
+	
+
 	private void makeSingleQuestion(HttpServletRequest request, HttpServletResponse response) throws SQLException{
 		String title=request.getParameter("title");
 		String description=request.getParameter("description");
@@ -142,7 +136,7 @@ String mAct=request.getParameter("mact");
 		case "mamc":
 			
 			Statement opsm=conn.createStatement();
-			for(int i=1;i<=optNum;i++){
+			for(int i=0;i<optNum;i++){
 				
 				opsm.executeUpdate("insert into machoices(description,qid, num) value('"
 						+optTitles.get(i)+"',"+qid+","+i+")");

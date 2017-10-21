@@ -70,7 +70,7 @@ public class DisplayQuestion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-String mAct=request.getParameter("mact");
+		String mAct=request.getParameter("mact");
 		
 		response.setCharacterEncoding("utf-8");
 		if(mAct==null){
