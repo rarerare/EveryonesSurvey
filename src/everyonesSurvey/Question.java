@@ -45,7 +45,7 @@ public class Question {
 		Statement stmt=conn.createStatement();
 		long qid=getId();
 		String inputname=getCategory()+"_"+qid;
-		String optionTableName="";
+		String optionTableName=null;
 		String inputType="";
 		if(getCategory()==QCategory.samc){
 			optionTableName="sachoices";
@@ -54,12 +54,17 @@ public class Question {
 			optionTableName="machoices";
 			inputType="checkbox";
 		}
-		ResultSet rs= stmt.executeQuery("select num, description from "+optionTableName+" where qid="+qid  );
-		while(rs.next()){
-			String description=rs.getString(2);
+		if(optionTableName!=null){
+			ResultSet rs= stmt.executeQuery("select num, description from "+optionTableName+" where qid="+qid  );
 			
-			responseStr+="<input type='"+inputType+"' name='"+inputname+"'>"+description+"<br>";
+			while(rs.next()){
+				String description=rs.getString(2);
+				
+				responseStr+="<input type='"+inputType+"' name='"+inputname+"'>"+description+"<br>";
+			}
 		}
+		
+		
 		responseStr+="<button type='submit' id='loginsubmit'>submit</button><form></div>";
 		return responseStr;
 		

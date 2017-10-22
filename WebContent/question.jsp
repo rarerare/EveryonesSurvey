@@ -28,8 +28,8 @@
   </div>
 </nav>
 <form id="qform" action="recordquestion">
-<input type="hidden" name="mact" value="question">
-<input type="hidden" name="opnum" id="opnum">
+<input type="hidden" name="mact" value="sbmtSnglQstn">
+<input type="hidden" name="optNum" id="optNum">
 Title:<input type="text" name="title" required><br>
 <br>
 Description:<textarea name="description" required></textarea><br>

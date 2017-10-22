@@ -28,10 +28,10 @@
   </div>
 </nav>
 <div id="maindiv">
-<form action="mainservlet" method="post" id="qform">
-<input type="hidden" name="mact" value="sbmtQuestionaire">
-<input name="qnum" id="qnumInput" type="hidden" value="0"/>
-Title of questionnaire:<input type="text" name="qntitle" required><br>
+<form action="recordquestion" method="post" id="qform">
+<input type="hidden" name="mact" value="sbmtQnr">
+<input name="qNum" id="qNumInput" type="hidden" value="0"/>
+Title of questionnaire:<input type="text" name="qnTitle" required><br>
 <div id="qListDiv">
 </div>
 <button type="button" onclick="updateQList()">Add question</button>

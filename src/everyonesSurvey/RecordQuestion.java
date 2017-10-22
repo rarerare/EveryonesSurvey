@@ -43,7 +43,7 @@ public class RecordQuestion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-String mAct=request.getParameter("mact");
+		String mAct=request.getParameter("mact");
 		
 		response.setCharacterEncoding("utf-8");
 		if(mAct==null){
@@ -52,19 +52,29 @@ String mAct=request.getParameter("mact");
 		}else{
 			
 			switch(mAct){
-			
-			
-			
-			case "question":
+			case "sbmtSnglQstn":
 				try {
 					makeSingleQuestion(request, response);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				break;
 			
-			
+			case "sbmtQnr":
+				try {
+					makeQnr(request,response);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
 			default:
 				response.sendRedirect("main.jsp");
 				
@@ -74,10 +84,10 @@ String mAct=request.getParameter("mact");
 	}
 	
 
-	private void makeSingleQuestion(HttpServletRequest request, HttpServletResponse response) throws SQLException{
+	private void makeSingleQuestion(HttpServletRequest request, HttpServletResponse response) 
+			throws SQLException, ClassNotFoundException{
 		String title=request.getParameter("title");
 		String description=request.getParameter("description");
-		
 		String category=request.getParameter("category");
 		long time =(new Date()).getTime();
 		long userid=(long) request.getSession().getAttribute("userid");
@@ -85,39 +95,75 @@ String mAct=request.getParameter("mact");
 		int optNum = 0;
 		switch(category){
 		case "samc":
-			optNum=Integer.valueOf(request.getParameter("opnum"));
+			optNum=Integer.valueOf(request.getParameter("optNum"));
 			
 			for(int i=1;i<=optNum;i++){
-				optTitles.add(request.getParameter("choice"+i));
+				optTitles.add(request.getParameter("option"+i));
 			}
 			
 			break;
 		case "mamc":
-			optNum=Integer.valueOf(request.getParameter("opnum"));
+			optNum=Integer.valueOf(request.getParameter("optNum"));
 			for(int i=1;i<=optNum;i++){
-				optTitles.add(request.getParameter("choice"+i));
+				optTitles.add(request.getParameter("option"+i));
 			}
 			
 			break;
 		case "fr":
 			break;
 		}
-		makeQuestion(title, description, category, time, userid, optNum, optTitles);
+		makeQuestion(title, description, category, time, userid,null, optNum, optTitles);
 	}
-	private void makeQuestion(String title
+	private synchronized void makeQnr(HttpServletRequest request, HttpServletResponse response) 
+			throws ClassNotFoundException, SQLException{
+		String title=request.getParameter("qnTitle");
+		int qNum=Integer.parseInt(request.getParameter("qNum"));
+		long userid=(long) request.getSession().getAttribute("userid");
+		long time =(new Date()).getTime();
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
+		Statement createQN=conn.createStatement();
+		createQN.executeUpdate("insert into qNaire (title, qNum, userid) values('"+title+"',"+qNum+","+userid+")");
+		ResultSet qidrs=createQN.executeQuery("select last_insert_id()");
+		qidrs.next();
+		long qnid=qidrs.getLong(1);
+		for(int i=1;i<=qNum;i++){
+			String qTitle=request.getParameter("qTitle"+i);
+			String qDescription=request.getParameter("qDescription"+i);
+			String category=request.getParameter("category"+i);
+			int optNum=Integer.parseInt(request.getParameter("optNum"+i));
+			ArrayList<String> optTitles=new ArrayList<String>();
+			for(int j=1;j<=optNum;j++){
+				optTitles.add(request.getParameter("q"+i+"option"+j));
+			}
+			makeQuestion(qTitle, qDescription, category, time, userid, qnid, optNum, optTitles);
+		}
+	}
+	private synchronized void makeQuestion(String title
 			, String description
 			, String category
 			, long time
 			, long userid
+			, Long qnid
 			, int optNum
-			, ArrayList<String> optTitles ) throws SQLException{
+			, ArrayList<String> optTitles ) throws SQLException, ClassNotFoundException{
 		
-		
+		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
 		Statement insertQ=conn.createStatement();
-		insertQ.executeUpdate("insert into question (title, userid, timeint,"
-				+ "description, category) value('"+title+"',"+userid+","+time+",'"+description
-				+"','"+category+"')");
+		if(qnid==null){
+			insertQ.executeUpdate("insert into question (title, userid, timeint,"
+					+ "description, category) value('"+title+"',"+userid+","+time+",'"+description
+					+"','"+category+"')");
+		}else{
+			System.out.println("insert into question (title, userid, timeint,"
+					+ "description, category, qnid) value('"+title+"',"+userid+","+time+",'"+description
+					+"','"+category+"'"+qnid+")");
+			insertQ.executeUpdate("insert into question (title, userid, timeint,"
+					+ "description, category, qnid) value('"+title+"',"+userid+","+time+",'"+description
+					+"','"+category+"',"+qnid+")");
+		}
+		
 		ResultSet qidrs=insertQ.executeQuery("select last_insert_id()");
 		qidrs.next();
 		long qid=qidrs.getLong(1);

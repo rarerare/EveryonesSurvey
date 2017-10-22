@@ -1,10 +1,10 @@
 window.onload=function(){
 	checkLogin();
-	var cate=document.getElementsByName("category");
+	/*var cate=document.getElementsByName("category");
 	for(var i=0;i<cate.length;i++){
 		cate[i].addEventListener("change",updateAnswerDetail);
 	}
-	document.getElementById("submitButt").addEventListener("click", function(){
+	$("#submitButt").addEventListener("click", function(){
 		
 		var categoryRs=document.getElementsByName("category");
 		var cateSelected=false;
@@ -15,14 +15,15 @@ window.onload=function(){
 		}
 		
 		
-			document.getElementById("qform").submit();
+		document.getElementById("qform").submit();
 		
 		
-	})
-}
-function updateAnswerDetail(qnum){
+	})*/
 	
-	var cateRadios=document.getElementsByName("category"+qnum);
+}
+function updateAnswerDetail(qNum){
+	
+	var cateRadios=document.getElementsByName("category"+qNum);
 	var category;
 	
 	for(var i=0;i<cateRadios.length;i++){
@@ -33,29 +34,24 @@ function updateAnswerDetail(qnum){
 		}
 	}
 	
-	var detail=document.getElementById("detail_answer"+qnum);
+	var detail=document.getElementById("detail_answer"+qNum);
 	
 	switch(category){
 	case "samc":
-		detail.innerHTML="<span id='choices"+qnum+"'><span>Choice1: " +
-				"<input type='text' name='choice1' required><br></span></span>" +
-				"<br><button id='addchoicebutt"+qnum+"' type='button'" 
-				+"onclick='addChoice("+qnum+")'>Add choice</button>";
-		
-		
-		addChoice.num=1;
-		
+		detail.innerHTML="<span id='options"+qNum+"'><span>Option1: " +
+				"<input type='text' name='q"+qNum+"option1' required><br></span></span>" +
+				"<br><button id='addOptionButt"+qNum+"' type='button'" 
+				+"onclick='addOption("+qNum+")'>Add option</button>";
+		$('#optNum'+qNum).val(1);
 		break;
 		
 	case "mamc":
 		
-		detail.innerHTML="<span id='choices"+qnum+"'><span>Choice1:" +
-				" <input type='text' name='choice1' required><br></span></span>" +
-				"<br><button id='addchoicebutt"+qnum+"' type='button'" +
-				" onclick='addChoice("+qnum+")'>Add choice</button>";
-        addChoice.num=1;
-        
-        
+		detail.innerHTML="<span id='options"+qNum+"'><span>Option1:" +
+				" <input type='text' name='q"+qNum+"option1' required><br></span></span>" +
+				"<br><button id='addOptionButt"+qNum+"' type='button'" +
+				" onclick='addOption("+qNum+")'>Add option</button>";
+		$('#optNum'+qNum).val(1);
         break;
         
 	case "fr":
@@ -65,15 +61,17 @@ function updateAnswerDetail(qnum){
 	}
 	
 }
-function addChoice(qnum){
+function addOption(qNum){
 	
-	addChoice.num++;
+	var optNum=$('#optNum'+qNum).val();
+	optNum++;
+	$('#optNum'+qNum).val(optNum);
 	
-	document.getElementById("opnum"+qnum).value=addChoice.num;
-	var newChoice=document.createElement("span");
-	newChoice.innerHTML="Choice"
-		+addChoice.num+": <input type='text' name='q"+qnum+"choice"+addChoice.num+"' required><br>";
-	document.getElementById("choices"+qnum).appendChild(newChoice);
+	
+	var newOption=document.createElement("span");
+	newOption.innerHTML="Option"
+		+optNum+": <input type='text' name='q"+qNum+"option"+optNum+"' required><br>";
+	document.getElementById("options"+qNum).appendChild(newOption);
 	
 	
 }
@@ -125,22 +123,22 @@ function setupUser(){
 }
 function updateQList(e){
 	
-	var qnum=parseInt($('#qnumInput').val());
-	qnum++;
-	$("#qListDiv").append("<hr><br><h3>Question "+qnum+"</h3><br><b>Title:</b><br> " 
-			+"<input type='hidden' name='opnum' id='opnum"+qnum+"'>"
-			+"<input type='text' name='title"+qnum+"' required><br><br>"
-			+"<b>Description:</b><br> <textarea name='description"+qnum+"' required></textarea><br><br>"
+	var qNum=parseInt($('#qNumInput').val());
+	qNum++;
+	$("#qListDiv").append("<hr><br><h3>Question "+qNum+"</h3><br><b>Title:</b><br> " 
+			+"<input type='hidden' name='optNum"+qNum+"' id='optNum"+qNum+"' value='0'>"
+			+"<input type='text' name='qTitle"+qNum+"' required><br><br>"
+			+"<b>Description:</b><br> <textarea name='qDescription"+qNum+"' required></textarea><br><br>"
 			+"<b>Category:</b> <br> Single-Answer Multiple choice" 
-			+"<input type='radio' name='category"+qnum+"' value='samc' " 
-			+"onchange='updateAnswerDetail("+qnum+")' required><br>"
+			+"<input type='radio' name='category"+qNum+"' value='samc' " 
+			+"onchange='updateAnswerDetail("+qNum+")' required><br>"
 			+"Multiple-Answer Multiple choice" 
-			+"<input type='radio' name='category"+qnum+"' value='mamc' "
-			+"onchange='updateAnswerDetail("+qnum+")' required><br>"
+			+"<input type='radio' name='category"+qNum+"' value='mamc' "
+			+"onchange='updateAnswerDetail("+qNum+")' required><br>"
 			+"Free Response:" 
-			+"<input type='radio' name='category"+qnum+"' value='fr'" 
-			+" onchange='updateAnswerDetail("+qnum+")' required><br>"
-			+"<div id='detail_answer"+qnum+"'></div><br><br>");
-	$('#qnumInput').val(qnum);
+			+"<input type='radio' name='category"+qNum+"' value='fr'" 
+			+" onchange='updateAnswerDetail("+qNum+")' required><br>"
+			+"<div id='detail_answer"+qNum+"'></div><br><br>");
+	$('#qNumInput').val(qNum);
 	
 }

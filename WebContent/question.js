@@ -38,19 +38,19 @@ function updateAnswerDetail(e){
 	var detail=document.getElementById("detail_answer");
 	switch(category){
 	case "samc":
-		detail.innerHTML="<span id='choices'><span>Option1: <input type='text' name='choice1' required><br></span></span>" +
-				"<br><button id='addchoicebutt'>Add option</button>";
+		detail.innerHTML="<span id='options'><span>Option1: <input type='text' name='option1' required><br></span></span>" +
+				"<br><button id='addOptionButt'>Add option</button>";
 		
-		document.getElementById("opnum").value=1;
+		document.getElementById("optNum").value=1;
 		addChoice.num=1;
-		document.getElementById("addchoicebutt").addEventListener("click", addChoice);
+		document.getElementById("addOptionButt").addEventListener("click", addChoice);
 		break;
 		
 	case "mamc":
-		detail.innerHTML="<span id='choices'><span>Option1: <input type='text' name='choice1' required><br></span></span>" +
-				"<br><button id='addchoicebutt'>Add option</button>";
+		detail.innerHTML="<span id='options'><span>Option1: <input type='text' name='option1' required><br></span></span>" +
+				"<br><button id='addOptionButt'>Add option</button>";
         addChoice.num=1;
-        document.getElementById("addchoicebutt").addEventListener("click", addChoice);
+        document.getElementById("addOptionButt").addEventListener("click", addChoice);
         break;
         
 	case "fr":
@@ -63,11 +63,11 @@ function updateAnswerDetail(e){
 function addChoice(e){
 	e.preventDefault();
 	addChoice.num++;
-	document.getElementById("opnum").value=addChoice.num;
+	document.getElementById("optNum").value=addChoice.num;
 	var newChoice=document.createElement("span");
 	newChoice.innerHTML="Option"
-		+addChoice.num+": <input type='text' name='choice"+addChoice.num+"' required><br>";
-	document.getElementById("choices").appendChild(newChoice);
+		+addChoice.num+": <input type='text' name='option"+addChoice.num+"' required><br>";
+	document.getElementById("options").appendChild(newChoice);
 	
 	
 }
