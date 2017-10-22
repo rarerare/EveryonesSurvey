@@ -114,7 +114,7 @@ public class RecordQuestion extends HttpServlet {
 		}
 		makeQuestion(title, description, category, time, userid,null, optNum, optTitles);
 	}
-	private synchronized void makeQnr(HttpServletRequest request, HttpServletResponse response) 
+	private void makeQnr(HttpServletRequest request, HttpServletResponse response) 
 			throws ClassNotFoundException, SQLException{
 		String title=request.getParameter("qnTitle");
 		int qNum=Integer.parseInt(request.getParameter("qNum"));
@@ -123,10 +123,15 @@ public class RecordQuestion extends HttpServlet {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
 		Statement createQN=conn.createStatement();
-		createQN.executeUpdate("insert into qNaire (title, qNum, userid) values('"+title+"',"+qNum+","+userid+")");
-		ResultSet qidrs=createQN.executeQuery("select last_insert_id()");
-		qidrs.next();
-		long qnid=qidrs.getLong(1);
+		ResultSet qnidRS; 
+		synchronized(this.getClass()){
+			createQN.executeUpdate("insert into qNaire (title, qNum, userid) values('"+title+"',"+qNum+","+userid+")");
+			qnidRS=createQN.executeQuery("select qnid from qNaire order by qnid desc limit 1");
+			
+		}
+		qnidRS.next();
+		long qnid=qnidRS.getLong(1);
+		
 		for(int i=1;i<=qNum;i++){
 			String qTitle=request.getParameter("qTitle"+i);
 			String qDescription=request.getParameter("qDescription"+i);
@@ -139,7 +144,7 @@ public class RecordQuestion extends HttpServlet {
 			makeQuestion(qTitle, qDescription, category, time, userid, qnid, optNum, optTitles);
 		}
 	}
-	private synchronized void makeQuestion(String title
+	private void makeQuestion(String title
 			, String description
 			, String category
 			, long time
@@ -151,22 +156,26 @@ public class RecordQuestion extends HttpServlet {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
 		Statement insertQ=conn.createStatement();
-		if(qnid==null){
-			insertQ.executeUpdate("insert into question (title, userid, timeint,"
-					+ "description, category) value('"+title+"',"+userid+","+time+",'"+description
-					+"','"+category+"')");
-		}else{
-			System.out.println("insert into question (title, userid, timeint,"
-					+ "description, category, qnid) value('"+title+"',"+userid+","+time+",'"+description
-					+"','"+category+"'"+qnid+")");
-			insertQ.executeUpdate("insert into question (title, userid, timeint,"
-					+ "description, category, qnid) value('"+title+"',"+userid+","+time+",'"+description
-					+"','"+category+"',"+qnid+")");
+		ResultSet qidRS;
+		synchronized(this.getClass()){
+			if(qnid==null){
+				insertQ.executeUpdate("insert into question (title, userid, timeint,"
+						+ "description, category) value('"+title+"',"+userid+","+time+",'"+description
+						+"','"+category+"')");
+			}else{
+				System.out.println("insert into question (title, userid, timeint,"
+						+ "description, category, qnid) value('"+title+"',"+userid+","+time+",'"+description
+						+"','"+category+"'"+qnid+")");
+				insertQ.executeUpdate("insert into question (title, userid, timeint,"
+						+ "description, category, qnid) value('"+title+"',"+userid+","+time+",'"+description
+						+"','"+category+"',"+qnid+")");
+			}
+			
+			qidRS=insertQ.executeQuery("select qid from question order by qid desc limit 1");
 		}
 		
-		ResultSet qidrs=insertQ.executeQuery("select last_insert_id()");
-		qidrs.next();
-		long qid=qidrs.getLong(1);
+		qidRS.next();
+		long qid=qidRS.getLong(1);
 		
 		
 		switch(category){
