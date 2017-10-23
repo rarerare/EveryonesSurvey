@@ -43,14 +43,12 @@ initDOM();
   </div>
 </nav>
 <div class="container">
-  
-  <ul class="nav nav-pills">
-    <li class="active"><a href="#">Top Surveys</a></li>
-    <li><a href="popq.jsp">Top questions</a></li>
-    
-    
-  </ul>
-  
+	<ul class="nav nav-pills">
+	  <li ><a href="main.jsp">Top Surveys</a></li>
+	  <li class="active"><a href="#">Top questions</a></li>
+	  
+	  
+	</ul> 
 </div>
 <div id="popqdiv"></div>
 </body>

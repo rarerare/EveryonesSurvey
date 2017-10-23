@@ -41,7 +41,7 @@ public class DisplayQuestion extends HttpServlet {
 	private void getSurveysPop(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ClassNotFoundException{
 		initQs();
 		PrintWriter pw=response.getWriter();
-		String responseStr="<h2 id=\"popqh2\">Top questions</h2>";
+		String responseStr="";
 		for(int i =0; i< POPQNUM&&popqs[i]!=null;i++){
 			responseStr=popqs[i].addQ(responseStr);
 					

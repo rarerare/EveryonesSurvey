@@ -53,6 +53,8 @@ public class Question {
 		}else if(getCategory()==QCategory.mamc){
 			optionTableName="machoices";
 			inputType="checkbox";
+		}else if(getCategory()==QCategory.fr){
+			inputType="text";
 		}
 		if(optionTableName!=null){
 			ResultSet rs= stmt.executeQuery("select num, description from "+optionTableName+" where qid="+qid  );
@@ -62,6 +64,8 @@ public class Question {
 				
 				responseStr+="<input type='"+inputType+"' name='"+inputname+"'>"+description+"<br>";
 			}
+		}else{
+			responseStr+="<input type='"+inputType+"' name='"+inputname+"'><br>";
 		}
 		
 		

@@ -1,21 +1,11 @@
-window.onload=function(){
-	loadData();
-	checkLogin();
+function initDOM(){
 	$('#searchForm').submit(searchQ);
 }
-function loadData(){
-	if(window.XMLHttpRequest){
-		var xhttpq=new XMLHttpRequest();
-	}else{
-		var xhttpq = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	
-	xhttpq.onreadystatechange=function(){
-		document.getElementById("popqdiv").innerHTML=this.responseText;
-	}
-	
-	xhttpq.open("POST", "displayquestion?mact=getsvypops",true);
-	xhttpq.send();	
+
+function loadPopQs(){
+	$.post("displayquestion?mact=getsvypops", function(data){
+		$('#popqdiv').html(data);
+	})
 }
 function searchQ(event){
 	
