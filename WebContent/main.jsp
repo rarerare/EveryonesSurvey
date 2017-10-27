@@ -1,3 +1,5 @@
+<%@page import="everyonesSurvey.Questionnaire"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html  >
@@ -11,16 +13,17 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>EveryoneQ</title>
 <script type="text/javascript">
-loadPopQs();
-checkLogin();
-initDOM();
+window.onload=function(){
+	checkLogin();
+	initDOM();
+}
 </script>
 </head>
 <body id="mainbody">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="main.jsp">EveryoneQ</a>
+      <a class="navbar-brand" href="displayquestion">EveryoneQ</a>
     </div>
     
     <form class="navbar-form navbar-left" id="searchForm">
@@ -52,6 +55,17 @@ initDOM();
   </ul>
   
 </div>
-<div id="popqdiv"></div>
+<div id="popqdiv">
+
+<%
+
+ArrayList<Questionnaire> popQns=(ArrayList<Questionnaire>)request.getAttribute("popQns");
+
+for(Questionnaire qn:popQns){
+	%> <%= qn.getTitle()%> <% 
+}
+
+%>
+</div>
 </body>
 </html>

@@ -144,6 +144,7 @@ public class MainServlet extends HttpServlet {
 		stmt.executeUpdate("insert into user(username, password, email, firstname, lastname) value('"
 		+username+"','"+password+"','"+email+"','"+firstname+"','"+lastname+"')");
 		response.sendRedirect("login.jsp");
+		conn.close();
 	}
 	
 	private void getFirstName(HttpServletRequest request, HttpServletResponse response) throws IOException{

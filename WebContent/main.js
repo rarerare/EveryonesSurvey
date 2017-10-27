@@ -3,12 +3,16 @@ function initDOM(){
 }
 
 function loadPopQs(){
-	$.post("displayquestion?mact=getsvypops", function(data){
+	$.post("displayquestion?mact=getpopqs", function(data){
 		$('#popqdiv').html(data);
 	})
 }
+function loadPopQns(){
+	$.post("displayquestion?mact=getpopqns", function(data){
+		$('#popqndiv').html(data);
+	})
+}
 function searchQ(event){
-	
 	if(window.XMLHttpRequest){
 		var xhttpq=new XMLHttpRequest();
 	}else{
@@ -103,7 +107,7 @@ function login(){
 			document.getElementById("usernamewrong").innerHTML=this.responseText;
 			document.getElementById("passwordwrong").innerHTML="";
 		}else if(responseText=="main"){
-			window.location="main.jsp";
+			window.location="displayquestion";
 		}
 		
 		

@@ -15,7 +15,7 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="main.jsp">EveryoneQ</a>
+      <a class="navbar-brand" href="displayquestion">EveryoneQ</a>
     </div>
     
     <form class="navbar-form navbar-left">

@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,34 +22,57 @@ import javax.servlet.http.HttpServletResponse;
 public class DisplayQuestion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final int POPQNUM=255;
-	private static Question[] popqs=new Question[POPQNUM] ;
-	private void initQs() throws SQLException, ClassNotFoundException{
+	private Question[] popQs=new Question[POPQNUM] ;
+	private ArrayList<Questionnaire> popQns;
+	
+	private void initPopQs() throws SQLException, ClassNotFoundException{
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
 		Statement stmt=conn.createStatement();
 		ResultSet rs= stmt.executeQuery("select user.username, question.title, question.description"
 		+",question.popularity,question.category, question.qid"
-				+ "  from question, user where question.userid=user.userid order by popularity" );
+				+ "  from question, user where question.userid=user.userid order by question.popularity" );
 		int i=0;
 		while(rs.next()&&i<POPQNUM){
-			popqs[i]=new Question(rs.getString(1), rs.getString(2), rs.getString(3)
+			popQs[i]=new Question(rs.getString(1), rs.getString(2), rs.getString(3)
 					, rs.getInt(4),QCategory.valueOf(rs.getString(5)), rs.getLong(6));
 			i++;
 		}
-		
+		conn.close();
+	}
+	private void initPopQns() throws SQLException, ClassNotFoundException{
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
+		Statement stmt=conn.createStatement();
+		ResultSet rs= stmt.executeQuery("select qNaire.qnid, qNaire.title, qNaire.userid"
+		+",qNaire.qNum"
+				+ "  from qNaire, user where qNaire.userid=user.userid order by qNaire.popularity" );
+		int i=0;
+		popQns=new ArrayList<Questionnaire>();
+		while(rs.next()&&i<POPQNUM){
+			popQns.add(new Questionnaire(rs.getLong(1), rs.getString(2), rs.getLong(3),rs.getInt(4)));
+			i++;
+		}
+		conn.close();
 	}
 	
-	private void getSurveysPop(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ClassNotFoundException{
-		initQs();
+	private void getPopQuestions(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ClassNotFoundException{
+		initPopQs();
 		PrintWriter pw=response.getWriter();
 		String responseStr="";
-		for(int i =0; i< POPQNUM&&popqs[i]!=null;i++){
-			responseStr=popqs[i].addQ(responseStr);
+		for(int i =0; i< POPQNUM&&popQs[i]!=null;i++){
+			responseStr=popQs[i].addQ(responseStr);
 					
 		}
 		pw.print(responseStr);
 		
-	}   
+	}
+	private void getPopQns(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException, IOException{
+		initPopQns();
+		request.setAttribute("popQns", popQns);
+		request.getRequestDispatcher("/main.jsp")
+		.forward(request, response);
+	}
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -74,15 +98,23 @@ public class DisplayQuestion extends HttpServlet {
 		
 		response.setCharacterEncoding("utf-8");
 		if(mAct==null){
-			response.sendRedirect("main.jsp");
+			try {
+				getPopQns(request, response);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	
 		}else{
 			
 			switch(mAct){
 			
-			case "getsvypops":
+			case "getpopqs":
 				try {
-					getSurveysPop(request,response);
+					getPopQuestions(request,response);
 				}catch(Exception e){
 					e.printStackTrace();
 				}
@@ -100,8 +132,18 @@ public class DisplayQuestion extends HttpServlet {
 					e.printStackTrace();
 				}
 				break;
+			
+				
 			default:
-				response.sendRedirect("main.jsp");
+				try {
+					getPopQns(request, response);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				;
 			}
 		}
@@ -127,6 +169,7 @@ public class DisplayQuestion extends HttpServlet {
 		}
 		PrintWriter pw=response.getWriter();
 		pw.print(responseStr);
+		conn.close();
 	}
 
 }

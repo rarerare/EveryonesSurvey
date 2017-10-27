@@ -11,16 +11,18 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>EveryoneQ</title>
 <script type="text/javascript">
-loadPopQs();
-checkLogin();
-initDOM();
+window.onload=function(){
+	loadPopQs();
+	checkLogin();
+	initDOM();
+}
 </script>
 </head>
 <body id="mainbody">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="main.jsp">EveryoneQ</a>
+      <a class="navbar-brand" href="displayquestion">EveryoneQ</a>
     </div>
     
     <form class="navbar-form navbar-left" id="searchForm">
@@ -44,7 +46,7 @@ initDOM();
 </nav>
 <div class="container">
 	<ul class="nav nav-pills">
-	  <li ><a href="main.jsp">Top Surveys</a></li>
+	  <li ><a href="displayquestion">Top Surveys</a></li>
 	  <li class="active"><a href="#">Top questions</a></li>
 	  
 	  

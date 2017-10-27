@@ -70,6 +70,7 @@ public class Question {
 		
 		
 		responseStr+="<button type='submit' id='loginsubmit'>submit</button><form></div>";
+		conn.close();
 		return responseStr;
 		
 	}
