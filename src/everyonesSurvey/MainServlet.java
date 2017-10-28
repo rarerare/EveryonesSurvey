@@ -98,7 +98,7 @@ public class MainServlet extends HttpServlet {
 		String userName=request.getParameter("username");
 		String password=request.getParameter("password");
 		
-		ResultSet rs=stmt.executeQuery("select password, firstname, lastname, userid from user WHERE username='"+userName+"'");
+		ResultSet rs=stmt.executeQuery("SELECT password, firstname, lastname, userid from user WHERE username='"+userName+"'");
 		if(rs.next()){
 			String realPass=rs.getString(1);
 			if(password.equals(realPass)){
@@ -135,13 +135,13 @@ public class MainServlet extends HttpServlet {
 		String lastname=request.getParameter("lastname");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
 		Statement lookup=conn.createStatement();
-		ResultSet rs= lookup.executeQuery("select * from user where username='"+username+"'");
+		ResultSet rs= lookup.executeQuery("SELECT * from user WHERE username='"+username+"'");
 		if(rs.next()){
 			response.getWriter().println("username already exists");
 			return;
 		}
 		Statement stmt=conn.createStatement();
-		stmt.executeUpdate("insert into user(username, password, email, firstname, lastname) value('"
+		stmt.executeUpdate("INSERT INTO user(username, password, email, firstname, lastname) VALUE('"
 		+username+"','"+password+"','"+email+"','"+firstname+"','"+lastname+"')");
 		response.sendRedirect("login.jsp");
 		conn.close();

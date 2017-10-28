@@ -1,6 +1,9 @@
 #mainbody{
 	 background-color:#dedede;
 }
+.mainbody{
+	background-color:#dedede !important;
+}
 .mainq{
 	background-color:#ffffff;
 	color:#000000;
@@ -23,4 +26,13 @@
 }
 .navbartext{
 	color:#ffffff;
+}
+h1{
+	text-align: center;
+}
+.betweenQsHr{
+	width:100% ;
+	
+	border-top: 1px solid;
+	color:black;
 }

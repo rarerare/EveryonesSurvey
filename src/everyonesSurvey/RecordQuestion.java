@@ -125,8 +125,8 @@ public class RecordQuestion extends HttpServlet {
 		Statement createQN=conn.createStatement();
 		ResultSet qnidRS; 
 		synchronized(this.getClass()){
-			createQN.executeUpdate("insert into qNaire (title, qNum, userid) values('"+title+"',"+qNum+","+userid+")");
-			qnidRS=createQN.executeQuery("select qnid from qNaire order by qnid desc limit 1");
+			createQN.executeUpdate("INSERT INTO qNaire (title, qNum, userid) VALUEs('"+title+"',"+qNum+","+userid+")");
+			qnidRS=createQN.executeQuery("SELECT qnid FROM qNaire ORDER BY qnid DESC LIMIT 1");
 			
 		}
 		qnidRS.next();
@@ -159,19 +159,19 @@ public class RecordQuestion extends HttpServlet {
 		ResultSet qidRS;
 		synchronized(this.getClass()){
 			if(qnid==null){
-				insertQ.executeUpdate("insert into question (title, userid, timeint,"
-						+ "description, category) value('"+title+"',"+userid+","+time+",'"+description
+				insertQ.executeUpdate("INSERT INTO question (title, userid, timeint,"
+						+ "description, category) VALUE('"+title+"',"+userid+","+time+",'"+description
 						+"','"+category+"')");
 			}else{
-				System.out.println("insert into question (title, userid, timeint,"
-						+ "description, category, qnid) value('"+title+"',"+userid+","+time+",'"+description
+				System.out.println("INSERT INTO question (title, userid, timeint,"
+						+ "description, category, qnid) VALUE('"+title+"',"+userid+","+time+",'"+description
 						+"','"+category+"'"+qnid+")");
-				insertQ.executeUpdate("insert into question (title, userid, timeint,"
-						+ "description, category, qnid) value('"+title+"',"+userid+","+time+",'"+description
+				insertQ.executeUpdate("INSERT INTO question (title, userid, timeint,"
+						+ "description, category, qnid) VALUE('"+title+"',"+userid+","+time+",'"+description
 						+"','"+category+"',"+qnid+")");
 			}
 			
-			qidRS=insertQ.executeQuery("select qid from question order by qid desc limit 1");
+			qidRS=insertQ.executeQuery("SELECT qid FROM question ORDER BY qid DESC LIMIT 1");
 		}
 		
 		qidRS.next();
@@ -183,7 +183,7 @@ public class RecordQuestion extends HttpServlet {
 			
 			Statement opss=conn.createStatement();
 			for(int i=0;i<optNum;i++){
-				opss.executeUpdate("insert into sachoices(description,qid, num) value('"
+				opss.executeUpdate("INSERT INTO sachoices(description,qid, num) VALUE('"
 						+optTitles.get(i)+"',"+qid+","+i+")");
 			}
 			
@@ -193,7 +193,7 @@ public class RecordQuestion extends HttpServlet {
 			Statement opsm=conn.createStatement();
 			for(int i=0;i<optNum;i++){
 				
-				opsm.executeUpdate("insert into machoices(description,qid, num) value('"
+				opsm.executeUpdate("INSERT INTO machoices(description,qid, num) VALUE('"
 						+optTitles.get(i)+"',"+qid+","+i+")");
 				
 			}

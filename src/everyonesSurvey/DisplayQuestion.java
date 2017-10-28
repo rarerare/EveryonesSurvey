@@ -22,20 +22,21 @@ import javax.servlet.http.HttpServletResponse;
 public class DisplayQuestion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final int POPQNUM=255;
-	private Question[] popQs=new Question[POPQNUM] ;
+	private ArrayList<Question> popQs=new ArrayList<Question>();
 	private ArrayList<Questionnaire> popQns;
 	
 	private void initPopQs() throws SQLException, ClassNotFoundException{
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
 		Statement stmt=conn.createStatement();
-		ResultSet rs= stmt.executeQuery("select user.username, question.title, question.description"
+		ResultSet rs= stmt.executeQuery("SELECT user.username, question.title, question.description"
 		+",question.popularity,question.category, question.qid"
-				+ "  from question, user where question.userid=user.userid order by question.popularity" );
+				+ "  FROM question, user WHERE question.userid=user.userid ORDER BY question.popularity" );
 		int i=0;
+		popQs=new ArrayList<Question>();
 		while(rs.next()&&i<POPQNUM){
-			popQs[i]=new Question(rs.getString(1), rs.getString(2), rs.getString(3)
-					, rs.getInt(4),QCategory.valueOf(rs.getString(5)), rs.getLong(6));
+			popQs.add(new Question(rs.getString(1), rs.getString(2), rs.getString(3)
+					, rs.getInt(4),QCategory.valueOf(rs.getString(5)), rs.getLong(6)));
 			i++;
 		}
 		conn.close();
@@ -44,9 +45,9 @@ public class DisplayQuestion extends HttpServlet {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
 		Statement stmt=conn.createStatement();
-		ResultSet rs= stmt.executeQuery("select qNaire.qnid, qNaire.title, qNaire.userid"
+		ResultSet rs= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
 		+",qNaire.qNum"
-				+ "  from qNaire, user where qNaire.userid=user.userid order by qNaire.popularity" );
+				+ "  FROM qNaire, user WHERE qNaire.userid=user.userid ORDER BY qNaire.popularity" );
 		int i=0;
 		popQns=new ArrayList<Questionnaire>();
 		while(rs.next()&&i<POPQNUM){
@@ -56,15 +57,12 @@ public class DisplayQuestion extends HttpServlet {
 		conn.close();
 	}
 	
-	private void getPopQuestions(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ClassNotFoundException{
+	private void getPopQuestions(HttpServletRequest request, HttpServletResponse response) 
+			throws SQLException, IOException, ClassNotFoundException, ServletException{
 		initPopQs();
-		PrintWriter pw=response.getWriter();
-		String responseStr="";
-		for(int i =0; i< POPQNUM&&popQs[i]!=null;i++){
-			responseStr=popQs[i].addQ(responseStr);
-					
-		}
-		pw.print(responseStr);
+		request.setAttribute("popQs", popQs);
+		request.getRequestDispatcher("/popq.jsp")
+		.forward(request, response);
 		
 	}
 	private void getPopQns(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException, IOException{
@@ -133,6 +131,17 @@ public class DisplayQuestion extends HttpServlet {
 				}
 				break;
 			
+			case "displayQn":
+				try {
+					displayQn(request,response);
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
 				
 			default:
 				try {
@@ -156,9 +165,9 @@ public class DisplayQuestion extends HttpServlet {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
 		Statement stmt=conn.createStatement();
-		ResultSet rs= stmt.executeQuery("select user.username, question.title, question.description"
+		ResultSet rs= stmt.executeQuery("SELECT user.username, question.title, question.description"
 		+",question.popularity,question.category, question.qid"
-				+ "  from question, user where (question.userid=user.userid) and (title like '%"
+				+ "  FROM question, user WHERE (question.userid=user.userid) AND (title like '%"
 		+searchKey+"%' or description like '%"+searchKey+"%')");
 		
 		String responseStr="<h2 id=\"popqh2\">Search Results</h2>";
@@ -169,6 +178,35 @@ public class DisplayQuestion extends HttpServlet {
 		}
 		PrintWriter pw=response.getWriter();
 		pw.print(responseStr);
+		conn.close();
+	}
+	private void displayQn(HttpServletRequest request, HttpServletResponse response) 
+			throws ClassNotFoundException, SQLException, ServletException, IOException{
+		
+		long qnId=Long.parseLong(request.getParameter("qnid"));
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
+		Statement stmt=conn.createStatement();
+		ResultSet rsQuestion= stmt.executeQuery("SELECT user.username, question.qid"
+				+ ", question.title, question.userid,question.description, question.category"
+				+ " FROM user, question, qNaire WHERE question.userid=user.userid "
+				+ "AND question.qnid=qNaire.qnid AND qNaire.qnid="+qnId);
+		ArrayList<Question> questions=new ArrayList<Question>();
+		while(rsQuestion.next()){
+			questions.add(new Question(rsQuestion.getString(1),rsQuestion.getString(3)
+					,rsQuestion.getString(5),0,QCategory.valueOf(rsQuestion.getString(6)),rsQuestion.getLong(2)));
+		}
+		ResultSet rsQn= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
+				+",qNaire.qNum"
+						+ "  FROM qNaire WHERE qNaire.qnid="+qnId );
+		rsQn.next();
+		Questionnaire qn= new Questionnaire(rsQn.getLong(1), rsQn.getString(2), rsQn.getLong(3),rsQn.getInt(4));
+		
+		
+		request.setAttribute("questions", questions);
+		request.setAttribute("questionnaire", qn);
+		request.getRequestDispatcher("/displayQn.jsp")
+		.forward(request, response);
 		conn.close();
 	}
 

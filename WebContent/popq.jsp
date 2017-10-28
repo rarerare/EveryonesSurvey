@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@page import="everyonesSurvey.Question"%>
+<%@page import="java.util.ArrayList" %>
 <!DOCTYPE html  >
 <html>
 <head>
@@ -12,7 +15,6 @@
 <title>EveryoneQ</title>
 <script type="text/javascript">
 window.onload=function(){
-	loadPopQs();
 	checkLogin();
 	initDOM();
 }
@@ -52,6 +54,13 @@ window.onload=function(){
 	  
 	</ul> 
 </div>
-<div id="popqdiv"></div>
+<% ArrayList<Question> popQs=(ArrayList<Question>)request.getAttribute("popQs"); %>
+<div id="popqdiv">
+<% for(Question q: popQs){
+	%><div class='mainq'><form action=""><%=q.addQ("") %><button type="submit">submit</button></form></div><%
+	
+}%>
+}
+</div>
 </body>
 </html>

@@ -49,7 +49,7 @@ window.onload=function(){
   
   <ul class="nav nav-pills">
     <li class="active"><a href="#">Top Surveys</a></li>
-    <li><a href="popq.jsp">Top questions</a></li>
+    <li><a href="displayquestion?mact=getpopqs">Top questions</a></li>
     
     
   </ul>
@@ -62,7 +62,7 @@ window.onload=function(){
 ArrayList<Questionnaire> popQns=(ArrayList<Questionnaire>)request.getAttribute("popQns");
 
 for(Questionnaire qn:popQns){
-	%> <%= qn.getTitle()%> <% 
+	%> <div class='mainq'><h2><a href='displayquestion?mact=displayQn&qnid=<%=qn.getId()%>'><%= qn.getTitle()%></a></h2></div> <% 
 }
 
 %>
