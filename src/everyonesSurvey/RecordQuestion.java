@@ -44,10 +44,10 @@ public class RecordQuestion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String mAct=request.getParameter("mact");
-		
+		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		if(mAct==null){
-			response.sendRedirect("main.jsp");
+			response.sendRedirect("displayquestion");
 	
 		}else{
 			
@@ -183,7 +183,7 @@ public class RecordQuestion extends HttpServlet {
 			
 			Statement opss=conn.createStatement();
 			for(int i=0;i<optNum;i++){
-				opss.executeUpdate("INSERT INTO sachoices(description,qid, num) VALUE('"
+				opss.executeUpdate("INSERT INTO sachoices(description,qid, position) VALUE('"
 						+optTitles.get(i)+"',"+qid+","+i+")");
 			}
 			
@@ -193,7 +193,7 @@ public class RecordQuestion extends HttpServlet {
 			Statement opsm=conn.createStatement();
 			for(int i=0;i<optNum;i++){
 				
-				opsm.executeUpdate("INSERT INTO machoices(description,qid, num) VALUE('"
+				opsm.executeUpdate("INSERT INTO machoices(description,qid, position) VALUE('"
 						+optTitles.get(i)+"',"+qid+","+i+")");
 				
 			}

@@ -1,5 +1,6 @@
 function initDOM(){
 	$('#searchForm').submit(searchQ);
+	$('.singleQForm').submit(submitSingleAns);
 }
 
 function loadPopQs(){
@@ -113,4 +114,10 @@ function login(){
 		
 	}
 	
+}
+function submitSingleAns(event){
+	
+	event.preventDefault();
+	
+	$.post("recordanswer",$(this).serialize());event.preventDefault();
 }

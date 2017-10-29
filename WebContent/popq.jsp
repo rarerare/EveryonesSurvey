@@ -57,7 +57,11 @@ window.onload=function(){
 <% ArrayList<Question> popQs=(ArrayList<Question>)request.getAttribute("popQs"); %>
 <div id="popqdiv">
 <% for(Question q: popQs){
-	%><div class='mainq'><form action=""><%=q.addQ("") %><button type="submit">submit</button></form></div><%
+	%><div class='mainq'><form class="singleQForm" id="formSingle_<%=q.getCategory()%>_<%=q.getId()%>">
+	<input type='hidden' value='recordSingleQAnswer' name='mact'>
+	<input type='hidden' value='<%=q.getId() %>' name='qId'>
+	<input type='hidden' value='<%=q.getCategory() %>' name='qCategory'>
+	<%=q.addQ("") %><button type="submit">submit</button></form></div><%
 	
 }%>
 }

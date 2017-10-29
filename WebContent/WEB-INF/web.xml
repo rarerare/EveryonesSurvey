@@ -12,11 +12,9 @@
   <servlet>
     <servlet-name>mainServlet</servlet-name>
     <servlet-class>everyonesSurvey.MainServlet</servlet-class>
-    
   </servlet>
   <servlet-mapping>
     <servlet-name>mainServlet</servlet-name>
-    
     <url-pattern>/mainservlet</url-pattern>
   </servlet-mapping>
   <servlet>
@@ -36,5 +34,15 @@
     <servlet-name>displayQuestion</servlet-name>
     <url-pattern></url-pattern>
     <url-pattern>/displayquestion</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>recordAnswer</servlet-name>
+    <servlet-class>everyonesSurvey.RecordAnswer</servlet-class>
+    
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>recordAnswer</servlet-name>
+    
+    <url-pattern>/recordanswer</url-pattern>
   </servlet-mapping>
 </web-app>

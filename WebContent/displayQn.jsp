@@ -43,11 +43,13 @@
 <% ArrayList<Question> questions=(ArrayList<Question>)request.getAttribute("questions");%>
 <h1><%=qn.getTitle() %></h1>
 <div class='mainq'>
-<form>
+<form action="recordanswer?mact=recordQnAnswer" method="post">
+<input type="hidden" name='qnId' value='<%=qn.getId()%>'>
+<input type="hidden" name='qNum' value='<%=qn.getQNum() %>'>
 <%for(Question q:questions){
 	%><%=q.addQ("") %><hr class='betweenQsHr'><br><% 
 }%>
-<button>Submit</button>
+<button type="submit">Submit</button>
 </form>
 </div>
 </body>

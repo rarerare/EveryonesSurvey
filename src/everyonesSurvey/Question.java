@@ -44,7 +44,7 @@ public class Question {
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
 		Statement stmt=conn.createStatement();
 		long qid=getId();
-		String inputname=getCategory()+"_"+qid;
+		String inputname=getCategory()+"__"+qid;
 		String optionTableName=null;
 		String inputType="";
 		if(getCategory()==QCategory.samc){
@@ -57,19 +57,19 @@ public class Question {
 			inputType="text";
 		}
 		if(optionTableName!=null){
-			ResultSet rs= stmt.executeQuery("SELECT num, description FROM "+optionTableName+" WHERE qid="+qid  );
+			ResultSet rs= stmt.executeQuery("SELECT position, description, cid FROM "+optionTableName+" WHERE qid="+qid  );
 			
 			while(rs.next()){
 				String description=rs.getString(2);
-				
-				responseStr+="<input type='"+inputType+"' name='"+inputname+"'>"+description+"<br>";
+				long cId=rs.getLong(3);
+				responseStr+="<input type='"+inputType+"' name='"+inputname+"' value='"+cId+"'>"+description+"<br>";
 			}
 		}else{
 			responseStr+="<input type='"+inputType+"' name='"+inputname+"'><br>";
 		}
 		
 		
-		//responseStr+="<button type='submit' id='loginsubmit'>submit</button><form></div>";
+		
 		conn.close();
 		return responseStr;
 		
