@@ -95,16 +95,16 @@ public class MainServlet extends HttpServlet {
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
 		Statement stmt=conn.createStatement();
 		
-		String userName=request.getParameter("username");
+		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		
-		ResultSet rs=stmt.executeQuery("SELECT password, firstname, lastname, userid from user WHERE username='"+userName+"'");
+		ResultSet rs=stmt.executeQuery("SELECT password, firstname, lastname, userid from user WHERE username='"+username+"'");
 		if(rs.next()){
 			String realPass=rs.getString(1);
 			if(password.equals(realPass)){
 				HttpSession session=request.getSession();
 				session.setAttribute("loggedin", true);
-				session.setAttribute("username", userName);
+				session.setAttribute("username", username);
 				String firstname=rs.getString(2);
 				System.out.println("firstname:"+firstname);
 				session.setAttribute("firstname", firstname);
@@ -113,9 +113,17 @@ public class MainServlet extends HttpServlet {
 				long userid=rs.getLong(4);
 				session.setAttribute("userid", userid);
 				
-				PrintWriter pw= response.getWriter();
 				
+				
+				ResultSet rsEMail=stmt.executeQuery("select email from user where userid="+userid );
+				rsEMail.next();
+				
+				String eMail=rsEMail.getString(1);
+				User user=new User(username, firstname, lastname, eMail, userid);
+				session.setAttribute("user", user);
+				PrintWriter pw= response.getWriter();
 				pw.write("main");
+				pw.close();
 			}else{
 				
 				PrintWriter pw= response.getWriter();
@@ -163,6 +171,14 @@ public class MainServlet extends HttpServlet {
 			return;
 		}
 		response.getWriter().print("yes");
+		
+	}
+	
+	
+	private void displayUserQList(HttpServletRequest request, HttpServletResponse response){
+		
+	}
+	private void displayUserQnList(HttpServletRequest request, HttpServletResponse response){
 		
 	}
 	

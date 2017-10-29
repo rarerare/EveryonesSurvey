@@ -36,6 +36,9 @@ h1{
 	border-top: 1px solid;
 	color:black;
 }
+.userProfileDropdown{
+	
+}
 .userProfileDropdown:hover .userProfileDropdownMenu{
 	display: block;
 

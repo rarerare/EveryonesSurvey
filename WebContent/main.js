@@ -41,6 +41,7 @@ function checkLogin(){
 	xhttpchecklogin.onreadystatechange=function(){
 		if(xhttpchecklogin.readyState==4){
 			if(this.responseText=="no"){
+				
 				document.getElementById("navRightUl").innerHTML=
 					"<form method='post'  id='loginform' class='navbar-form navbar-right'>"+
 "<input type='hidden' name='mact' value='login'> <span id='usernamewrong' class='wrong'></span>"+
@@ -56,6 +57,7 @@ function checkLogin(){
 					
 				}
 			}else{
+				
 				setupUser();
 			}
 		}
@@ -87,7 +89,7 @@ function setupUser(){
 				+"<span class='caret'></span></a>"
 				+"<ul class='dropdown-menu userProfileDropdownMenu'>"
 				+"<li><a href='#'>My Surveys</a></li>"
-				+"<li><a href='#'>My Profile</a></li>"
+				+"<li><a href='userProfile.jsp'>My Profile</a></li>"
 				+"</ul></li>";
 		}
 	}
