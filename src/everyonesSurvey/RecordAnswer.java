@@ -1,6 +1,7 @@
 package everyonesSurvey;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -81,7 +82,7 @@ public class RecordAnswer extends HttpServlet {
 	private void recordQnAnswer(HttpServletRequest request, HttpServletResponse response)
 			throws ClassNotFoundException, SQLException{
 		
-		System.out.println("recordQnAnswer");
+		
 		long qnId=Long.parseLong(request.getParameter("qnId"));
 		//long userId=Long.parseLong()
 		int qNum=Integer.parseInt(request.getParameter("qNum"));
@@ -95,12 +96,30 @@ public class RecordAnswer extends HttpServlet {
 				String[] parts=param.split("__");
 				QCategory category=QCategory.valueOf(parts[0]);
 				long qId=Long.parseLong(parts[1]);
-				long cId=Long.parseLong(request.getParameter("param"));
+				
+				
 				switch(category){
 				case mamc:
-				case samc:
-					//recordChoice(qId,cId, category);
+					System.out.println(param);
+					String[] cIdStrs=request.getParameterValues(param);
+					System.out.println(cIdStrs);
+					long[] cIds=new long[cIdStrs.length];
+					for(int i=0;i<cIds.length;i++){
+						cIds[i]=Long.parseLong(cIdStrs[i]);
+					}
+					recordMultipleChoice(qId, cIds);
 					break;
+					
+				case samc:
+					long cId=Long.parseLong(request.getParameter(param));
+					recordSingleChoice(qId,cId);
+					break;
+					
+				case fr:
+					String text=request.getParameter(param);
+					recordFreeResponse(qId,text);
+					break;
+					
 				default:
 					break;
 				}
@@ -108,7 +127,8 @@ public class RecordAnswer extends HttpServlet {
 		}
 		
 	}
-	private void recordSingleQAnswer(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException{
+	private void recordSingleQAnswer(HttpServletRequest request, HttpServletResponse response) 
+			throws ClassNotFoundException, SQLException, IOException{
 		long qId=Long.parseLong(request.getParameter("qId"));
 		QCategory category=QCategory.valueOf(request.getParameter("qCategory"));
 		if(category==QCategory.samc){
@@ -125,6 +145,8 @@ public class RecordAnswer extends HttpServlet {
 			String text=request.getParameter(category+"__"+qId);
 			recordFreeResponse(qId,text);
 		}
+		PrintWriter pw=response.getWriter();
+		pw.print("successfully submitted");
 		
 	}
 	private void recordSingleChoice(long qId, long cId) throws ClassNotFoundException, SQLException{
@@ -145,6 +167,7 @@ public class RecordAnswer extends HttpServlet {
 		
 		recordC.executeUpdate("insert into "+selectionTableName+"(cId) values("+cId+")");
 		conn.close();
+		
 		
 	}
 	private void recordMultipleChoice(long qId, long[] cIds) throws ClassNotFoundException, SQLException{

@@ -30,11 +30,11 @@
         </div>
       </div>
     </form>
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav" id="navRightUl">
       
       <li><a href="question.jsp">Ask a Question</a></li>
       <li><a href="questionaire.jsp">Make a Questionnaire</a></li>
-      <li id="me"></li>
+      
       
     </ul>
   </div>
@@ -43,11 +43,13 @@
 <% ArrayList<Question> questions=(ArrayList<Question>)request.getAttribute("questions");%>
 <h1><%=qn.getTitle() %></h1>
 <div class='mainq'>
-<form action="recordanswer?mact=recordQnAnswer" method="post">
+<form action="recordanswer" method="post">
+<input type="hidden" name="mact" value="recordQnAnswer">
 <input type="hidden" name='qnId' value='<%=qn.getId()%>'>
 <input type="hidden" name='qNum' value='<%=qn.getQNum() %>'>
 <%for(Question q:questions){
-	%><%=q.addQ("") %><hr class='betweenQsHr'><br><% 
+	%><h4><%=q.getTitle() %></h4><hr><%q.getDescription(); %><br>
+	<%=q.addQ("") %><hr class='betweenQsHr'><br><% 
 }%>
 <button type="submit">Submit</button>
 </form>

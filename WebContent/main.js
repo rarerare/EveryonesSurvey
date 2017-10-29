@@ -41,7 +41,7 @@ function checkLogin(){
 	xhttpchecklogin.onreadystatechange=function(){
 		if(xhttpchecklogin.readyState==4){
 			if(this.responseText=="no"){
-				document.getElementById("me").innerHTML=
+				document.getElementById("navRightUl").innerHTML=
 					"<form method='post'  id='loginform' class='navbar-form navbar-right'>"+
 "<input type='hidden' name='mact' value='login'> <span id='usernamewrong' class='wrong'></span>"+
 "</span> <input type='text' class='form-control' placeholder='username' name='username' id='username'>"+
@@ -80,9 +80,15 @@ function setupUser(){
 	xhttpname.onreadystatechange=function(){
 		if(xhttpname.readyState==4){
 			var firstname=this.responseText;
-			
-			document.getElementById("me").innerHTML="<a href=''>"+this.responseText
-			+"<i class='glyphicon glyphicon-user'></i></a>";
+			document.getElementById("navRightUl").innerHTML+="<li class='dropdown userProfileDropdown'>"
+				
+				+"<a class='btn dropdown-toggle' role='button' data-toggle='dropdown' href='#'>"+this.responseText
+				+"<i class='glyphicon glyphicon-user'></i>"
+				+"<span class='caret'></span></a>"
+				+"<ul class='dropdown-menu userProfileDropdownMenu'>"
+				+"<li><a href='#'>My Surveys</a></li>"
+				+"<li><a href='#'>My Profile</a></li>"
+				+"</ul></li>";
 		}
 	}
 	xhttpname.open("POST", "mainservlet?mact=getfirstname", true);
@@ -118,6 +124,9 @@ function login(){
 function submitSingleAns(event){
 	
 	event.preventDefault();
+	var thisForm=$(this);
 	
-	$.post("recordanswer",$(this).serialize());event.preventDefault();
+	$.post("recordanswer",$(this).serialize(),function(data){
+		thisForm.html(data);
+	});
 }

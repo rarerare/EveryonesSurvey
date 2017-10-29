@@ -37,11 +37,11 @@ window.onload=function(){
         </div>
       </div>
     </form>
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav" id="navRightUl">
       
       <li><a href="question.jsp">Ask a Question</a></li>
       <li><a href="questionaire.jsp">Make a Questionnaire</a></li>
-      <li id="me"></li>
+      
       
     </ul>
   </div>
@@ -57,14 +57,17 @@ window.onload=function(){
 <% ArrayList<Question> popQs=(ArrayList<Question>)request.getAttribute("popQs"); %>
 <div id="popqdiv">
 <% for(Question q: popQs){
-	%><div class='mainq'><form class="singleQForm" id="formSingle_<%=q.getCategory()%>_<%=q.getId()%>">
+	%><div class='mainq'>
+	<h4><%=q.getTitle() %></h4><hr><%q.getDescription(); %><br>
+	<form class="singleQForm" id="formSingle_<%=q.getCategory()%>_<%=q.getId()%>">
 	<input type='hidden' value='recordSingleQAnswer' name='mact'>
 	<input type='hidden' value='<%=q.getId() %>' name='qId'>
 	<input type='hidden' value='<%=q.getCategory() %>' name='qCategory'>
+	
 	<%=q.addQ("") %><button type="submit">submit</button></form></div><%
 	
 }%>
-}
+
 </div>
 </body>
 </html>

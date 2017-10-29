@@ -37,9 +37,6 @@ public class Question {
 		return qid;
 	}
 	public String addQ(String responseStr) throws SQLException{
-		System.out.println("entered addQ");
-		responseStr+="<h4>"+getTitle()+"</h4><hr>"
-				+getDescription()+"<br>";
 		
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
 		Statement stmt=conn.createStatement();

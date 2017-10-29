@@ -36,11 +36,11 @@ window.onload=function(){
         </div>
       </div>
     </form>
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav" id="navRightUl">
       
       <li><a href="question.jsp">Ask a Question</a></li>
       <li><a href="questionaire.jsp">Make a Questionnaire</a></li>
-      <li id="me"></li>
+      
       
     </ul>
   </div>
