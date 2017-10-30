@@ -52,6 +52,8 @@ public class Question {
 			inputType="checkbox";
 		}else if(getCategory()==QCategory.fr){
 			inputType="text";
+		}else if(getCategory()==QCategory.number){
+			inputType="number";
 		}
 		if(optionTableName!=null){
 			ResultSet rs= stmt.executeQuery("SELECT position, description, cid FROM "+optionTableName+" WHERE qid="+qid  );
@@ -62,7 +64,12 @@ public class Question {
 				responseStr+="<input type='"+inputType+"' name='"+inputname+"' value='"+cId+"'>"+description+"<br>";
 			}
 		}else{
-			responseStr+="<input type='"+inputType+"' name='"+inputname+"'><br>";
+			if(getCategory()==QCategory.number){
+				responseStr+="<input type='"+inputType+"' name='"+inputname+"' step='any'><br>";
+			}else{
+				responseStr+="<input type='"+inputType+"' name='"+inputname+"'><br>";
+			}
+			
 		}
 		
 		

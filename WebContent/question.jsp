@@ -37,6 +37,7 @@ Description:<textarea name="description" required></textarea><br>
 Category: <br> Single-Answer Multiple choice<input type="radio" name="category" value="samc" required><br>
 Multiple-Answer Multiple choice<input type="radio" name="category" value="mamc" required><br>
 Free Response:<input type="radio" name="category" value="fr" required><br>
+Number:<input type="radio" name="category" value="number" required><br>
 <br>
 <br>
 <div id="detail_answer">

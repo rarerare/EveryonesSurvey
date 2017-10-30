@@ -42,7 +42,7 @@ function checkLogin(){
 		if(xhttpchecklogin.readyState==4){
 			if(this.responseText=="no"){
 				
-				document.getElementById("navRightUl").innerHTML=
+				document.getElementById("navRightUl").innerHTML+=
 					"<form method='post'  id='loginform' class='navbar-form navbar-right'>"+
 "<input type='hidden' name='mact' value='login'> <span id='usernamewrong' class='wrong'></span>"+
 "</span> <input type='text' class='form-control' placeholder='username' name='username' id='username'>"+

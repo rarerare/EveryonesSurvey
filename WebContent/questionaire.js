@@ -138,6 +138,9 @@ function updateQList(e){
 			+"Free Response:" 
 			+"<input type='radio' name='category"+qNum+"' value='fr'" 
 			+" onchange='updateAnswerDetail("+qNum+")' required><br>"
+			+"Number:"
+			+"<input type='radio' name='category"+qNum+"' value='number'" 
+			+" onchange='updateAnswerDetail("+qNum+")' required><br>"
 			+"<div id='detail_answer"+qNum+"'></div><br><br>");
 	$('#qNumInput').val(qNum);
 	

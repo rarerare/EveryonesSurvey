@@ -111,6 +111,8 @@ public class RecordQuestion extends HttpServlet {
 			break;
 		case "fr":
 			break;
+		case "number":
+			break;
 		}
 		makeQuestion(title, description, category, time, userid,null, optNum, optTitles);
 	}
@@ -199,6 +201,8 @@ public class RecordQuestion extends HttpServlet {
 			}
 			break;
 		case "fr":
+			break;
+		case "number":
 			break;
 		}
 	}

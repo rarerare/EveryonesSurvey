@@ -119,7 +119,10 @@ public class RecordAnswer extends HttpServlet {
 					String text=request.getParameter(param);
 					recordFreeResponse(qId,text);
 					break;
-					
+				case number:
+					double answer=Double.parseDouble(request.getParameter(param));
+					recordNumAnswer(qId, answer);
+					break;
 				default:
 					break;
 				}
@@ -144,6 +147,9 @@ public class RecordAnswer extends HttpServlet {
 		}else if(category==QCategory.fr){
 			String text=request.getParameter(category+"__"+qId);
 			recordFreeResponse(qId,text);
+		}else if(category==QCategory.number){
+			double answer=Double.parseDouble(request.getParameter(category+"__"+qId));
+			recordNumAnswer(qId, answer);
 		}
 		PrintWriter pw=response.getWriter();
 		pw.print("successfully submitted");
@@ -185,6 +191,13 @@ public class RecordAnswer extends HttpServlet {
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
 		Statement recordA=conn.createStatement();
 		recordA.executeUpdate("insert into frAnswers (qid,answer) values("+qId+",'"+text+"')");
+		conn.close();
+	}
+	private void recordNumAnswer(long qId, double answer) throws ClassNotFoundException, SQLException{
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
+		Statement recordA=conn.createStatement();
+		recordA.executeUpdate("insert into numAnswer (qid, answer) values("+qId+","+answer+")");
 		conn.close();
 	}
 

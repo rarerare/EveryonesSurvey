@@ -1,5 +1,5 @@
 package everyonesSurvey;
 
 public enum QCategory {
-	samc, mamc, fr
+	samc, mamc, fr, number
 }
