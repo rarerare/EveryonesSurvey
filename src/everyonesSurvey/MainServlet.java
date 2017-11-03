@@ -51,7 +51,7 @@ public class MainServlet extends HttpServlet {
 		
 		response.setCharacterEncoding("utf-8");
 		if(mAct==null){
-			response.sendRedirect("main.jsp");
+			response.sendRedirect("displayquestion");
 	
 		}else{
 			
@@ -83,7 +83,7 @@ public class MainServlet extends HttpServlet {
 				break;
 			
 			default:
-				response.sendRedirect("main.jsp");
+				response.sendRedirect("displayquestion");
 				;
 			}
 		}

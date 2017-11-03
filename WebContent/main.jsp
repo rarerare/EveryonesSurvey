@@ -38,8 +38,8 @@ window.onload=function(){
     </form>
     <ul class="nav navbar-nav" id="navRightUl">
       
-      <li><a href="question.jsp">Ask a Question</a></li>
-      <li><a href="questionaire.jsp">Make a Questionnaire</a></li>
+      
+      <li><a href="questionaire.jsp">Create a Survey</a></li>
       
       
     </ul>
@@ -49,7 +49,7 @@ window.onload=function(){
   
   <ul class="nav nav-pills">
     <li class="active"><a href="#">Top Surveys</a></li>
-    <li><a href="displayquestion?mact=getpopqs">Top questions</a></li>
+    
     
     
   </ul>

@@ -7,14 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Question {
-	private String user;
+	private String userName;
 	private String title;
 	private String description;
 	private int popularity;
 	private QCategory category;
 	private long qid;
-	public Question(String user, String title, String description, int popularity, QCategory category, long qid){
-		this.user=user;
+	public Question(String userName, String title, String description, int popularity, QCategory category, long qid){
+		this.userName=userName;
 		this.title=title;
 		this.description=description;
 		this.popularity=popularity;
@@ -27,8 +27,8 @@ public class Question {
 	public String getDescription(){
 		return description;
 	}
-	public String getUser(){
-		return user;
+	public String getUserName(){
+		return userName;
 	}
 	public QCategory getCategory(){
 		return this.category;
@@ -36,7 +36,7 @@ public class Question {
 	public long getId(){
 		return qid;
 	}
-	public String addQ(String responseStr) throws SQLException{
+	/*public String addQ(String responseStr) throws SQLException{
 		
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
 		Statement stmt=conn.createStatement();
@@ -77,5 +77,5 @@ public class Question {
 		conn.close();
 		return responseStr;
 		
-	}
+	}*/
 }

@@ -20,8 +20,8 @@
     
     <ul class="nav navbar-nav" id="navRightUl">
       
-      <li><a href="question.jsp">Ask a Question</a></li>
-      <li><a href="#">Make a Questionnaire</a></li>
+      
+      <li class="active"><a href="#">Create a Survey</a></li>
       
       
     </ul>
@@ -31,7 +31,7 @@
 <form action="recordquestion" method="post" id="qform">
 <input type="hidden" name="mact" value="sbmtQnr">
 <input name="qNum" id="qNumInput" type="hidden" value="0"/>
-Title of questionnaire:<input type="text" name="qnTitle" required><br>
+Title of Survey:<input type="text" name="qnTitle" required><br>
 <div id="qListDiv">
 </div>
 <button type="button" onclick="updateQList()">Add question</button>

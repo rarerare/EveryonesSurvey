@@ -35,14 +35,18 @@ window.onload=function(){
       </div>
     </form>
     <ul class="nav navbar-nav" id="navRightUl">
-      
-      <li><a href="question.jsp">Ask a Question</a></li>
       <li><a href="questionaire.jsp">Make a Questionnaire</a></li>
       
       
     </ul>
   </div>
 </nav>
+<ul class="nav nav-pills">
+    <li class="active"><a href="#">My profile</a></li>
+    
+    <li><a href="displaysurveyresult?mact=getQnList">My surveys</a>
+    
+  </ul>
 <% User user=(User)request.getSession().getAttribute("user"); %>
 
 <h2><%=user.getFirstName()%> <%=user.getLastName() %></h2>

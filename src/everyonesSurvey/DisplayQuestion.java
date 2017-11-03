@@ -159,7 +159,7 @@ public class DisplayQuestion extends HttpServlet {
 	}
 	
 	private void searchQ(HttpServletRequest request, HttpServletResponse response)
-			throws ClassNotFoundException, SQLException, IOException{
+			throws ClassNotFoundException, SQLException, IOException, ServletException{
 		String searchKey=request.getParameter("searchkey");
 		System.out.println(searchKey);
 		Class.forName("com.mysql.jdbc.Driver");
@@ -171,43 +171,38 @@ public class DisplayQuestion extends HttpServlet {
 		+searchKey+"%' or description like '%"+searchKey+"%')");
 		
 		String responseStr="<h2 id=\"popqh2\">Search Results</h2>";
+		ArrayList<Question> questions=new ArrayList<Question>();
 		while(rs.next()){
-			responseStr=(new Question(rs.getString(1), rs.getString(2), rs.getString(3)
-					, rs.getInt(4),QCategory.valueOf(rs.getString(5)), rs.getLong(6))).addQ(responseStr);
-			System.out.println("responseStr"+responseStr);
+			questions.add(new Question(rs.getString(1), rs.getString(2), rs.getString(3)
+					, rs.getInt(4),QCategory.valueOf(rs.getString(5)), rs.getLong(6)));
+			
 		}
-		PrintWriter pw=response.getWriter();
-		pw.print(responseStr);
+		
 		conn.close();
+		request.setAttribute("questions", questions);
+		request.getRequestDispatcher("/searchResults.jsp")
+		.forward(request, response);
 	}
 	private void displayQn(HttpServletRequest request, HttpServletResponse response) 
 			throws ClassNotFoundException, SQLException, ServletException, IOException{
 		
 		long qnId=Long.parseLong(request.getParameter("qnid"));
-		Class.forName("com.mysql.jdbc.Driver");
+		
+		/*Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
 		Statement stmt=conn.createStatement();
-		ResultSet rsQuestion= stmt.executeQuery("SELECT user.username, question.qid"
-				+ ", question.title, question.userid,question.description, question.category"
-				+ " FROM user, question, qNaire WHERE question.userid=user.userid "
-				+ "AND question.qnid=qNaire.qnid AND qNaire.qnid="+qnId);
-		ArrayList<Question> questions=new ArrayList<Question>();
-		while(rsQuestion.next()){
-			questions.add(new Question(rsQuestion.getString(1),rsQuestion.getString(3)
-					,rsQuestion.getString(5),0,QCategory.valueOf(rsQuestion.getString(6)),rsQuestion.getLong(2)));
-		}
 		ResultSet rsQn= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
 				+",qNaire.qNum"
 						+ "  FROM qNaire WHERE qNaire.qnid="+qnId );
-		rsQn.next();
-		Questionnaire qn= new Questionnaire(rsQn.getLong(1), rsQn.getString(2), rsQn.getLong(3),rsQn.getInt(4));
-		
+		rsQn.next();*/
+		Questionnaire qn= Questionnaire.getQnById(qnId);
+		ArrayList<Question> questions=qn.getQList();
 		
 		request.setAttribute("questions", questions);
 		request.setAttribute("questionnaire", qn);
 		request.getRequestDispatcher("/displayQn.jsp")
 		.forward(request, response);
-		conn.close();
+		
 	}
 
 }

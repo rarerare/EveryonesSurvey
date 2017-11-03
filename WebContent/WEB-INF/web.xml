@@ -21,6 +21,7 @@
     <servlet-name>recordQuestion</servlet-name>
     <servlet-class>everyonesSurvey.RecordQuestion</servlet-class>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>recordQuestion</servlet-name>
     <url-pattern>/recordquestion</url-pattern>
@@ -38,11 +39,17 @@
   <servlet>
     <servlet-name>recordAnswer</servlet-name>
     <servlet-class>everyonesSurvey.RecordAnswer</servlet-class>
-    
   </servlet>
   <servlet-mapping>
     <servlet-name>recordAnswer</servlet-name>
-    
     <url-pattern>/recordanswer</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>displaySurveyResult</servlet-name>
+    <servlet-class>everyonesSurvey.DisplaySurveyResult</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>displaySurveyResult</servlet-name>
+    <url-pattern>/displaysurveyresult</url-pattern>
   </servlet-mapping>
 </web-app>

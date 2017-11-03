@@ -88,7 +88,7 @@ function setupUser(){
 				+"<i class='glyphicon glyphicon-user'></i>"
 				+"<span class='caret'></span></a>"
 				+"<ul class='dropdown-menu userProfileDropdownMenu'>"
-				+"<li><a href='#'>My Surveys</a></li>"
+				+"<li><a href='displaysurveyresult?mact=getQnList'>My Surveys</a></li>"
 				+"<li><a href='userProfile.jsp'>My Profile</a></li>"
 				+"</ul></li>";
 		}

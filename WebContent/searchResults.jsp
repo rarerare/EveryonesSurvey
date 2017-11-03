@@ -42,41 +42,12 @@
     </ul>
   </div>
 </nav>
-<% Questionnaire qn=(Questionnaire)request.getAttribute("questionnaire");%>
+
 <% ArrayList<Question> questions=(ArrayList<Question>)request.getAttribute("questions");%>
-<h1><%=qn.getTitle() %></h1>
+<h1>Search Results</h1>
 <div class='mainq'>
-<form action="recordanswer" method="post">
-<input type="hidden" name="mact" value="recordQnAnswer">
-<input type="hidden" name='qnId' value='<%=qn.getId()%>'>
-<input type="hidden" name='qNum' value='<%=qn.getQNum() %>'>
-<%for(Question q:questions){
-	
-	%><h4><%=q.getTitle() %></h4><hr><%q.getDescription(); %><br>
-	<% QCategory category=q.getCategory();
-	
-	if(category.isFinAns()){
-		ArrayList<FinOption> options=((FinAnsQuestion)q).getOptions();
-		
-		
-		String inputName=category+"__"+q.getId();
-		for(FinOption op:options){
-			%><input type='<%=q.getCategory().getInputType()%>' name='<%=inputName%>' value='<%=op.getId()%>' ><%=op.getDescription() %><br> <% 
-		}
-	}else {
-		String inputName=category+"__"+q.getId();
-		if(category==QCategory.fr){
-			%><input type='<%=q.getCategory().getInputType()%>' name='<%=inputName%>' step='any' required><%
-		}else if(category==QCategory.number){
-			%><input type='<%=q.getCategory().getInputType()%>' name='<%=inputName%>' step='any' required><%
-		}
-		
-		 
-	} %>
-	<hr class='betweenQsHr'><br><% 
-}%>
-<button type="submit">Submit</button>
-</form>
+
+
 </div>
 </body>
 </html>

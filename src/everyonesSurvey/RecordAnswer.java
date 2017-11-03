@@ -64,7 +64,7 @@ public class RecordAnswer extends HttpServlet {
 					e.printStackTrace();
 				}
 				break;
-			case "recordSingleQAnswer":
+			/*case "recordSingleQAnswer":
 				try {
 					recordSingleQAnswer(request, response);
 				} catch (ClassNotFoundException e) {
@@ -74,7 +74,7 @@ public class RecordAnswer extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				break;
+				break;*/
 				
 			}
 		}
@@ -130,7 +130,7 @@ public class RecordAnswer extends HttpServlet {
 		}
 		
 	}
-	private void recordSingleQAnswer(HttpServletRequest request, HttpServletResponse response) 
+	/*private void recordSingleQAnswer(HttpServletRequest request, HttpServletResponse response) 
 			throws ClassNotFoundException, SQLException, IOException{
 		long qId=Long.parseLong(request.getParameter("qId"));
 		QCategory category=QCategory.valueOf(request.getParameter("qCategory"));
@@ -154,7 +154,7 @@ public class RecordAnswer extends HttpServlet {
 		PrintWriter pw=response.getWriter();
 		pw.print("successfully submitted");
 		
-	}
+	}*/
 	private void recordSingleChoice(long qId, long cId) throws ClassNotFoundException, SQLException{
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");

@@ -25,7 +25,7 @@ function login(){
 			document.getElementById("usernamewrong").innerHTML=this.responseText;
 			document.getElementById("passwordwrong").innerHTML="";
 		}else if(responseText=="main"){
-			window.location="main.jsp";
+			window.location="displayquestion";
 		}
 		
 		

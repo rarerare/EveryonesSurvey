@@ -52,7 +52,7 @@ public class RecordQuestion extends HttpServlet {
 		}else{
 			
 			switch(mAct){
-			case "sbmtSnglQstn":
+			/*case "sbmtSnglQstn":
 				try {
 					makeSingleQuestion(request, response);
 				} catch (SQLException e) {
@@ -63,7 +63,7 @@ public class RecordQuestion extends HttpServlet {
 					e.printStackTrace();
 				}
 				break;
-			
+			*/
 			case "sbmtQnr":
 				try {
 					makeQnr(request,response);
