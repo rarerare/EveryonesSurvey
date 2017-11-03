@@ -7,5 +7,6 @@ public class InfiAnsQuestion extends Question{
 		super(userName, title, description, popularity, category, qid);
 		// TODO Auto-generated constructor stub
 	}
+	
 
 }

@@ -32,7 +32,7 @@ public class FinOption {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
 		Statement stmt=conn.createStatement();
-		ResultSet rs=stmt.executeQuery("select count(*) from "+category.getAnsTable());
+		ResultSet rs=stmt.executeQuery("select count(*) from "+category.getAnsTable()+" where cId= "+id );
 		rs.next();
 		long selectCount=rs.getLong(1);
 		conn.close();

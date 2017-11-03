@@ -52,7 +52,7 @@ window.onload=function(){
 </ul>
 <% ArrayList<Questionnaire> qns=(ArrayList<Questionnaire>)request.getAttribute("qns"); %>
 <%for(Questionnaire qn:qns){%>
- <a href='displaysurveyresult?mact=getQnResult'><%=qn.getTitle() %></a><br>
+ <a href='displaysurveyresult?mact=getQnResult&qnId=<%=qn.getId()%>'><%=qn.getTitle() %></a><br>
 <% }%>
 
 

@@ -74,6 +74,15 @@ public class DisplaySurveyResult extends HttpServlet {
 				}
 				break;
 			case "getQnResult":
+				try {
+					displayQnResult(request, response);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			
 			}
@@ -126,7 +135,7 @@ public class DisplaySurveyResult extends HttpServlet {
 		Questionnaire qn= Questionnaire.getQnById(qnId);
 		request.setAttribute("qn", qn);
 		
-		request.getRequestDispatcher("/displayQn.jsp")
+		request.getRequestDispatcher("/displayResult.jsp")
 		.forward(request, response);
 	}
 }

@@ -52,9 +52,7 @@ public class Questionnaire {
 				+ "AND question.qnid=qNaire.qnid AND qNaire.qnid="+getId());
 		ArrayList<Question> questions=new ArrayList<Question>();
 		while(rsQuestion.next()){
-			if(QCategory.valueOf(rsQuestion.getString(6))==QCategory.mamc
-					||QCategory.valueOf(rsQuestion.getString(6))==QCategory.samc){
-				
+			if(QCategory.valueOf(rsQuestion.getString(6)).isFinAns()){
 				questions.add(new FinAnsQuestion(rsQuestion.getString(1),rsQuestion.getString(3)
 						,rsQuestion.getString(5),0,QCategory.valueOf(rsQuestion.getString(6)),rsQuestion.getLong(2)));
 			}else{

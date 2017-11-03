@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="everyonesSurvey.Questionnaire"%>
+<%@page import="everyonesSurvey.Question"%>
+<%@page import="java.util.ArrayList" %>
+<%@page import="everyonesSurvey.QCategory"%>
+<%@page import="everyonesSurvey.FinAnsQuestion"%>
+<%@page import="everyonesSurvey.FinOption"%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -46,6 +52,17 @@ window.onload=function(){
     <li><a href="displaysurveyresult?mact=getQnList">My surveys</a>
     
   </ul>
-<% %>
+<% Questionnaire qn=(Questionnaire)request.getAttribute("qn");%>
+<% ArrayList<Question> questions=qn.getQList();%>
+
+<% for(Question q:questions){%><h3><%=q.getTitle() %></h3><%
+if(q.getCategory().isFinAns()){
+	ArrayList<FinOption> opts=((FinAnsQuestion)q).getOptions();
+	for(FinOption opt:opts){
+		%> <%=opt.getDescription()%> :<%=opt.selectCount()%><br> <%
+	}
+}} 
+%>
+
 </body>
 </html>
