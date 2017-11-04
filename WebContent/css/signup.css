@@ -1,0 +1,57 @@
+
+h1{
+	text-align: center;
+	font-family: Sans-serif;
+}
+h2{
+	text-align: center;
+	font-family: Sans-serif;
+}
+h3{
+	text-align: center;
+}
+.loginformdiv{
+	background-color:#000033;
+	color:#ffffff;
+	margin-left:10%;
+	margin-right:10%;
+	padding-left:10%;
+	padding-right:10%;
+	margin-top:10%;
+	padding-top:50px;
+	padding-bottom:50px;
+	font-size:2em;
+	border-radius:15px;
+	box-shadow: 5px 5px 5px grey;
+	
+}
+.logininput{
+	color: #000000;
+	font-size:1em;
+	background-color:#ffffdd;
+	width:100%;
+	margin-bottom:20px;
+}
+.loginsubmit{
+	width:100%;
+	border-radius:20px;
+	font-size:1em;
+	border: none;
+	box-shadow: 1px 1px 1px white;
+	
+}
+.signupbutt{
+	border-radius:20px;
+	font-size:1em;
+	color: #99bbff;
+	
+	
+}
+.signupformdiv{
+	margin-top:20px;
+	margin-left:20px;
+	margin-right:20px;
+	padding:20px;
+	border:solid;
+	border-width:1px;
+}
