@@ -6,6 +6,7 @@
 <%@page import="everyonesSurvey.QCategory"%>
 <%@page import="everyonesSurvey.FinAnsQuestion"%>
 <%@page import="everyonesSurvey.FinOption"%>
+<%@page import="everyonesSurvey.InfiAnsQuestion"%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -55,13 +56,20 @@ window.onload=function(){
 <% Questionnaire qn=(Questionnaire)request.getAttribute("qn");%>
 <% ArrayList<Question> questions=qn.getQList();%>
 
-<% for(Question q:questions){%><h3><%=q.getTitle() %></h3><%
-if(q.getCategory().isFinAns()){
-	ArrayList<FinOption> opts=((FinAnsQuestion)q).getOptions();
-	for(FinOption opt:opts){
-		%> <%=opt.getDescription()%> :<%=opt.selectCount()%><br> <%
+<% 
+for(Question q:questions){%><h3><%=q.getTitle() %></h3><%
+	if(q.getCategory().isFinAns()){
+		ArrayList<FinOption> opts=((FinAnsQuestion)q).getOptions();
+		for(FinOption opt:opts){
+			%> <%=opt.getDescription()%> :<%=opt.selectCount()%><br> <%
+		}
+	}else{
+		ArrayList<String> answers=((InfiAnsQuestion)q).getAnsList();
+		for(String ans:answers){
+			%> <%=ans%><br><%
+		}
 	}
-}} 
+} 
 %>
 
 </body>
