@@ -64,23 +64,13 @@ public class RecordAnswer extends HttpServlet {
 					e.printStackTrace();
 				}
 				break;
-			/*case "recordSingleQAnswer":
-				try {
-					recordSingleQAnswer(request, response);
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;*/
+			
 				
 			}
 		}
 	}
 	private void recordQnAnswer(HttpServletRequest request, HttpServletResponse response)
-			throws ClassNotFoundException, SQLException{
+			throws ClassNotFoundException, SQLException, ServletException, IOException{
 		
 		
 		long qnId=Long.parseLong(request.getParameter("qnId"));
@@ -128,48 +118,18 @@ public class RecordAnswer extends HttpServlet {
 				}
 			}
 		}
-		
+		request.setAttribute("serverMessage", "Your response has been recorded.");
+		request.setAttribute("qnTitle", Questionnaire.getQnById(qnId).getTitle());
+		request.getRequestDispatcher("/serverMessage.jsp")
+		.forward(request, response);
 	}
-	/*private void recordSingleQAnswer(HttpServletRequest request, HttpServletResponse response) 
-			throws ClassNotFoundException, SQLException, IOException{
-		long qId=Long.parseLong(request.getParameter("qId"));
-		QCategory category=QCategory.valueOf(request.getParameter("qCategory"));
-		if(category==QCategory.samc){
-			long cId=Long.parseLong(request.getParameter(category+"__"+qId));
-			recordSingleChoice(qId,cId);
-		}else if(category==QCategory.mamc){
-			String[] cIdStrs=request.getParameterValues(category+"__"+qId);
-			long[] cIds=new long[cIdStrs.length];
-			for(int i=0;i<cIds.length;i++){
-				cIds[i]=Long.parseLong(cIdStrs[i]);
-			}
-			recordMultipleChoice(qId, cIds);
-		}else if(category==QCategory.fr){
-			String text=request.getParameter(category+"__"+qId);
-			recordFreeResponse(qId,text);
-		}else if(category==QCategory.number){
-			double answer=Double.parseDouble(request.getParameter(category+"__"+qId));
-			recordNumAnswer(qId, answer);
-		}
-		PrintWriter pw=response.getWriter();
-		pw.print("successfully submitted");
-		
-	}*/
+	
 	private void recordSingleChoice(long qId, long cId) throws ClassNotFoundException, SQLException{
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
 		Statement recordC=conn.createStatement();
 		String selectionTableName="saSelections";
-		/*switch(category){
-		case mamc:
-			selectionTableName="maSelections";
-			break;
-		case samc:
-			selectionTableName="saSelections";
-			break;
-		default:
-			break;
-		}*/
+		
 		
 		recordC.executeUpdate("insert into "+selectionTableName+"(cId) values("+cId+")");
 		conn.close();

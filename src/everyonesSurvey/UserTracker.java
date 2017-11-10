@@ -81,7 +81,9 @@ public class UserTracker extends HttpServlet {
 			case "checklogin":
 				checkLogin(request,response);
 				break;
-			
+			case "hrefCheckLogin":
+				hrefCheckLogin(request,response);
+				break;
 			default:
 				response.sendRedirect("displayquestion");
 				;
@@ -97,7 +99,10 @@ public class UserTracker extends HttpServlet {
 		
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
-		
+		String nextPage=request.getParameter("nextPage");
+		if(nextPage==null){
+			nextPage="displayquestion";
+		}
 		ResultSet rs=stmt.executeQuery("SELECT password, firstname, lastname, userid from user WHERE username='"+username+"'");
 		if(rs.next()){
 			String realPass=rs.getString(1);
@@ -122,7 +127,7 @@ public class UserTracker extends HttpServlet {
 				User user=new User(username, firstname, lastname, eMail, userid);
 				session.setAttribute("user", user);
 				PrintWriter pw= response.getWriter();
-				pw.write("main");
+				pw.write("loggedin"+nextPage);
 				pw.close();
 			}else{
 				
@@ -173,8 +178,19 @@ public class UserTracker extends HttpServlet {
 		response.getWriter().print("yes");
 		
 	}
-	
-	
+	private void hrefCheckLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String nextPage=request.getParameter("nextPage");
+		if(request.getSession().getAttribute("loggedin")==null||(boolean)request.getSession().getAttribute("loggedin")==false){
+			request.setAttribute("nextPage", nextPage);
+			request.getRequestDispatcher("/login.jsp")
+			.forward(request, response);
+		}else{
+			response.sendRedirect(nextPage);
+		}
+	}
+	private void redirectToLogin(HttpServletRequest request, HttpServletResponse response){
+		
+	}
 	
 	
 	

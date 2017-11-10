@@ -15,7 +15,7 @@
 <script type="text/javascript">
 window.onload=function(){
 	checkLogin();
-	initDOM();
+	
 }
 </script>
 </head>
@@ -26,7 +26,7 @@ window.onload=function(){
       <a class="navbar-brand" href="displayquestion">EveryoneQ</a>
     </div>
     
-    <form class="navbar-form navbar-left" id="searchForm">
+    <form class="navbar-form navbar-left" id="searchForm" action="displayquestion">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search" id="searchKeyText" name="searchkey">
         <input type="hidden" name="mact" value="searchQ">
@@ -40,7 +40,7 @@ window.onload=function(){
     <ul class="nav navbar-nav" id="navRightUl">
       
       
-      <li><a href="questionaire.jsp">Create a Survey</a></li>
+      <li><a href="usertracker?mact=hrefCheckLogin&nextPage=questionnaire.jsp">Create a Survey</a></li>
       
       
     </ul>

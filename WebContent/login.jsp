@@ -4,7 +4,7 @@
 <html>
 <head>
 <script src="js/login.js"></script>
-<script src="js/init.js"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="css/login.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -37,9 +37,14 @@
 </nav>
 <h1 class="loginh1">EveryoneQ</h1>
 <div class="loginformdiv">
-
+<% String nextPage=(String)request.getAttribute("nextPage"); 
+   if(nextPage==null){
+     nextPage="displayquestion";
+    }
+%>
 <form method="post"  id="loginform">
 <input type="hidden" name="mact" value="login">
+<input type="hidden" name="nextPage" value='<%=nextPage%>'>
 Username: <span id="usernamewrong" class="wrong"></span>
 </span> <br><input type="text" class="logininput" name="username" id="username"><br>
 Password: <span id="passwordwrong" class="wrong"></span>

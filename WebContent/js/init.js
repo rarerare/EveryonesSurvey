@@ -12,16 +12,7 @@ function loadPopQns(){
 		$('#popqndiv').html(data);
 	})
 }
-/*function searchQ(event){
-	if(window.XMLHttpRequest){
-		var xhttpq=new XMLHttpRequest();
-	}else{
-		var xhttpq = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xhttpq.open("POST", "displayquestion?mact=searchQ&searchkey="+$("#searchKeyText").val(),true);
-	xhttpq.send();	
-	event.preventDefault();
-}*/
+
 
 function checkLogin(){
 	
@@ -60,7 +51,7 @@ function checkLogin(){
 
 		
 	}
-	xhttpchecklogin.open("POST", "mainservlet?mact=checklogin",true);
+	xhttpchecklogin.open("POST", "usertracker?mact=checklogin",true);
 
 	xhttpchecklogin.send();
 }
@@ -87,7 +78,7 @@ function setupUser(){
 				+"</ul></li>";
 		}
 	}
-	xhttpname.open("POST", "mainservlet?mact=getfirstname", true);
+	xhttpname.open("POST", "usertracker?mact=getfirstname", true);
 	xhttpname.send();
 }
 function login(){
@@ -98,7 +89,7 @@ function login(){
 	}else{
 		var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	xhttp.open("POST", "mainservlet?mact=login", true);
+	xhttp.open("POST", "usertracker?mact=login", true);
 	xhttp.send(new FormData(loginform));
 	
 	xhttp.onreadystatechange=function(){
@@ -109,8 +100,8 @@ function login(){
 		}else if(responseText=="Incorrect Username"){
 			document.getElementById("usernamewrong").innerHTML=this.responseText;
 			document.getElementById("passwordwrong").innerHTML="";
-		}else if(responseText=="main"){
-			window.location="displayquestion";
+		}else if(responseText.includes("loggedin")){
+			window.location="displayquestion"
 		}
 		
 		

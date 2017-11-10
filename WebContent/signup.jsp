@@ -34,7 +34,7 @@
 <h2>EveryoneQ</h2><br>
 
 <div class="signupformdiv">
-<form action="mainservlet" method="post" id="mainform">
+<form action="usertracker" method="post" id="mainform">
 <input type="hidden" value="signup" name="mact">
 First Name:<input type="text" name="firstname"><br>
 Last Name:<input type="text" name="lastname"><br><br>

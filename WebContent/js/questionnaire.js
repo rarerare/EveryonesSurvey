@@ -1,8 +1,4 @@
-window.onload=function(){
-	checkLogin();
-	
-	
-}
+
 function updateAnswerDetail(qNum){
 	
 	var cateRadios=document.getElementsByName("category"+qNum);
@@ -37,6 +33,9 @@ function updateAnswerDetail(qNum){
         break;
         
 	case "fr":
+		detail.innerHTML="";
+		break;
+	case "number":
 		detail.innerHTML="";
 		break;
 		
@@ -79,30 +78,14 @@ function checkLogin(){
 
 		
 	}
-	xhttpchecklogin.open("POST", "mainservlet?mact=checklogin",true);
+	xhttpchecklogin.open("POST", "usertracker?mact=checklogin",true);
 
 	xhttpchecklogin.send();
 }
 
 
 
-function setupUser(){
-	if(window.XMLHttpRequest){
-		var xhttpname=new XMLHttpRequest();
-	}else{
-		var xhttpname = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xhttpname.onreadystatechange=function(){
-		if(xhttpname.readyState==4){
-			var firstname=this.responseText;
-			
-			document.getElementById("me").innerHTML="<a href=''>"+this.responseText
-			+"<i class='glyphicon glyphicon-user'></i></a>";
-		}
-	}
-	xhttpname.open("POST", "mainservlet?mact=getfirstname", true);
-	xhttpname.send();
-}
+
 function updateQList(e){
 	
 	var qNum=parseInt($('#qNumInput').val());
@@ -126,4 +109,27 @@ function updateQList(e){
 			+"<div id='detail_answer"+qNum+"'></div><br><br>");
 	$('#qNumInput').val(qNum);
 	
+}
+function setupUser(){
+	if(window.XMLHttpRequest){
+		var xhttpname=new XMLHttpRequest();
+	}else{
+		var xhttpname = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xhttpname.onreadystatechange=function(){
+		if(xhttpname.readyState==4){
+			var firstname=this.responseText;
+			document.getElementById("navRightUl").innerHTML+="<li class='dropdown userProfileDropdown'>"
+				
+				+"<a class='btn dropdown-toggle' role='button' data-toggle='dropdown' href='#'>"+this.responseText
+				+"<i class='glyphicon glyphicon-user'></i>"
+				+"<span class='caret'></span></a>"
+				+"<ul class='dropdown-menu userProfileDropdownMenu'>"
+				+"<li><a href='displaysurveyresult?mact=getQnList'>My Surveys</a></li>"
+				+"<li><a href='userProfile.jsp'>My Profile</a></li>"
+				+"</ul></li>";
+		}
+	}
+	xhttpname.open("POST", "usertracker?mact=getfirstname", true);
+	xhttpname.send();
 }

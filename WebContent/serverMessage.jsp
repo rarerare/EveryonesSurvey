@@ -30,10 +30,9 @@ window.onload=function(){
       <a class="navbar-brand" href="displayquestion">EveryoneQ</a>
     </div>
     
-    <form class="navbar-form navbar-left" id="searchForm" action="displayquestion">
+    <form class="navbar-form navbar-left" id="searchForm">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search" id="searchKeyText" name="searchkey">
-        <input type="hidden" name="mact" value="searchQ">
+        <input type="text" class="form-control" placeholder="Search" id="searchKeyText">
         <div class="input-group-btn">
           <button class="btn btn-default" type="submit" >
             <i class="glyphicon glyphicon-search"></i>
@@ -44,22 +43,16 @@ window.onload=function(){
     <ul class="nav navbar-nav" id="navRightUl">
       
       
-      <li><a href="questionnaire.jsp">Create a Survey</a></li>
+      <li><a href="questionnaire.jsp">Make a Questionnaire</a></li>
       
       
     </ul>
   </div>
 </nav>
-<h1>Search Results</h1>
-<% ArrayList<Questionnaire> surveys=(ArrayList<Questionnaire>)request.getAttribute("surveys");%>
-<%
-for(Questionnaire qn:surveys){
-	%><div class='mainq'><h2><a href='displayquestion?mact=displayQn&qnid=<%=qn.getId()%>'><%= qn.getTitle()%></a></h2></div><%
-}%>
 
-
-
-
-
+<h1><%=request.getAttribute("qnTitle") %></h1>
+<div class='mainq'>
+<%=request.getAttribute("serverMessage") %>
+</div>
 </body>
 </html>

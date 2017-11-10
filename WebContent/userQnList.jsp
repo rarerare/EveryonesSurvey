@@ -39,7 +39,7 @@ window.onload=function(){
     <ul class="nav navbar-nav" id="navRightUl">
       
       
-      <li><a href="questionaire.jsp">Make a Questionnaire</a></li>
+      <li><a href="questionnaire.jsp">Create a Survey</a></li>
       
       
     </ul>

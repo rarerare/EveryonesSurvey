@@ -84,7 +84,7 @@ public class RecordQuestion extends HttpServlet {
 	}
 	
 
-	private void makeSingleQuestion(HttpServletRequest request, HttpServletResponse response) 
+	/*private void makeSingleQuestion(HttpServletRequest request, HttpServletResponse response) 
 			throws SQLException, ClassNotFoundException{
 		String title=request.getParameter("title");
 		String description=request.getParameter("description");
@@ -115,9 +115,9 @@ public class RecordQuestion extends HttpServlet {
 			break;
 		}
 		makeQuestion(title, description, category, time, userid,null, optNum, optTitles);
-	}
+	}*/
 	private void makeQnr(HttpServletRequest request, HttpServletResponse response) 
-			throws ClassNotFoundException, SQLException{
+			throws ClassNotFoundException, SQLException, IOException{
 		String title=request.getParameter("qnTitle");
 		int qNum=Integer.parseInt(request.getParameter("qNum"));
 		long userid=(long) request.getSession().getAttribute("userid");
@@ -145,6 +145,7 @@ public class RecordQuestion extends HttpServlet {
 			}
 			makeQuestion(qTitle, qDescription, category, time, userid, qnid, optNum, optTitles);
 		}
+		response.sendRedirect("displayquestion?mact=displayQn&qnid="+qnid);
 	}
 	private void makeQuestion(String title
 			, String description

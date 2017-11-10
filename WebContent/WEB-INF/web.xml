@@ -10,12 +10,12 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-    <servlet-name>mainServlet</servlet-name>
+    <servlet-name>userTracker</servlet-name>
     <servlet-class>everyonesSurvey.UserTracker</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>mainServlet</servlet-name>
-    <url-pattern>/mainservlet</url-pattern>
+    <servlet-name>userTracker</servlet-name>
+    <url-pattern>/usertracker</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>recordQuestion</servlet-name>

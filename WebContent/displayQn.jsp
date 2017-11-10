@@ -16,6 +16,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>EveryoneQ</title>
+<script type="text/javascript">
+window.onload=function(){
+	checkLogin();
+	initDOM();
+}
+</script>
 </head>
 <body class='mainbody'>
 <nav class="navbar navbar-inverse">
@@ -37,7 +43,7 @@
     <ul class="nav navbar-nav" id="navRightUl">
       
       
-      <li><a href="questionaire.jsp">Make a Questionnaire</a></li>
+      <li><a href="questionnaire.jsp">Create a Survey</a></li>
       
       
     </ul>
