@@ -4,12 +4,16 @@
 <html>
 <head>
 <script src="js/login.js"></script>
+<script src="js/init.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="css/login.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="js/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>EveryoneQ</title>
+<script type="text/javascript">
+
+</script>
 </head>
 <body id="loginbody">
 <nav class="navbar navbar-inverse">
@@ -40,8 +44,9 @@ Username: <span id="usernamewrong" class="wrong"></span>
 </span> <br><input type="text" class="logininput" name="username" id="username"><br>
 Password: <span id="passwordwrong" class="wrong"></span>
 </span> <br><input type="password" class="logininput" name="password" id="password"><br>
+<button  class="loginsubmit" id="loginsubmit" type="submit">Sign in</button><br>
 </form>
-<button  class="loginsubmit" id="loginsubmit">Sign in</button><br>
+
 <a href="forgetpass.jsp" class="signupbutt">Forgot password</a><br>
 
 Don't have an account?

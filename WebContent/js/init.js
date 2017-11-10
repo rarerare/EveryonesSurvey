@@ -1,6 +1,5 @@
 function initDOM(){
-	$('#searchForm').submit(searchQ);
-	$('.singleQForm').submit(submitSingleAns);
+	
 }
 
 function loadPopQs(){
@@ -13,21 +12,16 @@ function loadPopQns(){
 		$('#popqndiv').html(data);
 	})
 }
-function searchQ(event){
+/*function searchQ(event){
 	if(window.XMLHttpRequest){
 		var xhttpq=new XMLHttpRequest();
 	}else{
 		var xhttpq = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	
-	xhttpq.onreadystatechange=function(){
-		document.getElementById("popqdiv").innerHTML=this.responseText;
-	}
-	
 	xhttpq.open("POST", "displayquestion?mact=searchQ&searchkey="+$("#searchKeyText").val(),true);
 	xhttpq.send();	
 	event.preventDefault();
-}
+}*/
 
 function checkLogin(){
 	

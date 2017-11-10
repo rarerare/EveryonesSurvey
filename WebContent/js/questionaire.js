@@ -1,24 +1,6 @@
 window.onload=function(){
 	checkLogin();
-	/*var cate=document.getElementsByName("category");
-	for(var i=0;i<cate.length;i++){
-		cate[i].addEventListener("change",updateAnswerDetail);
-	}
-	$("#submitButt").addEventListener("click", function(){
-		
-		var categoryRs=document.getElementsByName("category");
-		var cateSelected=false;
-		for(var i=0;i<categoryRs.length;i++){
-			if(categoryRs[i].checked){
-				cateSelected=true;
-			}
-		}
-		
-		
-		document.getElementById("qform").submit();
-		
-		
-	})*/
+	
 	
 }
 function updateAnswerDetail(qNum){

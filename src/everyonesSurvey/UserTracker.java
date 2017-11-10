@@ -22,13 +22,13 @@ import java.util.Date;
  * Servlet implementation class Main
  */
 @MultipartConfig
-public class MainServlet extends HttpServlet {
+public class UserTracker extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainServlet() {
+    public UserTracker() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -162,7 +162,7 @@ public class MainServlet extends HttpServlet {
 	}
 	
 	private void checkLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		boolean loggedin;
+		
 		if(request.getSession().getAttribute("loggedin")==null){
 			response.getWriter().print("no");
 			return;
@@ -175,12 +175,7 @@ public class MainServlet extends HttpServlet {
 	}
 	
 	
-	private void displayUserQList(HttpServletRequest request, HttpServletResponse response){
-		
-	}
-	private void displayUserQnList(HttpServletRequest request, HttpServletResponse response){
-		
-	}
+	
 	
 	
 	
