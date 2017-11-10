@@ -24,9 +24,10 @@ window.onload=function(){
       <a class="navbar-brand" href="displayquestion">EveryoneQ</a>
     </div>
     
-    <form class="navbar-form navbar-left" id="searchForm">
+    <form class="navbar-form navbar-left" id="searchForm" action="displayquestion">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search" id="searchKeyText">
+        <input type="text" class="form-control" placeholder="Search" id="searchKeyText" name="searchkey">
+        <input type="hidden" name="mact" value="searchQ">
         <div class="input-group-btn">
           <button class="btn btn-default" type="submit" >
             <i class="glyphicon glyphicon-search"></i>

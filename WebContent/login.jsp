@@ -22,9 +22,10 @@
       <a class="navbar-brand" href="displayquestion">EveryoneQ</a>
     </div>
     
-    <form class="navbar-form navbar-left">
+    <form class="navbar-form navbar-left" action="displayquestion">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search">
+        <input type="text" class="form-control" placeholder="Search" name="searchkey">
+        <input type="hidden" name="mact" value="searchQ">
         <div class="input-group-btn">
           <button class="btn btn-default" type="submit">
             <i class="glyphicon glyphicon-search"></i>
