@@ -24,7 +24,7 @@ import java.util.Date;
 @MultipartConfig
 public class UserTracker extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private final static String SQL_PASSWORD="drwssp";   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -94,7 +94,7 @@ public class UserTracker extends HttpServlet {
 	private void login(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ClassNotFoundException{
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
 		Statement stmt=conn.createStatement();
 		
 		String username=request.getParameter("username");
@@ -146,7 +146,7 @@ public class UserTracker extends HttpServlet {
 		String email=request.getParameter("email");
 		String firstname=request.getParameter("firstname");
 		String lastname=request.getParameter("lastname");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
 		Statement lookup=conn.createStatement();
 		ResultSet rs= lookup.executeQuery("SELECT * from user WHERE username='"+username+"'");
 		if(rs.next()){

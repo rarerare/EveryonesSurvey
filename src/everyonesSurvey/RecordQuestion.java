@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class RecordQuestion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private final static String SQL_PASSWORD="drwssp";   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -52,18 +52,7 @@ public class RecordQuestion extends HttpServlet {
 		}else{
 			
 			switch(mAct){
-			/*case "sbmtSnglQstn":
-				try {
-					makeSingleQuestion(request, response);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
-			*/
+			
 			case "sbmtQnr":
 				try {
 					makeQnr(request,response);
@@ -84,38 +73,7 @@ public class RecordQuestion extends HttpServlet {
 	}
 	
 
-	/*private void makeSingleQuestion(HttpServletRequest request, HttpServletResponse response) 
-			throws SQLException, ClassNotFoundException{
-		String title=request.getParameter("title");
-		String description=request.getParameter("description");
-		String category=request.getParameter("category");
-		long time =(new Date()).getTime();
-		long userid=(long) request.getSession().getAttribute("userid");
-		ArrayList<String> optTitles=new ArrayList<String>();
-		int optNum = 0;
-		switch(category){
-		case "samc":
-			optNum=Integer.valueOf(request.getParameter("optNum"));
-			
-			for(int i=1;i<=optNum;i++){
-				optTitles.add(request.getParameter("option"+i));
-			}
-			
-			break;
-		case "mamc":
-			optNum=Integer.valueOf(request.getParameter("optNum"));
-			for(int i=1;i<=optNum;i++){
-				optTitles.add(request.getParameter("option"+i));
-			}
-			
-			break;
-		case "fr":
-			break;
-		case "number":
-			break;
-		}
-		makeQuestion(title, description, category, time, userid,null, optNum, optTitles);
-	}*/
+	
 	private void makeQnr(HttpServletRequest request, HttpServletResponse response) 
 			throws ClassNotFoundException, SQLException, IOException{
 		String title=request.getParameter("qnTitle");
@@ -123,7 +81,7 @@ public class RecordQuestion extends HttpServlet {
 		long userid=(long) request.getSession().getAttribute("userid");
 		long time =(new Date()).getTime();
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
 		Statement createQN=conn.createStatement();
 		ResultSet qnidRS; 
 		synchronized(this.getClass()){
@@ -157,7 +115,7 @@ public class RecordQuestion extends HttpServlet {
 			, ArrayList<String> optTitles ) throws SQLException, ClassNotFoundException{
 		
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root","");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
 		Statement insertQ=conn.createStatement();
 		ResultSet qidRS;
 		synchronized(this.getClass()){

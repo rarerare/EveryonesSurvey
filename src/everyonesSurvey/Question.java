@@ -36,46 +36,5 @@ public class Question {
 	public long getId(){
 		return qid;
 	}
-	/*public String addQ(String responseStr) throws SQLException{
-		
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
-		Statement stmt=conn.createStatement();
-		long qid=getId();
-		String inputname=getCategory()+"__"+qid;
-		String optionTableName=null;
-		String inputType="";
-		if(getCategory()==QCategory.samc){
-			optionTableName="sachoices";
-			inputType="radio";
-		}else if(getCategory()==QCategory.mamc){
-			optionTableName="machoices";
-			inputType="checkbox";
-		}else if(getCategory()==QCategory.fr){
-			inputType="text";
-		}else if(getCategory()==QCategory.number){
-			inputType="number";
-		}
-		if(optionTableName!=null){
-			ResultSet rs= stmt.executeQuery("SELECT position, description, cid FROM "+optionTableName+" WHERE qid="+qid  );
-			
-			while(rs.next()){
-				String description=rs.getString(2);
-				long cId=rs.getLong(3);
-				responseStr+="<input type='"+inputType+"' name='"+inputname+"' value='"+cId+"'>"+description+"<br>";
-			}
-		}else{
-			if(getCategory()==QCategory.number){
-				responseStr+="<input type='"+inputType+"' name='"+inputname+"' step='any'><br>";
-			}else{
-				responseStr+="<input type='"+inputType+"' name='"+inputname+"'><br>";
-			}
-			
-		}
-		
-		
-		
-		conn.close();
-		return responseStr;
-		
-	}*/
+	
 }

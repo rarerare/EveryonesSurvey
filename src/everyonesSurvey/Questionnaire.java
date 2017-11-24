@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Questionnaire {
+	private final static String SQL_PASSWORD="drwssp";
 	private long qnid;
 	private String title;
 	private long userId;
@@ -20,7 +21,7 @@ public class Questionnaire {
 	}
 	public static Questionnaire getQnById(long id) throws ClassNotFoundException, SQLException{
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
 		Statement stmt=conn.createStatement();
 		ResultSet rsQn= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
 				+",qNaire.qNum"
@@ -44,7 +45,7 @@ public class Questionnaire {
 	}
 	public ArrayList<Question> getQList() throws ClassNotFoundException, SQLException{
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
 		Statement stmt=conn.createStatement();
 		ResultSet rsQuestion= stmt.executeQuery("SELECT user.username, question.qid"
 				+ ", question.title, question.userid,question.description, question.category"

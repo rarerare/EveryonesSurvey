@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/DisplaySurveyResult")
 public class DisplaySurveyResult extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private final static String SQL_PASSWORD="drwssp";  
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -88,34 +88,13 @@ public class DisplaySurveyResult extends HttpServlet {
 			}
 		}	
 	}
-	/*private void displayUserQList(HttpServletRequest request, HttpServletResponse response) 
-			throws ClassNotFoundException, SQLException, ServletException, IOException{
-		
-		User user=(User)request.getSession().getAttribute("user");
-		long userId=user.getId();
-		String userName=user.getUsername();
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
-		Statement stmt=conn.createStatement();
-		ResultSet singleQRs= stmt.executeQuery("SELECT (title, description, popularity, category,qid)"
-				+ " FROM question WHERE qnid IS NULL AND userid="+userId);
-		ArrayList<Question> singleQs=new ArrayList<Question>();
-		while(singleQRs.next()){
-			singleQs.add(new Question(userName,singleQRs.getString(1), singleQRs.getString(2)
-					, singleQRs.getInt(3), QCategory.valueOf(singleQRs.getString(4)),singleQRs.getLong(5) ));
-		}
-		request.setAttribute("singleQs", singleQs);
-		request.getRequestDispatcher("/userQList.jsp")
-		.forward(request, response);
-		conn.close();
-		
-	}*/
+	
 	private void displayUserQnList(HttpServletRequest request, HttpServletResponse response)
 			throws ClassNotFoundException, SQLException, ServletException, IOException{
 		User user=(User)request.getSession().getAttribute("user");
 		long userId=user.getId();
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
 		Statement stmt=conn.createStatement();
 		ResultSet qnRs=stmt.executeQuery("SELECT qnid, title, qNum FROM qNaire WHERE userid="+userId);
 		ArrayList<Questionnaire> qns=new ArrayList<Questionnaire>();

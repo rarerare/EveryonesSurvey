@@ -24,10 +24,10 @@ public class DisplayQuestion extends HttpServlet {
 	private static final int POPQNUM=255;
 	private ArrayList<Question> popQs=new ArrayList<Question>();
 	private ArrayList<Questionnaire> popQns;
-	
+	private final static String SQL_PASSWORD="drwssp";
 	private void initPopQs() throws SQLException, ClassNotFoundException{
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
 		Statement stmt=conn.createStatement();
 		ResultSet rs= stmt.executeQuery("SELECT user.username, question.title, question.description"
 		+",question.popularity,question.category, question.qid"
@@ -43,7 +43,7 @@ public class DisplayQuestion extends HttpServlet {
 	}
 	private void initPopQns() throws SQLException, ClassNotFoundException{
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
 		Statement stmt=conn.createStatement();
 		ResultSet rs= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
 		+",qNaire.qNum"
@@ -163,7 +163,7 @@ public class DisplayQuestion extends HttpServlet {
 		String searchKey=request.getParameter("searchkey");
 		System.out.println(searchKey);
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root","");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
 		Statement stmt=conn.createStatement();
 		
 		ResultSet rsQn= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
