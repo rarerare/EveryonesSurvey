@@ -84,6 +84,9 @@ public class UserTracker extends HttpServlet {
 			case "hrefCheckLogin":
 				hrefCheckLogin(request,response);
 				break;
+			case "logOut":
+				logOut(request,response);
+				break;
 			default:
 				response.sendRedirect("displayquestion");
 				;
@@ -188,8 +191,8 @@ public class UserTracker extends HttpServlet {
 			response.sendRedirect(nextPage);
 		}
 	}
-	private void redirectToLogin(HttpServletRequest request, HttpServletResponse response){
-		
+	private void logOut(HttpServletRequest request, HttpServletResponse response){
+		request.getSession().setAttribute("loggedin", false);
 	}
 	
 	

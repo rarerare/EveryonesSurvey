@@ -56,7 +56,7 @@ function addOption(qNum){
 	
 	
 }
-function checkLogin(){
+function notLoggedIn(){
 	
 	if(window.XMLHttpRequest){
 		var xhttpchecklogin=new XMLHttpRequest();
@@ -69,8 +69,6 @@ function checkLogin(){
 		if(xhttpchecklogin.readyState==4){
 			if(this.responseText=="no"){
 				window.location="login.jsp";
-			}else{
-				setupUser();
 			}
 		}
 		
@@ -109,27 +107,4 @@ function updateQList(e){
 			+"<div id='detail_answer"+qNum+"'></div><br><br>");
 	$('#qNumInput').val(qNum);
 	
-}
-function setupUser(){
-	if(window.XMLHttpRequest){
-		var xhttpname=new XMLHttpRequest();
-	}else{
-		var xhttpname = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xhttpname.onreadystatechange=function(){
-		if(xhttpname.readyState==4){
-			var firstname=this.responseText;
-			document.getElementById("navRightUl").innerHTML+="<li class='dropdown userProfileDropdown'>"
-				
-				+"<a class='btn dropdown-toggle' role='button' data-toggle='dropdown' href='#'>"+this.responseText
-				+"<i class='glyphicon glyphicon-user'></i>"
-				+"<span class='caret'></span></a>"
-				+"<ul class='dropdown-menu userProfileDropdownMenu'>"
-				+"<li><a href='displaysurveyresult?mact=getQnList'>My Surveys</a></li>"
-				+"<li><a href='userProfile.jsp'>My Profile</a></li>"
-				+"</ul></li>";
-		}
-	}
-	xhttpname.open("POST", "usertracker?mact=getfirstname", true);
-	xhttpname.send();
 }

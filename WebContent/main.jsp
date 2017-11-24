@@ -37,12 +37,10 @@ window.onload=function(){
         </div>
       </div>
     </form>
-    <ul class="nav navbar-nav" id="navRightUl">
-      
-      
+    <ul class="nav navbar-nav" >
       <li><a href="usertracker?mact=hrefCheckLogin&nextPage=questionnaire.jsp">Create a Survey</a></li>
-      
-      
+    </ul>
+    <ul class="nav navbar-nav" id="navRightUl">
     </ul>
   </div>
 </nav>

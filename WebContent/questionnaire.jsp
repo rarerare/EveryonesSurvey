@@ -9,11 +9,12 @@
 <script src="js/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/questionnaire.js"></script>
+<script src="js/init.js"></script>
 <title>EveryoneQ</title>
 <script type="text/javascript">
 window.onload=function(){
+	notLoggedIn();
 	checkLogin();
-	
 }
 </script>
 </head>
@@ -35,12 +36,10 @@ window.onload=function(){
         </div>
       </div>
     </form>
+    <ul class="nav navbar-nav" >
+      <li><a href="usertracker?mact=hrefCheckLogin&nextPage=questionnaire.jsp">Create a Survey</a></li>
+    </ul>
     <ul class="nav navbar-nav" id="navRightUl">
-      
-      
-      <li class="active"><a href="#">Create a Survey</a></li>
-      
-      
     </ul>
   </div>
 </nav>

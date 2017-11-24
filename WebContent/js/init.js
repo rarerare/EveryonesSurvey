@@ -27,7 +27,7 @@ function checkLogin(){
 		if(xhttpchecklogin.readyState==4){
 			if(this.responseText=="no"){
 				
-				document.getElementById("navRightUl").innerHTML+=
+				document.getElementById("navRightUl").innerHTML=
 					"<form method='post'  id='loginform' class='navbar-form navbar-right'>"+
 "<input type='hidden' name='mact' value='login'> <span id='usernamewrong' class='wrong'></span>"+
 "</span> <input type='text' class='form-control' placeholder='username' name='username' id='username'>"+
@@ -67,7 +67,7 @@ function setupUser(){
 	xhttpname.onreadystatechange=function(){
 		if(xhttpname.readyState==4){
 			var firstname=this.responseText;
-			document.getElementById("navRightUl").innerHTML+="<li class='dropdown userProfileDropdown'>"
+			document.getElementById("navRightUl").innerHTML="<li class='dropdown userProfileDropdown'>"
 				
 				+"<a class='btn dropdown-toggle' role='button' data-toggle='dropdown' href='#'>"+this.responseText
 				+"<i class='glyphicon glyphicon-user'></i>"
@@ -75,6 +75,7 @@ function setupUser(){
 				+"<ul class='dropdown-menu userProfileDropdownMenu'>"
 				+"<li><a href='displaysurveyresult?mact=getQnList'>My Surveys</a></li>"
 				+"<li><a href='userProfile.jsp'>My Profile</a></li>"
+				+"<li><a href='#' onclick='logOut()'>Log Out</a></li>"
 				+"</ul></li>";
 		}
 	}
@@ -107,6 +108,11 @@ function login(){
 		
 	}
 	
+}
+function logOut(){
+	$.post("usertracker?mact=logOut", function(data){
+		window.location="displayquestion";
+	})
 }
 function submitSingleAns(event){
 	

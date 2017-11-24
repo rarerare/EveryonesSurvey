@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script src="js/init.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>EveryoneQ</title>
 <script type="text/javascript">
@@ -37,12 +37,10 @@ window.onload=function(){
         </div>
       </div>
     </form>
+    <ul class="nav navbar-nav" >
+      <li><a href="usertracker?mact=hrefCheckLogin&nextPage=questionnaire.jsp">Create a Survey</a></li>
+    </ul>
     <ul class="nav navbar-nav" id="navRightUl">
-      
-      
-      <li><a href="questionnaire.jsp">Create a Survey</a></li>
-      
-      
     </ul>
   </div>
 </nav>
