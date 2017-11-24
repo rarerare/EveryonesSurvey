@@ -15,7 +15,12 @@ document.getElementById("submitButt").addEventListener("click",
 		function(event){
 	event.preventDefault();
 	if(passMatch()){
-		document.getElementById("mainform").submit();
+		
+		if($('form#mainform > :input[required]:visible').val() != ""){
+			  form.submit();
+		}else{
+			alert("please fill in all required fields");
+		}
 	}else{
 		alert("password doesn't match");
 	}

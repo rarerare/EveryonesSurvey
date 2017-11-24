@@ -9,6 +9,7 @@
 <script src="js/signup.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EveryoneQ</title>
 </head>
 <body>
@@ -35,15 +36,15 @@
 
 <div class="signupformdiv">
 <form action="usertracker" method="post" id="mainform">
-<input type="hidden" value="signup" name="mact">
-First Name:<input type="text" name="firstname"><br>
-Last Name:<input type="text" name="lastname"><br><br>
-Username: <input type="text" name="username"><br><br>
-Password: <input type="password" name="password" id="password"><br><br>
-Confirm Password: <input type="password" id="confirmpassword"><br><br>
-
-Email (optional): <input type="text" name="email"><br><br>
-<button type="submit" id="submitButt">Sign up</button>
+	<input type="hidden" value="signup" name="mact">
+	First Name:<input type="text" name="firstname" required ><br><br>
+	Last Name:<input type="text" name="lastname" required ><br><br>
+	Username: <input type="text" name="username" required><br><br>
+	Password: <input type="password" name="password" id="password" required><br><br>
+	Confirm Password: <input type="password" id="confirmpassword" required><br><br>
+	
+	Email (optional): <input type="text" name="email"><br><br>
+	<button type="submit" id="submitButt">Sign up</button>
 </form>
 </div>
 </body>
