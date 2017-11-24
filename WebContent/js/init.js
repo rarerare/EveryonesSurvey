@@ -28,13 +28,13 @@ function checkLogin(){
 			if(this.responseText=="no"){
 				
 				document.getElementById("navRightUl").innerHTML=
-					"<form method='post'  id='loginform' class='navbar-form navbar-right'>"+
-"<input type='hidden' name='mact' value='login'> <span id='usernamewrong' class='wrong'></span>"+
-"</span> <input type='text' class='form-control' placeholder='username' name='username' id='username'>"+
-" <span id='passwordwrong' class='wrong'></span>"+
-"</span> <input type='password' class='form-control' placeholder='password' class='logininput' name='password' id='password'>"+
-"<button type='submit' id='loginsubmit'>Sign in</button>"+
-"<span class='navbartext'>or</span> <a href='signup.jsp'>Sign up</a></form>";
+					"<form method='post'  id='loginform' class='navbar-form'>"+
+					"<input type='hidden' name='mact' value='login'> <span id='usernamewrong' class='wrong'></span>"+
+					"</span> <div class='form-group'><input type='text' class='form-control' placeholder='username' name='username' id='username'></div>"+
+					" <span id='passwordwrong' class='wrong'></span>"+
+					"</span> <input type='password' class='form-control' placeholder='password' class='logininput' name='password' id='password'>"+
+					"<button type='submit' id='loginsubmit'>Sign in</button>"+
+					"<span class='navbartext'>or</span> <a href='signup.jsp'>Sign up</a></form>";
 				var loginSubmitButt=document.getElementById("loginsubmit");
 				loginSubmitButt.onclick=function(e){
 					e.preventDefault();
@@ -67,16 +67,23 @@ function setupUser(){
 	xhttpname.onreadystatechange=function(){
 		if(xhttpname.readyState==4){
 			var firstname=this.responseText;
-			document.getElementById("navRightUl").innerHTML="<li class='dropdown userProfileDropdown'>"
-				
-				+"<a class='btn dropdown-toggle' role='button' data-toggle='dropdown' href='#'>"+this.responseText
-				+"<i class='glyphicon glyphicon-user'></i>"
-				+"<span class='caret'></span></a>"
-				+"<ul class='dropdown-menu userProfileDropdownMenu'>"
+			
+			document.getElementById("navRightButt").outerHTML="<button type='button' id='navRightButt'" +
+					" class='navbar-toggle btn btn-primary' data-toggle='collapse' data-target='#navRightCollapse'>" +
+					"<i class='glyphicon glyphicon-user'></i><span class='caret'></span></button>";
+			document.getElementById("navRightCollapse").outerHTML="<ul class='dropdown-menu dropdown-menu-right ' id='navRightCollapse'>"
 				+"<li><a href='displaysurveyresult?mact=getQnList'>My Surveys</a></li>"
 				+"<li><a href='userProfile.jsp'>My Profile</a></li>"
 				+"<li><a href='#' onclick='logOut()'>Log Out</a></li>"
-				+"</ul></li>";
+				+"</ul>";
+			document.getElementById("right_button_div").innerHTML=" <ul class='nav navbar-nav'><li class='dropdown'><a href='#' id='rightButt'" +
+			" class='dropdown-toggle' data-toggle='dropdown'>" +
+			"<i class='glyphicon glyphicon-user'></i>"+firstname+"<span class='caret'></span></a>"
+			+"<ul class='dropdown-menu dropdown-menu-right ' id='navRightCollapse'>"
+			+"<li><a href='displaysurveyresult?mact=getQnList'>My Surveys</a></li>"
+			+"<li><a href='userProfile.jsp'>My Profile</a></li>"
+			+"<li><a href='#' onclick='logOut()'>Log Out</a></li>"
+			+"</ul>";;
 		}
 	}
 	xhttpname.open("POST", "usertracker?mact=getfirstname", true);

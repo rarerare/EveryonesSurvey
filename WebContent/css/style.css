@@ -46,3 +46,8 @@ h1{
 .date_span{
 	color:#777777;
 }
+.navbar-form {
+  border: 0 !important;
+  box-shadow: none !important;
+  border-color: none !important;
+}
