@@ -46,12 +46,12 @@ public class DisplayQuestion extends HttpServlet {
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
 		Statement stmt=conn.createStatement();
 		ResultSet rs= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
-		+",qNaire.qNum"
+		+",qNaire.qNum, qNaire.server_time"
 				+ "  FROM qNaire, user WHERE qNaire.userid=user.userid ORDER BY qNaire.popularity" );
 		int i=0;
 		popQns=new ArrayList<Questionnaire>();
 		while(rs.next()&&i<POPQNUM){
-			popQns.add(new Questionnaire(rs.getLong(1), rs.getString(2), rs.getLong(3),rs.getInt(4)));
+			popQns.add(new Questionnaire(rs.getLong(1), rs.getString(2), rs.getLong(3),rs.getInt(4), rs.getDate(5)));
 			i++;
 		}
 		conn.close();
@@ -167,11 +167,11 @@ public class DisplayQuestion extends HttpServlet {
 		Statement stmt=conn.createStatement();
 		
 		ResultSet rsQn= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
-				+",qNaire.qNum  FROM qNaire, user  WHERE (qNaire.userid=user.userid) AND (qNaire.title like '%"
+				+",qNaire.qNum, qNaire.server_time  FROM qNaire, user  WHERE (qNaire.userid=user.userid) AND (qNaire.title like '%"
 		+searchKey+"%' )");
 		ArrayList<Questionnaire> surveys=new ArrayList<Questionnaire>();
 		while(rsQn.next()){
-			surveys.add(new Questionnaire(rsQn.getLong(1), rsQn.getString(2), rsQn.getLong(3),rsQn.getInt(4)));
+			surveys.add(new Questionnaire(rsQn.getLong(1), rsQn.getString(2), rsQn.getLong(3),rsQn.getInt(4), rsQn.getDate(5)));
 			
 		}
 		

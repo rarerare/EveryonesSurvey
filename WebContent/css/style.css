@@ -15,8 +15,8 @@
 	padding-right:3%;
 	padding-bottom:3%;
 	padding-top:3%;
-	border-radius: 5px;
-	box-shadow: 6px 3px 3px grey;
+	border-radius: 2px;
+	box-shadow: 3px 2px 2px grey;
 }
 .wrong{
 	color: red;
@@ -42,4 +42,7 @@ h1{
 .userProfileDropdown:hover .userProfileDropdownMenu{
 	display: block;
 
+}
+.date_span{
+	color:#777777;
 }

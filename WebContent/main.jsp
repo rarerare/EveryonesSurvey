@@ -63,7 +63,8 @@ window.onload=function(){
 ArrayList<Questionnaire> popQns=(ArrayList<Questionnaire>)request.getAttribute("popQns");
 
 for(Questionnaire qn:popQns){
-	%> <div class='mainq'><h2><a href='displayquestion?mact=displayQn&qnid=<%=qn.getId()%>'><%= qn.getTitle()%></a></h2></div> <% 
+	%> <div class='mainq'><h2><a href='displayquestion?mact=displayQn&qnid=<%=qn.getId()%>'><%= qn.getTitle()%></a></h2>
+	<span class="date_span">created on <%=qn.getCreateTimeStr() %> by <%=qn.getUserName() %></span></div> <% 
 }
 
 %>

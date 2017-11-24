@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -79,13 +80,16 @@ public class RecordQuestion extends HttpServlet {
 		String title=request.getParameter("qnTitle");
 		int qNum=Integer.parseInt(request.getParameter("qNum"));
 		long userid=(long) request.getSession().getAttribute("userid");
-		long time =(new Date()).getTime();
+		
+		Date date=new Date();
+		long time =date.getTime();
+		String dateTimeStr=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
 		Statement createQN=conn.createStatement();
 		ResultSet qnidRS; 
 		synchronized(this.getClass()){
-			createQN.executeUpdate("INSERT INTO qNaire (title, qNum, userid) VALUEs('"+title+"',"+qNum+","+userid+")");
+			createQN.executeUpdate("INSERT INTO qNaire (title, qNum, userid, server_time) VALUES('"+title+"',"+qNum+","+userid+",'"+dateTimeStr+"')");
 			qnidRS=createQN.executeQuery("SELECT qnid FROM qNaire ORDER BY qnid DESC LIMIT 1");
 			
 		}
