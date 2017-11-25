@@ -1,7 +1,6 @@
 
 .loginh1{
 	text-align: center;
-	font-family: Impact;
 	color:#000000;
 	
 }
@@ -19,13 +18,12 @@ h3{
 	margin-right:10%;
 	padding-left:10%;
 	padding-right:10%;
-	margin-top:10%;
 	margin-bottom:10%;
-	padding-top:50px;
-	padding-bottom:50px;
+	padding-top:30px;
+	padding-bottom:30px;
 	font-size:1.5em;
-	border-radius:15px;
-	box-shadow: 5px 5px 5px grey;
+	border-radius:5px;
+	box-shadow: 3px 3px 3px grey;
 	
 }
 .logininput{

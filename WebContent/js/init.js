@@ -30,10 +30,10 @@ function checkLogin(){
 				document.getElementById("navRightUl").innerHTML=
 					"<form method='post'  id='loginform' class='navbar-form'>"+
 					"<input type='hidden' name='mact' value='login'> <span id='usernamewrong' class='wrong'></span>"+
-					"</span> <div class='form-group'><input type='text' class='form-control' placeholder='username' name='username' id='username'></div>"+
+					"</span> <input type='text' class='form-control' placeholder='username' name='username' id='username'>"+
 					" <span id='passwordwrong' class='wrong'></span>"+
 					"</span> <input type='password' class='form-control' placeholder='password' class='logininput' name='password' id='password'>"+
-					"<button type='submit' id='loginsubmit'>Sign in</button>"+
+					"<button type='submit' class='btn btn-primary btn-round' id='loginsubmit'>Sign in</button>"+
 					"<span class='navbartext'>or</span> <a href='signup.jsp'>Sign up</a></form>";
 				var loginSubmitButt=document.getElementById("loginsubmit");
 				loginSubmitButt.onclick=function(e){

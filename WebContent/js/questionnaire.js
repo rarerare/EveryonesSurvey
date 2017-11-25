@@ -92,7 +92,7 @@ function updateQList(e){
 			+"<input type='hidden' name='optNum"+qNum+"' id='optNum"+qNum+"' value='0'>"
 			+"<input type='text' name='qTitle"+qNum+"' required><br><br>"
 			+"<b>Description:</b><br> <textarea name='qDescription"+qNum+"' required></textarea><br><br>"
-			+"<b>Category:</b> <br> Single-Answer Multiple choice" 
+			+"<b>Type:</b> <br> Single-Answer Multiple choice" 
 			+"<input type='radio' name='category"+qNum+"' value='samc' " 
 			+"onchange='updateAnswerDetail("+qNum+")' required><br>"
 			+"Multiple-Answer Multiple choice" 
