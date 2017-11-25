@@ -66,7 +66,12 @@ public class UserTracker extends HttpServlet {
 				break;
 			case "signup":
 				try {
-					signup(request,response);
+					try {
+						signup(request,response);
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -143,12 +148,13 @@ public class UserTracker extends HttpServlet {
 		}
 		conn.close();
 	}
-	private void signup(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException{
+	private void signup(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ClassNotFoundException{
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		String email=request.getParameter("email");
 		String firstname=request.getParameter("firstname");
 		String lastname=request.getParameter("lastname");
+		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
 		Statement lookup=conn.createStatement();
 		ResultSet rs= lookup.executeQuery("SELECT * from user WHERE username='"+username+"'");

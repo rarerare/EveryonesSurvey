@@ -17,7 +17,7 @@ document.getElementById("submitButt").addEventListener("click",
 	if(passMatch()){
 		
 		if($('form#mainform > :input[required]:visible').val() != ""){
-			  form.submit();
+			$('form#mainform').submit();
 		}else{
 			alert("please fill in all required fields");
 		}
