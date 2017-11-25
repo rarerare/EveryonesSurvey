@@ -77,7 +77,7 @@ Title of Survey:<input type="text" name="qnTitle" required><br>
 <div id="qListDiv">
 </div>
 <button type="button" onclick="updateQList()">Add question</button>
-<input type="submit" value="Submit questionaire"/>
+<input type="submit" value="Submit questionnaire"/>
 </form>
 
 </div>
