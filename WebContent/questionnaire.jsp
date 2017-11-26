@@ -40,11 +40,7 @@ window.onload=function(){
     </div>
     
     
-    <ul class="nav navbar-nav " >
-	   	<li>
-	      	<a href="usertracker?mact=hrefCheckLogin&nextPage=questionnaire.jsp">Create a Survey</a>
-	    </li>
-    </ul>
+    
    
    	
     <div class="nav navbar-nav collapse navbar-collapse" id="searchCollapse">

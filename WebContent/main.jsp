@@ -41,7 +41,7 @@ window.onload=function(){
     </div>
     
     
-    <ul class="nav navbar-nav " >
+    <ul class="nav navbar-nav sub_navbar" >
 	   	<li>
 	      	<a href="usertracker?mact=hrefCheckLogin&nextPage=questionnaire.jsp">Create a Survey</a>
 	    </li>
