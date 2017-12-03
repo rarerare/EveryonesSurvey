@@ -1,16 +1,16 @@
 
 function updateAnswerDetail(qNum){
 	
-	var cateRadios=document.getElementsByName("category"+qNum);
-	var category;
-	
-	for(var i=0;i<cateRadios.length;i++){
+	//var cateSelection=document.getElementsByName("category"+qNum);
+	var category=$("#categorySelection"+qNum+" :selected").val();
+	alert(category)
+	/*for(var i=0;i<cateRadios.length;i++){
 		
 		if(cateRadios[i].checked){
 			category=cateRadios[i].value;
 			
 		}
-	}
+	}*/
 	
 	var detail=document.getElementById("detail_answer"+qNum);
 	
@@ -91,19 +91,15 @@ function updateQList(e){
 	$("#qListDiv").append("<hr><br><h3>Question "+qNum+"</h3><br><b>Title:</b><br> " 
 			+"<input type='hidden' name='optNum"+qNum+"' id='optNum"+qNum+"' value='0'>"
 			+"<input type='text' name='qTitle"+qNum+"' required><br><br>"
-			+"<b>Type:</b> <br> Single-Answer Multiple choice" 
-			+"<input type='radio' name='category"+qNum+"' value='samc' " 
-			+"onchange='updateAnswerDetail("+qNum+")' required><br>"
-			+"Multiple-Answer Multiple choice" 
-			+"<input type='radio' name='category"+qNum+"' value='mamc' "
-			+"onchange='updateAnswerDetail("+qNum+")' required><br>"
-			+"Free Response:" 
-			+"<input type='radio' name='category"+qNum+"' value='fr'" 
-			+" onchange='updateAnswerDetail("+qNum+")' required><br>"
-			+"Number:"
-			+"<input type='radio' name='category"+qNum+"' value='number'" 
-			+" onchange='updateAnswerDetail("+qNum+")' required><br>"
-			+"<div id='detail_answer"+qNum+"'></div><br><br>");
+			+"<b>Type:</b> <select id='categorySelection"+qNum+"'" +
+					" name='category"+qNum+"' onchange='updateAnswerDetail("+qNum+")'>"
+			+"<option disabled selected value> -- select an option -- </option>"
+			+" <option value='samc'> Single-Answer Multiple choice </option>" 
+			+"<option value='mamc'> Multiple-Answer Multiple choice </option>"
+			+"<option value='fr'> Free Response </option>"
+			+"<option value='number'>Number </option>"
+			+"</select><br><br>"
+			+"<div id='detail_answer"+qNum+"'></div><br><br><hr>");
 	$('#qNumInput').val(qNum);
 	
 }
