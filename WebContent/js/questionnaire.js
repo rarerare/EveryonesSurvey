@@ -3,7 +3,6 @@ function updateAnswerDetail(qNum){
 	
 	//var cateSelection=document.getElementsByName("category"+qNum);
 	var category=$("#categorySelection"+qNum+" :selected").val();
-	alert(category)
 	/*for(var i=0;i<cateRadios.length;i++){
 		
 		if(cateRadios[i].checked){
