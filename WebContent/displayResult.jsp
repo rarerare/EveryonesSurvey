@@ -75,14 +75,14 @@ window.onload=function(){
   </div>
 </nav>
 <ul class="nav nav-pills">
-    <li class="active"><a href="#">My profile</a></li>
+    <li ><a href="#">My profile</a></li>
     
     <li><a href="displaysurveyresult?mact=getQnList">My surveys</a>
     
   </ul>
 <% Questionnaire qn=(Questionnaire)request.getAttribute("qn");%>
 <% ArrayList<Question> questions=qn.getQList();%>
-
+<h2><%=qn.getTitle() %></h2>
 <% 
 for(Question q:questions){%><h3><%=q.getTitle() %></h3><%
 	if(q.getCategory().isFinAns()){
