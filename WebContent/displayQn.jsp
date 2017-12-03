@@ -84,7 +84,8 @@ window.onload=function(){
 <input type="hidden" name='qNum' value='<%=qn.getQNum() %>'>
 <%for(Question q:questions){
 	
-	%><h4><%=q.getTitle() %></h4><hr><%q.getDescription(); %><br>
+	%><h4><%=q.getTitle() %></h4>
+	
 	<% QCategory category=q.getCategory();
 	
 	if(category.isFinAns()){
@@ -105,7 +106,7 @@ window.onload=function(){
 		
 		 
 	} %>
-	<hr class='betweenQsHr'><br><% 
+	<br><br><% 
 }%>
 <button type="submit">Submit</button>
 </form>

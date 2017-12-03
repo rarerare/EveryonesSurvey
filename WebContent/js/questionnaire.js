@@ -91,7 +91,6 @@ function updateQList(e){
 	$("#qListDiv").append("<hr><br><h3>Question "+qNum+"</h3><br><b>Title:</b><br> " 
 			+"<input type='hidden' name='optNum"+qNum+"' id='optNum"+qNum+"' value='0'>"
 			+"<input type='text' name='qTitle"+qNum+"' required><br><br>"
-			+"<b>Description:</b><br> <textarea name='qDescription"+qNum+"' required></textarea><br><br>"
 			+"<b>Type:</b> <br> Single-Answer Multiple choice" 
 			+"<input type='radio' name='category"+qNum+"' value='samc' " 
 			+"onchange='updateAnswerDetail("+qNum+")' required><br>"

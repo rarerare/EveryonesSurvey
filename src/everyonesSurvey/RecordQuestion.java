@@ -98,7 +98,7 @@ public class RecordQuestion extends HttpServlet {
 		
 		for(int i=1;i<=qNum;i++){
 			String qTitle=request.getParameter("qTitle"+i);
-			String qDescription=request.getParameter("qDescription"+i);
+			String qDescription="";
 			String category=request.getParameter("category"+i);
 			int optNum=Integer.parseInt(request.getParameter("optNum"+i));
 			ArrayList<String> optTitles=new ArrayList<String>();
