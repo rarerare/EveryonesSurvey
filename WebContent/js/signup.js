@@ -15,14 +15,23 @@ document.getElementById("submitButt").addEventListener("click",
 		function(event){
 	event.preventDefault();
 	if(passMatch()){
-		
-		if($('form#mainform > :input[required]:visible').val() != ""){
+		var unFilled=false;
+		$('form#mainform > :input[required]:visible').each(
+				function(){
+					if($(this).val()==""){
+						unFilled=true;
+					}
+				}
+		);
+		if(!unFilled){
+			
 			$('form#mainform').submit();
 		}else{
 			alert("please fill in all required fields");
 		}
 	}else{
-		alert("password doesn't match");
+		
+		alert("Password confirmation doesn't match Password");
 	}
 });
 }

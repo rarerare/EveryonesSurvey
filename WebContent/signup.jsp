@@ -43,7 +43,7 @@
 	Password: <input type="password" name="password" id="password" required><br><br>
 	Confirm Password: <input type="password" id="confirmpassword" required><br><br>
 	
-	Email (optional): <input type="text" name="email"><br><br>
+	Email: <input type="text" name="email" required><br><br>
 	<button type="submit" id="submitButt">Sign up</button>
 </form>
 </div>
