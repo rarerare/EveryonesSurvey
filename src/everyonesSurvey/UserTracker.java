@@ -182,7 +182,7 @@ public class UserTracker extends HttpServlet {
 		Statement stmt=conn.createStatement();
 		stmt.executeUpdate("INSERT INTO user(username, password, email, firstname, lastname) VALUE('"
 		+username+"','"+password+"','"+email+"','"+firstname+"','"+lastname+"')");
-		response.sendRedirect("login.jsp");
+		response.getWriter().write("success");
 		conn.close();
 	}
 	

@@ -25,7 +25,25 @@ document.getElementById("submitButt").addEventListener("click",
 		);
 		if(!unFilled){
 			
-			$('form#mainform').submit();
+			//$('form#mainform').submit(
+					
+					    $.ajax({
+					           type: "POST",
+					           url: "usertracker",
+					           data: $("#mainform").serialize(), 
+					           success: function(message)
+					           {
+					        	   if(message=="success"){
+					        		   window.location="login.jsp";
+					        	   }else{
+					        		   alert(message); 
+					        	   }
+					               
+					           }
+					         });
+
+					    
+			
 		}else{
 			alert("please fill in all required fields");
 		}
