@@ -3,6 +3,7 @@ package everyonesSurvey;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -165,5 +166,70 @@ public class DBConnector {
 		conn.close();
 	}
 	
+	public static void addQuestion(String title
+			, String description
+			, String category
+			, long time
+			, long userid
+			, Long qnid
+			, int optNum
+			, ArrayList<String> optTitles ) throws SQLException, ClassNotFoundException{
+		
+		Connection conn=DBConnector.getConnection();
+		PreparedStatement insertQ;
+		ResultSet qidRS;
+		synchronized(DBConnector.class){
+			if(qnid==null){
+				insertQ=conn.prepareStatement("INSERT INTO question (title, userid, timeint,"
+						+ "description, category) VALUES(?,?,?,?,?)");
+				insertQ.setString(1, title);
+				insertQ.setLong(2, userid);
+				insertQ.setLong(3, time);
+				insertQ.setString(4, description);
+				insertQ.setString(5, category);
+				insertQ.executeUpdate();
+			}else{
+				
+				insertQ=conn.prepareStatement("INSERT INTO question (title, userid, timeint,"
+						+ "description, category, qnid) VALUES(?,?,?,?,?,?)");
+				insertQ.setString(1, title);
+				insertQ.setLong(2, userid);
+				insertQ.setLong(3, time);
+				insertQ.setString(4, description);
+				insertQ.setString(5, category);
+				insertQ.setLong(6, qnid);
+				insertQ.executeUpdate();
+			}
+			
+			qidRS=insertQ.executeQuery("SELECT qid FROM question ORDER BY qid DESC LIMIT 1");
+		}
+		
+		qidRS.next();
+		long qid=qidRS.getLong(1);
+		switch(category){
+		case "samc":
+			
+			Statement opss=conn.createStatement();
+			for(int i=0;i<optNum;i++){
+				opss.executeUpdate("INSERT INTO sachoices(description,qid, position) VALUE('"
+						+optTitles.get(i)+"',"+qid+","+i+")");
+			}
+			break;
+		case "mamc":
+			
+			Statement opsm=conn.createStatement();
+			for(int i=0;i<optNum;i++){
+				
+				opsm.executeUpdate("INSERT INTO machoices(description,qid, position) VALUE('"
+						+optTitles.get(i)+"',"+qid+","+i+")");
+			}
+			break;
+		case "fr":
+			break;
+		case "number":
+			break;
+		}
+		conn.close();
+	}
 	
 }

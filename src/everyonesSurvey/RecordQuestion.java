@@ -115,6 +115,16 @@ public class RecordQuestion extends HttpServlet {
 			, long userid
 			, Long qnid
 			, int optNum
+			, ArrayList<String> optTitles ) throws ClassNotFoundException, SQLException{
+		DBConnector.addQuestion(title, description, category, time, userid, qnid, optNum, optTitles);
+	}
+	/*private void makeQuestion(String title
+			, String description
+			, String category
+			, long time
+			, long userid
+			, Long qnid
+			, int optNum
 			, ArrayList<String> optTitles ) throws SQLException, ClassNotFoundException{
 		
 		Connection conn=DBConnector.getConnection();
@@ -166,6 +176,6 @@ public class RecordQuestion extends HttpServlet {
 		case "number":
 			break;
 		}
-	}
+	}*/
 
 }
