@@ -24,8 +24,7 @@ public class DisplayQuestion extends HttpServlet {
 	private static final int POPQNUM=255;
 	private ArrayList<Question> popQs=new ArrayList<Question>();
 	private ArrayList<Questionnaire> popQns;
-	private final static String SQL_PASSWORD="drwssp";
-	private void initPopQs() throws SQLException, ClassNotFoundException{
+	/*private void initPopQs() throws SQLException, ClassNotFoundException{
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
 		Statement stmt=conn.createStatement();
@@ -40,31 +39,19 @@ public class DisplayQuestion extends HttpServlet {
 			i++;
 		}
 		conn.close();
-	}
+	}*/
 	private void initPopQns() throws SQLException, ClassNotFoundException{
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
-		Statement stmt=conn.createStatement();
-		ResultSet rs= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
-		+",qNaire.qNum, qNaire.server_time"
-				+ "  FROM qNaire, user WHERE qNaire.userid=user.userid ORDER BY qNaire.popularity" );
-		int i=0;
-		popQns=new ArrayList<Questionnaire>();
-		while(rs.next()&&i<POPQNUM){
-			popQns.add(new Questionnaire(rs.getLong(1), rs.getString(2), rs.getLong(3),rs.getInt(4), rs.getDate(5)));
-			i++;
-		}
-		conn.close();
+		popQns=DBConnector.getPopQns(POPQNUM);
 	}
 	
-	private void getPopQuestions(HttpServletRequest request, HttpServletResponse response) 
+	/*private void getPopQuestions(HttpServletRequest request, HttpServletResponse response) 
 			throws SQLException, IOException, ClassNotFoundException, ServletException{
 		initPopQs();
 		request.setAttribute("popQs", popQs);
 		request.getRequestDispatcher("/popq.jsp")
 		.forward(request, response);
 		
-	}
+	}*/
 	private void getPopQns(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, ServletException, IOException{
 		initPopQns();
 		request.setAttribute("popQns", popQns);
@@ -110,13 +97,7 @@ public class DisplayQuestion extends HttpServlet {
 			
 			switch(mAct){
 			
-			case "getpopqs":
-				try {
-					getPopQuestions(request,response);
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-				break;
+			
 			
 			
 			case "searchQ":
@@ -161,21 +142,9 @@ public class DisplayQuestion extends HttpServlet {
 	private void searchQ(HttpServletRequest request, HttpServletResponse response)
 			throws ClassNotFoundException, SQLException, IOException, ServletException{
 		String searchKey=request.getParameter("searchkey");
-		System.out.println(searchKey);
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
-		Statement stmt=conn.createStatement();
+		ArrayList<Questionnaire> surveys=DBConnector.searchQn(searchKey);
 		
-		ResultSet rsQn= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
-				+",qNaire.qNum, qNaire.server_time  FROM qNaire, user  WHERE (qNaire.userid=user.userid) AND (qNaire.title like '%"
-		+searchKey+"%' )");
-		ArrayList<Questionnaire> surveys=new ArrayList<Questionnaire>();
-		while(rsQn.next()){
-			surveys.add(new Questionnaire(rsQn.getLong(1), rsQn.getString(2), rsQn.getLong(3),rsQn.getInt(4), rsQn.getDate(5)));
-			
-		}
 		
-		conn.close();
 		request.setAttribute("surveys", surveys);
 		request.getRequestDispatcher("/searchResults.jsp")
 		.forward(request, response);
