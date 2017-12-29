@@ -37,13 +37,13 @@
 	<div class="loginformdiv">
 	<form action="usertracker" method="post" id="mainform">
 		<input type="hidden" value="signup" name="mact">
-		First Name:<br><input type="text" name="firstname" required ><br><br>
-		Last Name:<br><input type="text" name="lastname" required ><br><br>
-		Username:<br> <input type="text" name="username" required><br><br>
-		Password:<br> <input type="password" name="password" id="password" required><br><br>
-		Confirm Password: <br><input type="password" id="confirmpassword" required><br><br>
+		First Name:<br><input type="text" name="firstname" class="signupinput" required ><br><br>
+		Last Name:<br><input type="text" name="lastname" class="signupinput" required ><br><br>
+		Username:<br> <input type="text" name="username" class="signupinput" required><br><br>
+		Password:<br> <input type="password" name="password" id="password" class="signupinput" required><br><br>
+		Confirm Password: <br><input type="password" id="confirmpassword" class="signupinput" required><br><br>
 		
-		Email: <br><input type="text" name="email" required><br><br>
+		Email: <br><input type="text" name="email" class="signupinput" required><br><br>
 		<button type="submit" id="submitButt">Sign up</button><br>
 		Already have an account?
 		<a href="login.jsp" class="signupbutt">Sign in</a>

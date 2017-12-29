@@ -15,12 +15,12 @@ h3{
 	background-color:#f7f7f7;
 	color:#000000;
 	margin: auto;
-	padding-left:3em;
-	padding-right:3em;
+	padding-left:1.5em;
+	padding-right:1.5em;
 	margin-bottom:10%;
 	padding-top:30px;
 	padding-bottom:30px;
-	font-size:1.5em;
+	font-size:1.3em;
 	border-radius:3px;
 	box-shadow: 1px 1px 1px grey;
 	max-width:25em;
@@ -28,16 +28,24 @@ h3{
 }
 .logininput{
 	color: #000000;
-	font-size:1em;
+	font-size:1.2em;
 	
 	width:100%;
 	margin-bottom:20px;
 	border-radius:10px;
 }
+.signupinput{
+	color: #000000;
+	font-size:1.2em;
+	
+	width:100%;
+	
+	
+}
 .loginsubmit{
 	width:100%;
 	border-radius:20px;
-	font-size:1em;
+	font-size:1.2em;
 	border: none;
 	box-shadow: 1px 1px 1px #000000;
 	background-color:#225588;
