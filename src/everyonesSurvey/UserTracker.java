@@ -92,6 +92,17 @@ public class UserTracker extends HttpServlet {
 			case "logOut":
 				logOut(request,response);
 				break;
+			case "retrievePass":
+				try {
+					retrievePass(request, response);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
 			default:
 				response.sendRedirect("displayquestion");
 				;
@@ -156,10 +167,16 @@ public class UserTracker extends HttpServlet {
 		String lastname=request.getParameter("lastname");
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
-		Statement lookup=conn.createStatement();
-		ResultSet rs= lookup.executeQuery("SELECT * from user WHERE username='"+username+"'");
-		if(rs.next()){
+		Statement lookupUser=conn.createStatement();
+		ResultSet rsUsr= lookupUser.executeQuery("SELECT * from user WHERE username='"+username+"'");
+		if(rsUsr.next()){
 			response.getWriter().println("username already exists");
+			return;
+		}
+		Statement lookupEmail=conn.createStatement();
+		ResultSet rsEml= lookupEmail.executeQuery("SELECT * from user WHERE email='"+email+"'");
+		if(rsEml.next()){
+			response.getWriter().println("email already in database.");
 			return;
 		}
 		Statement stmt=conn.createStatement();
@@ -200,8 +217,19 @@ public class UserTracker extends HttpServlet {
 	private void logOut(HttpServletRequest request, HttpServletResponse response){
 		request.getSession().setAttribute("loggedin", false);
 	}
-	
-	
-	
-	
+	private void retrievePass(HttpServletRequest request, HttpServletResponse response) 
+			throws ClassNotFoundException, SQLException{
+		String emailAddr=request.getParameter("email");
+		String title="Your password";
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
+		Statement lookupEmail=conn.createStatement();
+		ResultSet rsEml= lookupEmail.executeQuery("SELECT password from user WHERE email='"+emailAddr+"'");
+		if(rsEml.next()){
+			String passWd=rsEml.getString(1);
+			System.out.println(passWd);
+		}
+		String text="";
+		Mailman.sendMail("noreply@everyoneq.com", emailAddr, title, text);
+	}
 }
