@@ -1,10 +1,8 @@
 package everyonesSurvey;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +44,7 @@ public class Questionnaire {
 		return new SimpleDateFormat("MMM dd, yyyy").format(createServerTime);
 	}
 	public String getUserName() throws ClassNotFoundException, SQLException{
-		return User.getById(userId).getUsername();
+		return DBConnector.getUserById(userId).getUsername();
 	}
 	public ArrayList<Question> getQList() throws ClassNotFoundException, SQLException{
 		ArrayList<Question> questions=DBConnector.getQListByQnId(getId());

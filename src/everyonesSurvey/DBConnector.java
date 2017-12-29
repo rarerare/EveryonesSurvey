@@ -92,5 +92,17 @@ public class DBConnector {
 		conn.close();
 		return qn;
 	}
+	public static User getUserById(long id) throws ClassNotFoundException, SQLException{
+		
+		Connection conn=getConnection();
+		Statement stmt=conn.createStatement();
+		ResultSet rsQn= stmt.executeQuery("SELECT username, firstname, lastname"
+				+", email"
+						+ "  FROM user WHERE userid="+id );
+		rsQn.next();
+		User user= new User(rsQn.getString(1), rsQn.getString(2), rsQn.getString(3),rsQn.getString(4), id);
+		conn.close();
+		return user;
+	}
 	
 }
