@@ -45,4 +45,18 @@ public class DBConnector {
 		conn.close();
 		return surveys;
 	}
+	public static ArrayList<Questionnaire> getUserQnList(long userId) throws ClassNotFoundException, SQLException{
+		
+		Connection conn=getConnection();
+		Statement stmt=conn.createStatement();
+		ResultSet qnRs=stmt.executeQuery("SELECT qnid, title, qNum, server_time FROM qNaire WHERE userid="+userId);
+		ArrayList<Questionnaire> qns=new ArrayList<Questionnaire>();
+		while(qnRs.next()){
+			qns.add(new Questionnaire(qnRs.getLong(1),qnRs.getString(2),userId, qnRs.getInt(3), qnRs.getDate(4)));
+		}
+
+		conn.close();
+		return qns;
+	}
+	
 }
