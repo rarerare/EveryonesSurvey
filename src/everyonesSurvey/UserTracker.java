@@ -230,7 +230,7 @@ public class UserTracker extends HttpServlet {
 			String passWd=rsEml.getString(1);
 			System.out.println(passWd);
 			text="Your password is:"+passWd;
-			request.setAttribute("serverMessage", "We have sent you an email with your password. Please check you spam.");
+			request.setAttribute("serverMessage", "We have sent you an email with your password. Please check your spam.");
 		}else{
 			request.setAttribute("serverMessage", "You have not signed up yet.");
 		}
@@ -240,5 +240,6 @@ public class UserTracker extends HttpServlet {
 		.forward(request, response);
 		
 		Mailman.sendMail("noreply@everyoneq.com", emailAddr, title, text);
+		conn.close();
 	}
 }
