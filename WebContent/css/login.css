@@ -1,7 +1,7 @@
 
 .loginh1{
 	text-align: center;
-	color:#000000;
+	color:#ffffff;
 	
 }
 h2{
@@ -12,24 +12,24 @@ h3{
 	text-align: center;
 }
 .loginformdiv{
-	background-color:#ffffff;
+	background-color:#f7f7f7;
 	color:#000000;
-	margin-left:10%;
-	margin-right:10%;
-	padding-left:10%;
-	padding-right:10%;
+	margin: auto;
+	padding-left:3em;
+	padding-right:3em;
 	margin-bottom:10%;
 	padding-top:30px;
 	padding-bottom:30px;
 	font-size:1.5em;
-	border-radius:5px;
-	box-shadow: 3px 3px 3px grey;
+	border-radius:3px;
+	box-shadow: 1px 1px 1px grey;
+	max-width:25em;
 	
 }
 .logininput{
 	color: #000000;
 	font-size:1em;
-	background-color:#ffffdd;
+	
 	width:100%;
 	margin-bottom:20px;
 	border-radius:10px;
@@ -59,9 +59,13 @@ h3{
 	border:solid;
 	border-width:1px;
 }
-#loginbody{
-	background-color:#eeeeee;
+.loginbody{
+	background-color:#243549;
+	
 }
 .wrong{
 	color: red;
+}
+.margin_wrapper{
+	padding:8%;
 }

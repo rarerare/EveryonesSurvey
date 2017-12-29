@@ -16,7 +16,7 @@
 
 </script>
 </head>
-<body id="loginbody">
+<body class="loginbody">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -37,28 +37,30 @@
    
   </div>
 </nav>
-<h1 class="loginh1">EveryoneQ</h1>
-<div class="loginformdiv">
-<% String nextPage=(String)request.getAttribute("nextPage"); 
-   if(nextPage==null){
-     nextPage="displayquestion";
-    }
-%>
-<form method="post"  id="loginform">
-<input type="hidden" name="mact" value="login">
-<input type="hidden" name="nextPage" value='<%=nextPage%>'>
-Username: <span id="usernamewrong" class="wrong"></span>
-</span> <br><input type="text" class="logininput" name="username" id="username"><br>
-Password: <span id="passwordwrong" class="wrong"></span>
-</span> <br><input type="password" class="logininput" name="password" id="password"><br>
-<button  class="loginsubmit" id="loginsubmit" type="submit">Sign in</button><br>
-</form>
-
-<a href="forgetpass.jsp" class="signupbutt">Forgot password</a><br>
-
-Don't have an account?
-<a href="signup.jsp" class="signupbutt">Sign up</a>
-
+<h1 class="loginh1"></h1><br>
+<div class="margin_wrapper">
+	<div class="loginformdiv">
+	<% String nextPage=(String)request.getAttribute("nextPage"); 
+	   if(nextPage==null){
+	     nextPage="displayquestion";
+	    }
+	%>
+	<form method="post"  id="loginform">
+	<input type="hidden" name="mact" value="login">
+	<input type="hidden" name="nextPage" value='<%=nextPage%>'>
+	Username: <span id="usernamewrong" class="wrong"></span>
+	</span> <br><input type="text" class="logininput" name="username" id="username"><br>
+	Password: <span id="passwordwrong" class="wrong"></span>
+	</span> <br><input type="password" class="logininput" name="password" id="password"><br>
+	<button  class="loginsubmit" id="loginsubmit" type="submit">Sign in</button><br>
+	</form>
+	
+	<a href="forgetpass.jsp" class="signupbutt">Forgot password</a><br>
+	
+	Don't have an account?
+	<a href="signup.jsp" class="signupbutt">Sign up</a>
+	
+	</div>
 </div>
 </body>
 </html>
