@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class FinAnsQuestion extends Question{
-	private final static String SQL_PASSWORD="drwssp";
+	
 	public FinAnsQuestion(String userName, String title, String description, int popularity, QCategory category,
 			long qid) {
 		super(userName, title, description, popularity, category, qid);
@@ -16,8 +16,8 @@ public class FinAnsQuestion extends Question{
 	}
 	public ArrayList<FinOption> getOptions() throws SQLException, ClassNotFoundException{
 		ArrayList<FinOption> options=new ArrayList<FinOption>();
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
+		
+		Connection conn=DBConnector.getConnection();
 		Statement stmt=conn.createStatement();
 		long qId=getId();
 		ResultSet rs= stmt.executeQuery("SELECT position, description, cid FROM "+this.getCategory().getOptTable()+" WHERE qid="+qId  );

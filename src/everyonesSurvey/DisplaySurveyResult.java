@@ -1,11 +1,10 @@
 package everyonesSurvey;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+
+
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -96,7 +95,7 @@ public class DisplaySurveyResult extends HttpServlet {
 		
 		long qnId=Long.valueOf(request.getParameter("qnId"));
 		
-		Questionnaire qn= Questionnaire.getQnById(qnId);
+		Questionnaire qn= DBConnector.getQnById(qnId);
 		request.setAttribute("qn", qn);
 		
 		request.getRequestDispatcher("/displayResult.jsp")

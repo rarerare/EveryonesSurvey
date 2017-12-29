@@ -119,7 +119,7 @@ public class RecordAnswer extends HttpServlet {
 			}
 		}
 		request.setAttribute("serverMessage", "Your response has been recorded.");
-		request.setAttribute("qnTitle", Questionnaire.getQnById(qnId).getTitle());
+		request.setAttribute("qnTitle", DBConnector.getQnById(qnId).getTitle());
 		request.getRequestDispatcher("/serverMessage.jsp")
 		.forward(request, response);
 	}

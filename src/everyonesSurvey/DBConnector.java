@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class DBConnector {
 	private final static String SQL_PASSWORD="drwssp";
-	private static Connection getConnection() throws ClassNotFoundException, SQLException{
+	public static Connection getConnection() throws ClassNotFoundException, SQLException{
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
 		return conn;
@@ -57,6 +57,40 @@ public class DBConnector {
 
 		conn.close();
 		return qns;
+	}
+	public static ArrayList<Question> getQListByQnId(long qnId) throws SQLException, ClassNotFoundException{
+		
+		Connection conn=getConnection();
+		Statement stmt=conn.createStatement();
+		ResultSet rsQuestion= stmt.executeQuery("SELECT user.username, question.qid"
+				+ ", question.title, question.userid,question.description, question.category"
+				+ " FROM user, question, qNaire WHERE question.userid=user.userid "
+				+ "AND question.qnid=qNaire.qnid AND qNaire.qnid="+qnId);
+		ArrayList<Question> questions=new ArrayList<Question>();
+		while(rsQuestion.next()){
+			if(QCategory.valueOf(rsQuestion.getString(6)).isFinAns()){
+				questions.add(new FinAnsQuestion(rsQuestion.getString(1),rsQuestion.getString(3)
+						,rsQuestion.getString(5),0,QCategory.valueOf(rsQuestion.getString(6)),rsQuestion.getLong(2)));
+			}else{
+				questions.add(new InfiAnsQuestion(rsQuestion.getString(1),rsQuestion.getString(3)
+						,rsQuestion.getString(5),0,QCategory.valueOf(rsQuestion.getString(6)),rsQuestion.getLong(2)));
+			}
+			
+		}
+		conn.close();
+		return questions;
+	}
+	public static Questionnaire getQnById(long id) throws  SQLException, ClassNotFoundException{
+		
+		Connection conn=getConnection();
+		Statement stmt=conn.createStatement();
+		ResultSet rsQn= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
+				+",qNaire.qNum, qNaire.server_time"
+						+ "  FROM qNaire WHERE qNaire.qnid="+id );
+		rsQn.next();
+		Questionnaire qn= new Questionnaire(rsQn.getLong(1), rsQn.getString(2), rsQn.getLong(3),rsQn.getInt(4), rsQn.getDate(5));
+		conn.close();
+		return qn;
 	}
 	
 }

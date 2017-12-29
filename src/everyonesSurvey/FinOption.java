@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class FinOption {
-	private final static String SQL_PASSWORD="drwssp";
+	
 	private String description;
 	private long id;
 	
@@ -30,8 +30,8 @@ public class FinOption {
 		QCategory category=question.getCategory();
 		
 		
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq", "root",SQL_PASSWORD);
+		
+		Connection conn=DBConnector.getConnection();
 		Statement stmt=conn.createStatement();
 		ResultSet rs=stmt.executeQuery("select count(*) from "+category.getAnsTable()+" where cId= "+id );
 		rs.next();

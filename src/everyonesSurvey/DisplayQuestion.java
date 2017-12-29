@@ -2,11 +2,11 @@ package everyonesSurvey;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+
+
+
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -127,7 +127,7 @@ public class DisplayQuestion extends HttpServlet {
 			throws ClassNotFoundException, SQLException, ServletException, IOException{
 		
 		long qnId=Long.parseLong(request.getParameter("qnid"));
-		Questionnaire qn= Questionnaire.getQnById(qnId);
+		Questionnaire qn= DBConnector.getQnById(qnId);
 		ArrayList<Question> questions=qn.getQList();
 		
 		request.setAttribute("questions", questions);
