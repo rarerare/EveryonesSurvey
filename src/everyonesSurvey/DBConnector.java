@@ -154,5 +154,16 @@ public class DBConnector {
 		conn.close();
 		return passWd;
 	}
+	public static void addUser(String username, String email, String firstname, String lastname, String password) 
+			throws ClassNotFoundException, SQLException{
+		
+		Connection conn=DBConnector.getConnection();
+		Statement stmt=conn.createStatement();
+		stmt.executeUpdate("INSERT INTO user(username, password, email, firstname, lastname) VALUE('"
+		+username+"','"+password+"','"+email+"','"+firstname+"','"+lastname+"')");
+		
+		conn.close();
+	}
+	
 	
 }

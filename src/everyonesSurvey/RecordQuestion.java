@@ -128,7 +128,7 @@ public class RecordQuestion extends HttpServlet {
 			}else{
 				System.out.println("INSERT INTO question (title, userid, timeint,"
 						+ "description, category, qnid) VALUE('"+title+"',"+userid+","+time+",'"+description
-						+"','"+category+"'"+qnid+")");
+						+"','"+category+"',"+qnid+")");
 				insertQ.executeUpdate("INSERT INTO question (title, userid, timeint,"
 						+ "description, category, qnid) VALUE('"+title+"',"+userid+","+time+",'"+description
 						+"','"+category+"',"+qnid+")");

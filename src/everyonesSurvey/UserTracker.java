@@ -14,8 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import java.sql.*;
 
-import com.mysql.*;
-import com.mysql.jdbc.Driver;
+
 import java.util.*;
 import java.util.Date;
 /**
@@ -155,24 +154,18 @@ public class UserTracker extends HttpServlet {
 		String email=request.getParameter("email");
 		String firstname=request.getParameter("firstname");
 		String lastname=request.getParameter("lastname");
-		Connection conn=DBConnector.getConnection();
-		Statement lookupUser=conn.createStatement();
-		ResultSet rsUsr= lookupUser.executeQuery("SELECT * from user WHERE username='"+username+"'");
-		if(rsUsr.next()){
+		
+		if(DBConnector.getUserByUsername(username)!=null){
 			response.getWriter().println("username already exists");
 			return;
 		}
-		Statement lookupEmail=conn.createStatement();
-		ResultSet rsEml= lookupEmail.executeQuery("SELECT * from user WHERE email='"+email+"'");
-		if(rsEml.next()){
+		
+		if(DBConnector.getPassWdByEmail(email)!=null){
 			response.getWriter().println("email already in database.");
 			return;
 		}
-		Statement stmt=conn.createStatement();
-		stmt.executeUpdate("INSERT INTO user(username, password, email, firstname, lastname) VALUE('"
-		+username+"','"+password+"','"+email+"','"+firstname+"','"+lastname+"')");
+		DBConnector.addUser(username, email, firstname, lastname, password);
 		response.getWriter().write("success");
-		conn.close();
 	}
 	
 	private void getFirstName(HttpServletRequest request, HttpServletResponse response) throws IOException{
