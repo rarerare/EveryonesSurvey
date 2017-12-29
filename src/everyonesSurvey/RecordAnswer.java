@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/RecordAnswer")
 public class RecordAnswer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private final static String SQL_PASSWORD="drwssp";   
+     
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -125,8 +125,7 @@ public class RecordAnswer extends HttpServlet {
 	}
 	
 	private void recordSingleChoice(long qId, long cId) throws ClassNotFoundException, SQLException{
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
+		Connection conn=DBConnector.getConnection();
 		Statement recordC=conn.createStatement();
 		String selectionTableName="saSelections";
 		
@@ -137,8 +136,7 @@ public class RecordAnswer extends HttpServlet {
 		
 	}
 	private void recordMultipleChoice(long qId, long[] cIds) throws ClassNotFoundException, SQLException{
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
+		Connection conn=DBConnector.getConnection();
 		Statement recordC=conn.createStatement();
 		String selectionTableName="maSelections";
 		for(long cId:cIds){
@@ -147,15 +145,13 @@ public class RecordAnswer extends HttpServlet {
 		conn.close();
 	}
 	private void recordFreeResponse(long qId, String text) throws ClassNotFoundException, SQLException{
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
+		Connection conn=DBConnector.getConnection();
 		Statement recordA=conn.createStatement();
 		recordA.executeUpdate("insert into frAnswers (qid,answer) values("+qId+",'"+text+"')");
 		conn.close();
 	}
 	private void recordNumAnswer(long qId, double answer) throws ClassNotFoundException, SQLException{
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
+		Connection conn=DBConnector.getConnection();
 		Statement recordA=conn.createStatement();
 		recordA.executeUpdate("insert into numAnswer (qid, answer) values("+qId+","+answer+")");
 		conn.close();

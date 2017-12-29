@@ -29,7 +29,7 @@ public class User {
 	public String getLastName(){
 		return lastName;
 	}
-	public String eMail(){
+	public String getEmail(){
 		return eMail;
 	}
 	public long getId(){

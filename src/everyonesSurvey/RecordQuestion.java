@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class RecordQuestion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private final static String SQL_PASSWORD="drwssp";   
+      
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -84,8 +84,7 @@ public class RecordQuestion extends HttpServlet {
 		Date date=new Date();
 		long time =date.getTime();
 		String dateTimeStr=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
+		Connection conn=DBConnector.getConnection();
 		Statement createQN=conn.createStatement();
 		ResultSet qnidRS; 
 		synchronized(this.getClass()){
@@ -118,8 +117,7 @@ public class RecordQuestion extends HttpServlet {
 			, int optNum
 			, ArrayList<String> optTitles ) throws SQLException, ClassNotFoundException{
 		
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
+		Connection conn=DBConnector.getConnection();
 		Statement insertQ=conn.createStatement();
 		ResultSet qidRS;
 		synchronized(this.getClass()){

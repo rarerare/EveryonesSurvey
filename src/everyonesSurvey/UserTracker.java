@@ -24,7 +24,7 @@ import java.util.Date;
 @MultipartConfig
 public class UserTracker extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private final static String SQL_PASSWORD="drwssp";   
+      
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -112,9 +112,6 @@ public class UserTracker extends HttpServlet {
 	}
 	private void login(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ClassNotFoundException{
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
-		Statement stmt=conn.createStatement();
 		
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
@@ -122,28 +119,21 @@ public class UserTracker extends HttpServlet {
 		if(nextPage==null){
 			nextPage="displayquestion";
 		}
-		ResultSet rs=stmt.executeQuery("SELECT password, firstname, lastname, userid from user WHERE username='"+username+"'");
-		if(rs.next()){
-			String realPass=rs.getString(1);
+		User user=DBConnector.getUserByUsername(username);
+		if(user!=null){
+			String realPass=DBConnector.getPassWdByUsername(username);
 			if(password.equals(realPass)){
 				HttpSession session=request.getSession();
 				session.setAttribute("loggedin", true);
 				session.setAttribute("username", username);
-				String firstname=rs.getString(2);
+				String firstname=user.getFirstName();
 				System.out.println("firstname:"+firstname);
 				session.setAttribute("firstname", firstname);
-				String lastname=rs.getString(3);
+				String lastname=user.getLastName();
 				session.setAttribute("lastname", lastname);
-				long userid=rs.getLong(4);
+				long userid=user.getId();
 				session.setAttribute("userid", userid);
-				
-				
-				
-				ResultSet rsEMail=stmt.executeQuery("select email from user where userid="+userid );
-				rsEMail.next();
-				
-				String eMail=rsEMail.getString(1);
-				User user=new User(username, firstname, lastname, eMail, userid);
+				String eMail=user.getEmail();
 				session.setAttribute("user", user);
 				PrintWriter pw= response.getWriter();
 				pw.write("loggedin"+nextPage);
@@ -157,7 +147,7 @@ public class UserTracker extends HttpServlet {
 			PrintWriter pw= response.getWriter();
 			pw.write("Incorrect Username");
 		}
-		conn.close();
+		
 	}
 	private void signup(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ClassNotFoundException{
 		String username=request.getParameter("username");
@@ -165,8 +155,7 @@ public class UserTracker extends HttpServlet {
 		String email=request.getParameter("email");
 		String firstname=request.getParameter("firstname");
 		String lastname=request.getParameter("lastname");
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
+		Connection conn=DBConnector.getConnection();
 		Statement lookupUser=conn.createStatement();
 		ResultSet rsUsr= lookupUser.executeQuery("SELECT * from user WHERE username='"+username+"'");
 		if(rsUsr.next()){
@@ -221,18 +210,14 @@ public class UserTracker extends HttpServlet {
 			throws ClassNotFoundException, SQLException, ServletException, IOException{
 		String emailAddr=request.getParameter("email");
 		String title="Your password";
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
-		Statement lookupEmail=conn.createStatement();
-		ResultSet rsEml= lookupEmail.executeQuery("SELECT password from user WHERE email='"+emailAddr+"'");
-		String text="You have not signed up yet";
-		if(rsEml.next()){
-			String passWd=rsEml.getString(1);
-			System.out.println(passWd);
+		String passWd=DBConnector.getPassWdByEmail(emailAddr);
+		String text;
+		if(passWd!=null){
 			text="Your password is:"+passWd;
 			request.setAttribute("serverMessage", "We have sent you an email with your password. Please check your spam.");
 		}else{
 			request.setAttribute("serverMessage", "You have not signed up yet.");
+			text="You have not signed up yet";
 		}
 		
 		request.setAttribute("qnTitle", "");
@@ -240,6 +225,6 @@ public class UserTracker extends HttpServlet {
 		.forward(request, response);
 		
 		Mailman.sendMail("noreply@everyoneq.com", emailAddr, title, text);
-		conn.close();
+		
 	}
 }

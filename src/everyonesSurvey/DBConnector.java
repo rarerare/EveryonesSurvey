@@ -1,11 +1,14 @@
 package everyonesSurvey;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
 
 public class DBConnector {
 	private final static String SQL_PASSWORD="drwssp";
@@ -103,6 +106,53 @@ public class DBConnector {
 		User user= new User(rsQn.getString(1), rsQn.getString(2), rsQn.getString(3),rsQn.getString(4), id);
 		conn.close();
 		return user;
+	}
+	public static String getPassWdByEmail(String emailAddr) throws SQLException, ClassNotFoundException{
+		
+		Connection conn=getConnection();
+		Statement lookupEmail=conn.createStatement();
+		ResultSet rsEml= lookupEmail.executeQuery("SELECT password from user WHERE email='"+emailAddr+"'");
+		String passWd=null;
+		if(rsEml.next()){
+			passWd=rsEml.getString(1);
+		}else{
+			passWd=null;
+		}
+		conn.close();
+		return passWd;
+	}
+	public static User getUserByUsername(String username) throws SQLException, ClassNotFoundException{
+		Connection conn=DBConnector.getConnection();
+		Statement stmt=conn.createStatement();
+		ResultSet rs=stmt.executeQuery("SELECT password, firstname, lastname, userid from user WHERE username='"+username+"'");
+		if(rs.next()){
+			String realPass=rs.getString(1);
+			String firstname=rs.getString(2);
+			String lastname=rs.getString(3);
+			long userid=rs.getLong(4);
+			ResultSet rsEMail=stmt.executeQuery("select email from user where userid="+userid );
+			rsEMail.next();
+			String eMail=rsEMail.getString(1);
+			User user=new User(username, firstname, lastname, eMail, userid);
+			conn.close();
+			return user;
+		}
+		conn.close();
+		return null;
+	}
+	public static String getPassWdByUsername(String username) throws SQLException, ClassNotFoundException{
+		
+		Connection conn=getConnection();
+		Statement lookupEmail=conn.createStatement();
+		ResultSet rs= lookupEmail.executeQuery("SELECT password from user WHERE username='"+username+"'");
+		String passWd=null;
+		if(rs.next()){
+			passWd=rs.getString(1);
+		}else{
+			passWd=null;
+		}
+		conn.close();
+		return passWd;
 	}
 	
 }
