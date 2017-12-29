@@ -218,18 +218,27 @@ public class UserTracker extends HttpServlet {
 		request.getSession().setAttribute("loggedin", false);
 	}
 	private void retrievePass(HttpServletRequest request, HttpServletResponse response) 
-			throws ClassNotFoundException, SQLException{
+			throws ClassNotFoundException, SQLException, ServletException, IOException{
 		String emailAddr=request.getParameter("email");
 		String title="Your password";
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/everyoneq","root",SQL_PASSWORD);
 		Statement lookupEmail=conn.createStatement();
 		ResultSet rsEml= lookupEmail.executeQuery("SELECT password from user WHERE email='"+emailAddr+"'");
+		String text="You have not signed up yet";
 		if(rsEml.next()){
 			String passWd=rsEml.getString(1);
 			System.out.println(passWd);
+			text="Your password is:"+passWd;
+			request.setAttribute("serverMessage", "We have sent you an email with your password. Please check you spam.");
+		}else{
+			request.setAttribute("serverMessage", "You have not signed up yet.");
 		}
-		String text="";
+		
+		request.setAttribute("qnTitle", "");
+		request.getRequestDispatcher("/serverMessage.jsp")
+		.forward(request, response);
+		
 		Mailman.sendMail("noreply@everyoneq.com", emailAddr, title, text);
 	}
 }
