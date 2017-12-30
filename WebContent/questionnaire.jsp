@@ -76,7 +76,7 @@ window.onload=function(){
 	<hr><br><h3>Question 1</h3><br><b>Title:</b><br>
 	<input type='hidden' name='optNum1' ' id='optNum1' value='0'>
 	<input type='text' name='qTitle1' ' required><br><br>
-	<b>Type:</b> <select id='categorySelection1' name='category1' onchange='updateAnswerDetail(1)'>
+	<b>Type:</b> <select id='categorySelection1' name='category1' onchange='updateAnswerDetail(1)' required>
 			<option disabled selected value> -- select an option -- </option>
 			<option value='samc'> Single-Answer Multiple choice </option> 
 			<option value='mamc'> Multiple-Answer Multiple choice </option>
