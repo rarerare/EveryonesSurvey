@@ -2,11 +2,9 @@ package everyonesSurvey;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -22,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/RecordAnswer")
 public class RecordAnswer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String NUM_ANS_TABLE_NAME = "num_ans";
      
     /**
      * @see HttpServlet#HttpServlet()
@@ -98,21 +97,21 @@ public class RecordAnswer extends HttpServlet {
 					for(int i=0;i<cIds.length;i++){
 						cIds[i]=Long.parseLong(cIdStrs[i]);
 					}
-					recordMultipleChoice(qId, cIds);
+					recordMultipleChoice( cIds, category);
 					break;
 					
 				case samc:
 					long cId=Long.parseLong(request.getParameter(param));
-					recordSingleChoice(qId,cId);
+					DBConnector.recordChoice(cId, category);
 					break;
 					
 				case fr:
 					String text=request.getParameter(param);
-					recordFreeResponse(qId,text);
+					DBConnector.recordFreeResponse(qId,text);
 					break;
 				case number:
 					double answer=Double.parseDouble(request.getParameter(param));
-					recordNumAnswer(qId, answer);
+					DBConnector.recordNumAnswer(qId, answer);
 					break;
 				default:
 					break;
@@ -125,39 +124,13 @@ public class RecordAnswer extends HttpServlet {
 		.forward(request, response);
 	}
 	
-	private void recordSingleChoice(long qId, long cId) throws ClassNotFoundException, SQLException{
-		Connection conn=DBConnector.getConnection();
-		Statement recordC=conn.createStatement();
-		String selectionTableName="saSelections";
-		
-		
-		recordC.executeUpdate("insert into "+selectionTableName+"(cId) values("+cId+")");
-		conn.close();
-		
-		
-	}
-	private void recordMultipleChoice(long qId, long[] cIds) throws ClassNotFoundException, SQLException{
-		Connection conn=DBConnector.getConnection();
-		Statement recordC=conn.createStatement();
-		String selectionTableName="maSelections";
+	
+	private void recordMultipleChoice( long[] cIds, QCategory category) throws ClassNotFoundException, SQLException{
 		for(long cId:cIds){
-			recordC.executeUpdate("insert into "+selectionTableName+"(cId) values("+cId+")");
+			DBConnector.recordChoice(cId, category);
 		}
-		conn.close();
 	}
-	private void recordFreeResponse(long qId, String text) throws ClassNotFoundException, SQLException{
-		Connection conn=DBConnector.getConnection();
-		PreparedStatement recordA=conn.prepareStatement("insert into frAnswers (qid,answer) values(?,?)");
-		recordA.setLong(1, qId);
-		recordA.setString(2, text);
-		recordA.execute();
-		conn.close();
-	}
-	private void recordNumAnswer(long qId, double answer) throws ClassNotFoundException, SQLException{
-		Connection conn=DBConnector.getConnection();
-		Statement recordA=conn.createStatement();
-		recordA.executeUpdate("insert into numAnswer (qid, answer) values("+qId+","+answer+")");
-		conn.close();
-	}
+	
+	
 
 }

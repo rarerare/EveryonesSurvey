@@ -1,10 +1,8 @@
 package everyonesSurvey;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.sql.Statement;
+
 
 public class FinOption {
 	
@@ -28,15 +26,6 @@ public class FinOption {
 	}
 	public long selectCount() throws ClassNotFoundException, SQLException{
 		QCategory category=question.getCategory();
-		
-		
-		
-		Connection conn=DBConnector.getConnection();
-		Statement stmt=conn.createStatement();
-		ResultSet rs=stmt.executeQuery("select count(*) from "+category.getAnsTable()+" where cId= "+id );
-		rs.next();
-		long selectCount=rs.getLong(1);
-		conn.close();
-		return selectCount;
+		return DBConnector.getSelectCount(category, id);
 	}
 }

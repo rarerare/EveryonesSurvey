@@ -1,10 +1,8 @@
 package everyonesSurvey;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
 
 public class InfiAnsQuestion extends Question{
@@ -15,14 +13,7 @@ public class InfiAnsQuestion extends Question{
 		// TODO Auto-generated constructor stub
 	}
 	public ArrayList<String> getAnsList() throws SQLException, ClassNotFoundException{
-		ArrayList<String>  answers=new ArrayList<String>();
-		
-		Connection conn=DBConnector.getConnection();
-		Statement stmt=conn.createStatement();
-		ResultSet rs=stmt.executeQuery("SELECT answer FROM "+getCategory().getAnsTable()+" WHERE qid="+getId());
-		while(rs.next()){
-			answers.add(rs.getString(1));
-		}
+		ArrayList<String>  answers=DBConnector.getAnsList(getCategory(), getId());
 		return answers;
 		
 	}

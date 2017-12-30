@@ -1,10 +1,11 @@
 package everyonesSurvey;
 
 public enum QCategory {
-	samc("radio","sachoices","saSelections",true)
-	, mamc("checkbox","machoices","maSelections",true)
-	, fr("text",null,"frAnswers",false)
-	, number("number",null,"numAnswer",false);
+	
+	samc("radio","sa_option","sa_selection",true)
+	, mamc("checkbox","ma_option","ma_selection",true)
+	, fr("text",null,"fr_ans",false)
+	, number("number",null,"num_ans",false);
 	
 	private String inputType;
 	private String optTable;

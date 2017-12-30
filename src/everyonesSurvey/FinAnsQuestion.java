@@ -1,10 +1,8 @@
 package everyonesSurvey;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
 
 public class FinAnsQuestion extends Question{
@@ -15,20 +13,9 @@ public class FinAnsQuestion extends Question{
 		// TODO Auto-generated constructor stub
 	}
 	public ArrayList<FinOption> getOptions() throws SQLException, ClassNotFoundException{
-		ArrayList<FinOption> options=new ArrayList<FinOption>();
 		
-		Connection conn=DBConnector.getConnection();
-		Statement stmt=conn.createStatement();
-		long qId=getId();
-		ResultSet rs= stmt.executeQuery("SELECT position, description, cid FROM "+this.getCategory().getOptTable()+" WHERE qid="+qId  );
 		
-		while(rs.next()){
-			String description=rs.getString(2);
-			long cId=rs.getLong(3);
-			options.add(new FinOption(cId, this, description));
-		}
-		conn.close();
-		return options;
+		return DBConnector.getQOptions(this);
 		
 	}
 	

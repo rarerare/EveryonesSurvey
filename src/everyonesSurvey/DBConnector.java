@@ -12,6 +12,14 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 public class DBConnector {
+	private static final String SA_OPTION_TABLE_NAME = QCategory.samc.getOptTable();
+	private static final String SA_SELECTION_TABLE_NAME = QCategory.samc.getAnsTable();
+	private static final String QUESTION_TABLE_NAME = "question";
+	private static final String MA_OPTION_TABLE_NAME = QCategory.mamc.getOptTable();
+	private static final String MA_SELECTION_TABLE_NAME = QCategory.mamc.getAnsTable();
+	private static final String FR_ANS_TABLE_NAME = QCategory.fr.getAnsTable();
+	private static final String NUM_ANS_TABLE_NAME = QCategory.number.getAnsTable();
+	private static final String Q_NAIRE_TABLE_NAME = "qnaire";
 	private final static String SQL_PASSWORD="drwssp";
 	public static Connection getConnection() throws ClassNotFoundException, SQLException{
 		Class.forName("com.mysql.jdbc.Driver");
@@ -21,9 +29,9 @@ public class DBConnector {
 	public static ArrayList<Questionnaire> getPopQns(int num) throws ClassNotFoundException, SQLException{
 		Connection conn=getConnection();
 		Statement stmt=conn.createStatement();
-		ResultSet rs= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
-		+",qNaire.qNum, qNaire.server_time"
-				+ "  FROM qNaire, user WHERE qNaire.userid=user.userid ORDER BY qNaire.popularity" );
+		ResultSet rs= stmt.executeQuery("SELECT "+Q_NAIRE_TABLE_NAME+".qnid, "+Q_NAIRE_TABLE_NAME+".title, "+Q_NAIRE_TABLE_NAME+".userid"
+		+","+Q_NAIRE_TABLE_NAME+".qNum, "+Q_NAIRE_TABLE_NAME+".server_time"
+				+ "  FROM "+Q_NAIRE_TABLE_NAME+", user WHERE "+Q_NAIRE_TABLE_NAME+".userid=user.userid ORDER BY "+Q_NAIRE_TABLE_NAME+".popularity" );
 		int i=0;
 		ArrayList<Questionnaire> popQns=new ArrayList<Questionnaire>();
 		while(rs.next()&&i<num){
@@ -37,8 +45,9 @@ public class DBConnector {
 		Connection conn=getConnection();
 		Statement stmt=conn.createStatement();
 		
-		ResultSet rsQn= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
-				+",qNaire.qNum, qNaire.server_time  FROM qNaire, user  WHERE (qNaire.userid=user.userid) AND (qNaire.title like '%"
+		ResultSet rsQn= stmt.executeQuery("SELECT "+Q_NAIRE_TABLE_NAME+".qnid, "+Q_NAIRE_TABLE_NAME+".title, "+Q_NAIRE_TABLE_NAME+".userid"
+				+","+Q_NAIRE_TABLE_NAME+".qNum, "+Q_NAIRE_TABLE_NAME+".server_time  FROM "+Q_NAIRE_TABLE_NAME
+				+", user  WHERE ("+Q_NAIRE_TABLE_NAME+".userid=user.userid) AND ("+Q_NAIRE_TABLE_NAME+".title like '%"
 		+key+"%' )");
 		ArrayList<Questionnaire> surveys=new ArrayList<Questionnaire>();
 		while(rsQn.next()){
@@ -53,7 +62,7 @@ public class DBConnector {
 		
 		Connection conn=getConnection();
 		Statement stmt=conn.createStatement();
-		ResultSet qnRs=stmt.executeQuery("SELECT qnid, title, qNum, server_time FROM qNaire WHERE userid="+userId);
+		ResultSet qnRs=stmt.executeQuery("SELECT qnid, title, qNum, server_time FROM "+Q_NAIRE_TABLE_NAME+" WHERE userid="+userId);
 		ArrayList<Questionnaire> qns=new ArrayList<Questionnaire>();
 		while(qnRs.next()){
 			qns.add(new Questionnaire(qnRs.getLong(1),qnRs.getString(2),userId, qnRs.getInt(3), qnRs.getDate(4)));
@@ -68,8 +77,8 @@ public class DBConnector {
 		Statement stmt=conn.createStatement();
 		ResultSet rsQuestion= stmt.executeQuery("SELECT user.username, question.qid"
 				+ ", question.title, question.userid,question.description, question.category"
-				+ " FROM user, question, qNaire WHERE question.userid=user.userid "
-				+ "AND question.qnid=qNaire.qnid AND qNaire.qnid="+qnId);
+				+ " FROM user, question, "+Q_NAIRE_TABLE_NAME+" WHERE question.userid=user.userid "
+				+ "AND question.qnid="+Q_NAIRE_TABLE_NAME+".qnid AND "+Q_NAIRE_TABLE_NAME+".qnid="+qnId);
 		ArrayList<Question> questions=new ArrayList<Question>();
 		while(rsQuestion.next()){
 			if(QCategory.valueOf(rsQuestion.getString(6)).isFinAns()){
@@ -88,9 +97,9 @@ public class DBConnector {
 		
 		Connection conn=getConnection();
 		Statement stmt=conn.createStatement();
-		ResultSet rsQn= stmt.executeQuery("SELECT qNaire.qnid, qNaire.title, qNaire.userid"
-				+",qNaire.qNum, qNaire.server_time"
-						+ "  FROM qNaire WHERE qNaire.qnid="+id );
+		ResultSet rsQn= stmt.executeQuery("SELECT "+Q_NAIRE_TABLE_NAME+".qnid, "+Q_NAIRE_TABLE_NAME+".title, "+Q_NAIRE_TABLE_NAME+".userid"
+				+","+Q_NAIRE_TABLE_NAME+".qNum, "+Q_NAIRE_TABLE_NAME+".server_time"
+						+ "  FROM "+Q_NAIRE_TABLE_NAME+" WHERE "+Q_NAIRE_TABLE_NAME+".qnid="+id );
 		rsQn.next();
 		Questionnaire qn= new Questionnaire(rsQn.getLong(1), rsQn.getString(2), rsQn.getLong(3),rsQn.getInt(4), rsQn.getDate(5));
 		conn.close();
@@ -229,8 +238,9 @@ public class DBConnector {
 		Connection conn=DBConnector.getConnection();
 		Statement createQN=conn.createStatement();
 		ResultSet qnidRS;
-		createQN.executeUpdate("INSERT INTO qNaire (title, qNum, userid, server_time) VALUES('"+title+"',"+qNum+","+userid+",'"+dateTimeStr+"')");
-		qnidRS=createQN.executeQuery("SELECT qnid FROM qNaire ORDER BY qnid DESC LIMIT 1");
+		createQN.executeUpdate("INSERT INTO "+Q_NAIRE_TABLE_NAME
+				+" (title, qNum, userid, server_time) VALUES('"+title+"',"+qNum+","+userid+",'"+dateTimeStr+"')");
+		qnidRS=createQN.executeQuery("SELECT qnid FROM "+Q_NAIRE_TABLE_NAME+" ORDER BY qnid DESC LIMIT 1");
 		qnidRS.next();
 		long qnid=qnidRS.getLong(1);
 		conn.close();
@@ -257,14 +267,73 @@ public class DBConnector {
 	public static void emptyQnaires() throws ClassNotFoundException, SQLException{
 		Connection conn=DBConnector.getConnection();
 		Statement stmt=conn.createStatement();
-		stmt.execute("delete from frAnswers");
-		stmt.execute("delete from maSelections");
-		stmt.execute("delete from machoices");
-		stmt.execute("delete from numAnswer");
-		stmt.execute("delete from qNaire");
-		stmt.execute("delete from question");
-		stmt.execute("delete from saSelections");
-		stmt.execute("delete from sachoices");
+		stmt.execute("delete from "+FR_ANS_TABLE_NAME);
+		stmt.execute("delete from "+MA_SELECTION_TABLE_NAME);
+		stmt.execute("delete from "+MA_OPTION_TABLE_NAME);
+		stmt.execute("delete from "+NUM_ANS_TABLE_NAME);
+		stmt.execute("delete from "+Q_NAIRE_TABLE_NAME+"");
+		stmt.execute("delete from "+QUESTION_TABLE_NAME);
+		stmt.execute("delete from "+SA_SELECTION_TABLE_NAME);
+		stmt.execute("delete from "+SA_OPTION_TABLE_NAME);
+		conn.close();
+	}
+	public static void recordChoice( long cId, QCategory category) throws ClassNotFoundException, SQLException{
+		Connection conn=DBConnector.getConnection();
+		Statement recordC=conn.createStatement();
+		String selectionTableName=category.getAnsTable();
+		recordC.executeUpdate("insert into "+selectionTableName+"(cId) values("+cId+")");
+		conn.close();
+	}
+	public static void recordFreeResponse(long qId, String text) throws ClassNotFoundException, SQLException{
+		Connection conn=DBConnector.getConnection();
+		PreparedStatement recordA=conn.prepareStatement("insert into fr_ans (qid,answer) values(?,?)");
+		recordA.setLong(1, qId);
+		recordA.setString(2, text);
+		recordA.execute();
+		conn.close();
+	}
+	public static void recordNumAnswer(long qId, double answer) throws ClassNotFoundException, SQLException{
+		Connection conn=DBConnector.getConnection();
+		Statement recordA=conn.createStatement();
+		recordA.executeUpdate("insert into "+NUM_ANS_TABLE_NAME+" (qid, answer) values("+qId+","+answer+")");
+		conn.close();
+	}
+	public static ArrayList<String> getAnsList(QCategory category, long qid) throws SQLException, ClassNotFoundException{
+		ArrayList<String>  answers=new ArrayList<String>();
+		
+		Connection conn=DBConnector.getConnection();
+		Statement stmt=conn.createStatement();
+		ResultSet rs=stmt.executeQuery("SELECT answer FROM "+category.getAnsTable()+" WHERE qid="+qid);
+		while(rs.next()){
+			answers.add(rs.getString(1));
+		}
+		conn.close();
+		return answers;
+	}
+	public static long getSelectCount(QCategory category, long cId) throws ClassNotFoundException, SQLException{
+		Connection conn=DBConnector.getConnection();
+		Statement stmt=conn.createStatement();
+		ResultSet rs=stmt.executeQuery("select count(*) from "+category.getAnsTable()+" where cId= "+cId );
+		rs.next();
+		long selectCount=rs.getLong(1);
+		conn.close();
+		return selectCount;
+	}
+	public static ArrayList<FinOption> getQOptions(Question question) throws SQLException, ClassNotFoundException{
+		ArrayList<FinOption> options=new ArrayList<FinOption>();
+		long qId=question.getId();
+		Connection conn=DBConnector.getConnection();
+		Statement stmt=conn.createStatement();
+		ResultSet rs= stmt.executeQuery("SELECT position, description, cid FROM "+question.getCategory().getOptTable()+" WHERE qid="+qId  );
+		
+		while(rs.next()){
+			String description=rs.getString(2);
+			long cId=rs.getLong(3);
+			options.add(new FinOption(cId, question, description));
+		}
+		conn.close();
+		return options;
+		
 	}
 	
 }
