@@ -215,30 +215,19 @@ public class DBConnector {
 						+optTitles.get(i)+"',"+qid+","+i+")");
 			}
 		}
-		/*switch(category){
-		case "samc":
-			
-			Statement opss=conn.createStatement();
-			for(int i=0;i<optNum;i++){
-				opss.executeUpdate("INSERT INTO sachoices(description,qid, position) VALUE('"
-						+optTitles.get(i)+"',"+qid+","+i+")");
-			}
-			break;
-		case "mamc":
-			
-			Statement opsm=conn.createStatement();
-			for(int i=0;i<optNum;i++){
-				
-				opsm.executeUpdate("INSERT INTO machoices(description,qid, position) VALUE('"
-						+optTitles.get(i)+"',"+qid+","+i+")");
-			}
-			break;
-		case "fr":
-			break;
-		case "number":
-			break;
-		}*/
+		
 		conn.close();
+	}
+	public synchronized static long addEmptyQnr(String title, int qNum, long userid, String dateTimeStr) throws ClassNotFoundException, SQLException{
+		Connection conn=DBConnector.getConnection();
+		Statement createQN=conn.createStatement();
+		ResultSet qnidRS;
+		createQN.executeUpdate("INSERT INTO qNaire (title, qNum, userid, server_time) VALUES('"+title+"',"+qNum+","+userid+",'"+dateTimeStr+"')");
+		qnidRS=createQN.executeQuery("SELECT qnid FROM qNaire ORDER BY qnid DESC LIMIT 1");
+		qnidRS.next();
+		long qnid=qnidRS.getLong(1);
+		conn.close();
+		return qnid;
 	}
 	public static void emptyQnaires() throws ClassNotFoundException, SQLException{
 		Connection conn=DBConnector.getConnection();
