@@ -174,12 +174,16 @@ public class UserTracker extends HttpServlet {
 		pw.print(firstname);
 	}
 	
-	private void checkLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		
+	public static boolean loggedIn(HttpServletRequest request){
 		if(request.getSession().getAttribute("loggedin")==null){
-			response.getWriter().print("no");
-			return;
+			return false;
 		}else if((boolean)request.getSession().getAttribute("loggedin")==false){
+			return false;
+		}
+		return true;
+	}
+	private void checkLogin(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		if(!loggedIn(request)){
 			response.getWriter().print("no");
 			return;
 		}
@@ -219,5 +223,8 @@ public class UserTracker extends HttpServlet {
 		
 		Mailman.sendMail("noreply@everyoneq.com", emailAddr, title, text);
 		
+	}
+	public static User getCurrUser(HttpServletRequest request){
+		return (User) request.getSession().getAttribute("user");
 	}
 }

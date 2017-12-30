@@ -236,6 +236,24 @@ public class DBConnector {
 		conn.close();
 		return qnid;
 	}
+	public static void recordVisit(String ipv4, String datetimeStr, Long userId, String sessionId)
+			throws ClassNotFoundException, SQLException{
+		Connection conn=DBConnector.getConnection();
+		PreparedStatement stmt=
+				conn.prepareStatement("INSERT INTO visit(ipv4, server_time, userid, sessionid) VALUES(?,?,?,?)");
+		
+		stmt.setString(1, ipv4);
+		stmt.setString(2, datetimeStr);
+		if(userId!=null){
+			stmt.setLong(3, userId);
+		}else{
+			stmt.setLong(3, -1);
+		}
+		
+		stmt.setString(4, sessionId);
+		stmt.execute();
+		conn.close();
+	}
 	public static void emptyQnaires() throws ClassNotFoundException, SQLException{
 		Connection conn=DBConnector.getConnection();
 		Statement stmt=conn.createStatement();

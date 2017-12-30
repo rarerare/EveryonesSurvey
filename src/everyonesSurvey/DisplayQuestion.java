@@ -6,8 +6,9 @@ import java.io.PrintWriter;
 
 
 import java.sql.SQLException;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,6 +61,15 @@ public class DisplayQuestion extends HttpServlet {
 		String mAct=request.getParameter("mact");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
+		try {
+			recordVisit(request);
+		} catch (ClassNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		if(mAct==null){
 			try {
 				getPopQns(request, response);
@@ -135,6 +145,22 @@ public class DisplayQuestion extends HttpServlet {
 		request.getRequestDispatcher("/displayQn.jsp")
 		.forward(request, response);
 		
+	}
+	private void recordVisit(HttpServletRequest request)
+			throws ClassNotFoundException, SQLException{
+		Date date=new Date();
+		
+		String dateTimeStr=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+		String sessionId=request.getSession().getId();
+		Long userid=null;
+		if(UserTracker.loggedIn(request)){
+			User user=UserTracker.getCurrUser(request);
+			if(user!=null){
+				userid=user.getId();
+			}
+			
+		String ipv4=request.getRemoteAddr();
+		DBConnector.recordVisit(ipv4, dateTimeStr, userid, sessionId);
 	}
 
 }
