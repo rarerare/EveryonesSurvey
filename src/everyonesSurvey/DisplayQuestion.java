@@ -158,6 +158,7 @@ public class DisplayQuestion extends HttpServlet {
 			if(user!=null){
 				userid=user.getId();
 			}
+		}
 			
 		String ipv4=request.getRemoteAddr();
 		DBConnector.recordVisit(ipv4, dateTimeStr, userid, sessionId);
