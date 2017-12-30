@@ -90,6 +90,9 @@ public class RecordQuestion extends HttpServlet {
 			String qTitle=request.getParameter("qTitle"+i);
 			String qDescription="";
 			String category=request.getParameter("category"+i);
+			if(category==null){
+				category="fr";
+			}
 			int optNum=Integer.parseInt(request.getParameter("optNum"+i));
 			ArrayList<String> optTitles=new ArrayList<String>();
 			for(int j=1;j<=optNum;j++){
