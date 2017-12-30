@@ -206,7 +206,16 @@ public class DBConnector {
 		
 		qidRS.next();
 		long qid=qidRS.getLong(1);
-		switch(category){
+		QCategory qCategory=QCategory.valueOf(category);
+		if(qCategory.isFinAns()){
+			Statement opss=conn.createStatement();
+			for(int i=0;i<optNum;i++){
+				opss.executeUpdate("INSERT INTO " 
+						+qCategory.getOptTable()+" (description,qid, position) VALUE('"
+						+optTitles.get(i)+"',"+qid+","+i+")");
+			}
+		}
+		/*switch(category){
 		case "samc":
 			
 			Statement opss=conn.createStatement();
@@ -228,8 +237,20 @@ public class DBConnector {
 			break;
 		case "number":
 			break;
-		}
+		}*/
 		conn.close();
+	}
+	public static void emptyQnaires() throws ClassNotFoundException, SQLException{
+		Connection conn=DBConnector.getConnection();
+		Statement stmt=conn.createStatement();
+		stmt.execute("delete from frAnswers");
+		stmt.execute("delete from maSelections");
+		stmt.execute("delete from machoices");
+		stmt.execute("delete from numAnswer");
+		stmt.execute("delete from qNaire");
+		stmt.execute("delete from question");
+		stmt.execute("delete from saSelections");
+		stmt.execute("delete from sachoices");
 	}
 	
 }
