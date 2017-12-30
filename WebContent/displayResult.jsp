@@ -75,7 +75,7 @@ window.onload=function(){
   </div>
 </nav>
 <ul class="nav nav-pills">
-    <li ><a href="#">My profile</a></li>
+    <li ><a href="userProfile.jsp">My profile</a></li>
     
     <li><a href="displaysurveyresult?mact=getQnList">My surveys</a>
     
