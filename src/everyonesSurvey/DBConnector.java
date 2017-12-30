@@ -125,6 +125,7 @@ public class DBConnector {
 	public static User getUserByUsername(String username) throws SQLException, ClassNotFoundException{
 		Connection conn=DBConnector.getConnection();
 		Statement stmt=conn.createStatement();
+		username=username.replace("'", "''");
 		ResultSet rs=stmt.executeQuery("SELECT password, firstname, lastname, userid from user WHERE username='"+username+"'");
 		if(rs.next()){
 			String realPass=rs.getString(1);
@@ -159,10 +160,16 @@ public class DBConnector {
 			throws ClassNotFoundException, SQLException{
 		
 		Connection conn=DBConnector.getConnection();
-		Statement stmt=conn.createStatement();
-		stmt.executeUpdate("INSERT INTO user(username, password, email, firstname, lastname) VALUE('"
-		+username+"','"+password+"','"+email+"','"+firstname+"','"+lastname+"')");
+		PreparedStatement stmt=
+				conn.prepareStatement("INSERT INTO user(username, password, email, firstname, lastname)"
+						+ " VALUE(?,?,?,?,?)");
+		stmt.setString(1, username);
+		stmt.setString(2, password);
+		stmt.setString(3, email);
+		stmt.setString(4, firstname);
+		stmt.setString(5, lastname);
 		
+		stmt.execute();
 		conn.close();
 	}
 	

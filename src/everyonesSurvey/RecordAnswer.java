@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -146,8 +147,10 @@ public class RecordAnswer extends HttpServlet {
 	}
 	private void recordFreeResponse(long qId, String text) throws ClassNotFoundException, SQLException{
 		Connection conn=DBConnector.getConnection();
-		Statement recordA=conn.createStatement();
-		recordA.executeUpdate("insert into frAnswers (qid,answer) values("+qId+",'"+text+"')");
+		PreparedStatement recordA=conn.prepareStatement("insert into frAnswers (qid,answer) values(?,?)");
+		recordA.setLong(1, qId);
+		recordA.setString(2, text);
+		recordA.execute();
 		conn.close();
 	}
 	private void recordNumAnswer(long qId, double answer) throws ClassNotFoundException, SQLException{
