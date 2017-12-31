@@ -155,6 +155,7 @@ public class DBConnector {
 		
 		Connection conn=getConnection();
 		Statement lookupEmail=conn.createStatement();
+		username=username.replace("'", "''");
 		ResultSet rs= lookupEmail.executeQuery("SELECT password from user WHERE username='"+username+"'");
 		String passWd=null;
 		if(rs.next()){
